@@ -16,16 +16,23 @@ import sys
 import re
 
 
-import fileReader as fileReader
+import fileReader as FR
 
 
 class Node:
-
-    def __init__(self, val, p): #, child1, child2, child3, child4):
+    """
+      used to model a rectangle in quad-tree partition of the 2d plane;
+      each Node models a rectangle in the partition and can have at most 4 sub-rectanlges
+      representing the members of quad-tree construction
+      the value of the node is a 4-tuple of integers representing a rectangle
+      in "left upper-coord, and right-buttom" form
+    """
+    def __init__(self, val, p):
         self.value = val
-        self.parent = p
+        self.parent = p  # is a Node  or None if this is the root
 
-        self.isFull = False #shows if the node has all children, i.e. has reached its full capacity (2 or 4 in our case)
+        self.isFull = False # shows if the node has maximum number of children
+                            # i.e. has reached its full capacity (2 or 4 in our case)
 
         self.child1 = None
         self.child2 = None
@@ -33,9 +40,11 @@ class Node:
         self.child4 = None
 
     def isLeaf(self):
+        # true, if this node is a leaf, i.e. has no children
         return ( (self.child1 is None) and (self.child2 is None) and (self.child3 is None) and (self.child4 is None) )
 
     def Children(self):
+        # return the list of children, if any
         c = []
         if self.child1 is not None:
             c.append(self.child1)
@@ -49,25 +58,21 @@ class Node:
         return c
 
     def hasLeaf_ChildrenOnly(self):
-        q = True
+        # True, if the all children of this node (if any) are leaves
         if (self.child1 is not None):
-            q = self.child1.isLeaf()
-            if q == False:
+            if self.child1.isLeaf() == False:
                 return False
 
         if (self.child2 is not None):
-            q = self.child2.isLeaf()
-            if q == False:
+            if self.child2.isLeaf() == False:
                 return False
 
         if (self.child3 is not None):
-            q = self.child3.isLeaf()
-            if q == False:
+            if self.child3.isLeaf() == False:
                 return False
 
         if (self.child4 is not None):
-            q = self.child4.isLeaf()
-            if q == False:
+            if self.child4.isLeaf() == False:
                 return False
 
         return True
@@ -75,8 +80,10 @@ class Node:
 
 
 class Tree:
+    # stores the entire quad-tree partition, where each member of the partition is a Node class
 
-    def __init__(self, root): #root is a Node; serves as the root of this tree
+    def __init__(self, root):
+        #root is a Node; serves as the root of this tree
         self.root = root
 
     def getLeafs(self):
@@ -91,7 +98,6 @@ class Tree:
 
         c = r.Children()
         while c:
-            #until the list is not empty
             c1 = []
             for x in c:
                 #print(' '*i + 'Level ' + str(i) + ' : ' + str(x.value) )
@@ -118,7 +124,6 @@ class Tree:
 
         c = r.Children()
         while c:
-            #until the list is not empty
             c1 = []
             res += len(c)
 
@@ -134,7 +139,8 @@ class Tree:
 
 
 def Tree_traverse(T):
-    #traverses the tree T from the root to its leaves
+    # traverses the tree T from the root to its leaves
+    # used for testing purposes only
 
     r = T.root
     if r is not None:
@@ -223,7 +229,7 @@ def Tree_compress(T):
 
 
     for i in range( len( all_nodes ) -1, 0, -1 ):
-        for j in range(0, len( all_nodes[i] ) ):
+        for j in range( len( all_nodes[i] ) ):
             n = all_nodes[i][j]
 
             if n is not None:
@@ -276,8 +282,6 @@ def colorBBoxesBorders(im, T, shift = (0,0) ):
 
 
     return im_1
-
-
 
 
 
@@ -538,14 +542,14 @@ def getBoxes_Nested(im, minW, minH):
         #consider the 4 sub-boxes:
 
         if (x_box[0] + x_box[2])%2 == 0:
-            d1 = (x_box[0] + x_box[2])>>1 # the same as (x[0] + x[2])/2
+            d1 = (x_box[0] + x_box[2])>>1
         else:
-            d1 = (x_box[0] + x_box[2] + 1)>>1   #the same as (x[0] + x[2] - 1)/2
+            d1 = (x_box[0] + x_box[2] + 1)>>1
 
         if (x_box[1] + x_box[3])%2 == 0:
-            d2 = (x_box[1] + x_box[3])>>1   #the same as (x[1] + x[3])/2
+            d2 = (x_box[1] + x_box[3])>>1
         else:
-            d2 = (x_box[1] + x_box[3] + 1)>>1  # the same as (x[1] + x[3] - 1)/2
+            d2 = (x_box[1] + x_box[3] + 1)>>1
 
         # (x0, x1, d1, x3), (d1+1, x1, x2, d2), (x0, d2+1, d1, x3), (d1+1, d2+1, x2, x3)
 
@@ -1090,8 +1094,8 @@ def placeWords(tokens_with_freq ):
 
 def createWordle_fromFile( fName ):
 
-    tokens = fileReader.tokenize_file_IntoWords(fName)
-    tokens_with_freq = fileReader.tokenGroup(tokens)
+    tokens = FR.tokenize_file_IntoWords(fName)
+    tokens_with_freq = FR.tokenGroup(tokens)
 
     print('\n')
 

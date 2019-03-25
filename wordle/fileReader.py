@@ -100,7 +100,7 @@ def tokenize_file_IntoWords(fName, printStepInfo = True):
 
     return res
 
-def tokenGroup(tokens, sortDESC = True, removeStopWords = True):
+def tokenGroup(tokens, removeStopWords = True):
     """
       gets a list of raw tokens (strings) and returns 2 lists
       where the 1st is the grouped (unique) list of the original tokens, and the 2nd is their frequency
