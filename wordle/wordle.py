@@ -80,23 +80,23 @@ class Node:
 
 
 class Tree:
-    # stores the entire quad-tree partition, where each member of the partition is a Node class
+    """
+      stores the entire quad-tree partition, where each member of the partition is a Node class
+    """
 
     def __init__(self, root):
-        #root is a Node; serves as the root of this tree
+        # root is a Node; serves as the root of this tree
         self.root = root
 
     def getLeafs(self):
         #returns the leafs of the tree as a list
 
-        r = self.root
-
-        if r is None:
+        if self.root == None:
             return []
 
         res = []
 
-        c = r.Children()
+        c = self.root.Children()
         while c:
             c1 = []
             for x in c:
@@ -113,16 +113,14 @@ class Tree:
         return res
 
     def nodeCount(self):
-        #returns the leafs of the tree as a list
+        # returns the leafs of the tree as a list
 
-        r = self.root
-
-        if r is None:
+        if self.root == None:
             return 0
 
         res = 1
+        c = self.root.Children()
 
-        c = r.Children()
         while c:
             c1 = []
             res += len(c)
@@ -142,13 +140,16 @@ def Tree_traverse(T):
     # traverses the tree T from the root to its leaves
     # used for testing purposes only
 
-    r = T.root
-    if r is not None:
-        print('Level 0: ' + str(r.value) + '\n')
+    if T.root == None:
+        print('The tree is empty')
+        return
 
-    c = r.Children()
+    print('Level 0: ' + str(T.root.value) + '\n')
+
+    c = T.root.Children()
     i = 0
-    while len(c)>0:
+
+    while len(c) > 0:
         i += 1
         c1 = []
         for x in c:
@@ -162,20 +163,17 @@ def Tree_traverse(T):
 
 
 def get_Tree_values(T):
-    #traverses the tree T from the root to its leaves and returns a list of all values for all it's nodes
+    # traverses the tree T from the root to its leaves and returns a list of all values of all nodes
 
-    res = []
-
-    r = T.root
-    if r is not None:
-        res.append(r.value)
-    else:
+    if T.root == None:
         return []
 
+    res = [ T.root.value ]
 
-    c = r.Children()
+    c = T.root.Children()
     i = 0
-    while len(c)>0:
+
+    while len(c) > 0:
         i += 1
         c1 = []
         for x in c:
@@ -186,57 +184,57 @@ def get_Tree_values(T):
                 for u in x.Children():
                     c1.append(u)
 
-        c = c1.copy()
+        c = c1
 
     return res
 
 
 def Tree_compress(T):
     """
-     compresses the tree T, by removing all leafs, whose siblings
+     compresses the tree T, by removing all leaves whose siblings
      are leafs and whose parents have reached their full (child) capacity,
-     i.e. have MAX N of children (2 or 4 in our case)
+     i.e. have MAX number of children (2 or 4 in our case)
 
-     NOTE! T is passed by a reference, and all changes to its nodes affect the actual T at the end.
+     NOTE!# T is passed by a reference, and all changes to its nodes affect the actual T
     """
 
-    r = T.root
-    if r is None:
+    if T.root == None:
         return T
 
-
-    current_level = [ r ]
+    current_level = [ T.root ]
     all_nodes = [ [current_level] ]
 
     while True:
         c = []
-        for i in range(len(current_level)):
+        for i in range( len(current_level) ):
             x = current_level[i]
-            if x.child1 is not None:
+            if x.child1 != None:
                 c.append(x.child1)
-            if x.child2 is not None:
+            if x.child2 != None:
                 c.append(x.child2)
-            if x.child3 is not None:
+            if x.child3 != None:
                 c.append(x.child3)
-            if x.child4 is not None:
+            if x.child4 != None:
                 c.append(x.child4)
 
         if c == []:
             break
-        else:
-            all_nodes.append(c)
-            current_level = c[:]
+
+        all_nodes.append(c)
+        current_level = c[:]
 
 
     for i in range( len( all_nodes ) -1, 0, -1 ):
         for j in range( len( all_nodes[i] ) ):
             n = all_nodes[i][j]
 
-            if n is not None:
+            if n != None:
                 p = n.parent
                 if p.isFull:
-                    #has all 4 or all 2 children
+                    # p has all 4 or all 2 children
                     if p.hasLeaf_ChildrenOnly():
+                        # compression means that we destroy all children of a node
+                        # with only leaf children and where all child nodes are occupied
                         p.child1 = None
                         p.child2 = None
                         p.child3 = None
@@ -246,38 +244,40 @@ def Tree_compress(T):
 
 
 def colorBBoxesBorders(im, T, shift = (0,0) ):
-    #takes an image and the tree corresponding to the bounding box hierarchy
-    #colors only the borders of bounding rectangles
+    """
+        takes an image @im and a Tree @T corresponding to the bounding box hierarchy (quad-tree partition)
+        colors only the borders of bounding rectangles
 
-    w = 1 # the (symmetric) width of the border of rectangles to be colored
+        this function is for illustration/test purposes only
+    """
+
+    w = 1  # the (symmetric) width of the border of rectangles to be colored
 
     im_1 = im.copy()
     (W, H) = im_1.size
 
     Boxes = get_Tree_values(T)
 
-    for i in range(0, len(Boxes) ):
+    for i in range( len(Boxes) ):
         z = Boxes[i]
-        for u in range(z[0] + shift[0] , z[2] + shift[0] ):
 
+        for u in range(z[0] + shift[0] , z[2] + shift[0] ):
             for v in range( z[1] + shift[1] - w, z[1] + shift[1] + w +1 ):
-                if ((v>=0)and(v<H)):
+                if ( (v >= 0 ) and (v < H) ):
                     im_1.putpixel( (u,v), (255,0,0,0) )
 
             for v in range( z[3] + shift[1] - w, z[3] + shift[1] + w +1 ):
-                if ((v>=0)and(v<H)):
+                if ( (v >= 0) and ( v<H ) ):
                     im_1.putpixel( (u,v), (255,0,0,0) )
 
 
-        for u in range( z[1] + shift[1], z[3] + shift[1]  ):
-
+        for u in range( z[1] + shift[1], z[3] + shift[1] ):
             for v in range( z[0] + shift[0] - w, z[0] + shift[0] + w + 1 ):
-                if ((v>=0)and(v<W)):
+                if ( ( v >= 0 ) and ( v<W ) ):
                     im_1.putpixel( (v,u), (255,0,0,0) )
 
-
             for v in range( z[2] + shift[0] - w, z[2] + shift[0] + w + 1 ):
-                if ((v>=0)and(v<W)):
+                if ( ( v >= 0 ) and ( v<W ) ):
                     im_1.putpixel( (v,u), (255,0,0,0) )
 
 
@@ -286,15 +286,17 @@ def colorBBoxesBorders(im, T, shift = (0,0) ):
 
 
 def rectArea(r):
-    #returns the area of the rectangle given in min-max coordinates
+    #returns the area of the rectangle given in min-max coordinates (top-left bottom-right)
     return abs( (r[0] - r[2])*(r[1] - r[3]) )
 
 def intersectionRect(r1, r2, shift1 = (0,0), shift2 = (0,0), extraSize = 3 ):
-    #gets 2 tuples of 4 integers, representing a rectangle in min,max coord-s
-    #optional params. shifts can be used to move boxes on a large canvas
+    """
+     gets two 4-tuples of integers representing a rectangle in min,max coord-s
+     optional params. @shifts can be used to move boxes on a large canvas (2d plane)
+                     @extraSize, force the rectangles to stay away from each other by the given size
 
-    #returns true, if they intersect
-
+     returns true, if the rectangles intersect
+    """
 
     if ((min(r1[0] - extraSize + shift1[0] , r1[2] + extraSize + shift1[0] ) > max( r2[0] - extraSize + shift2[0], r2[2] + extraSize + shift2[0] ) )
         or ( max(r1[0] - extraSize + shift1[0], r1[2] + extraSize + shift1[0] ) < min( r2[0] - extraSize + shift2[0], r2[2] + extraSize + shift2[0] ) ) ):
@@ -308,7 +310,7 @@ def intersectionRect(r1, r2, shift1 = (0,0), shift2 = (0,0), extraSize = 3 ):
 
 
 def Arch_spiral(a):
-    # generator for Archimedian spiral
+    # generator for the Archimedian spiral
     r = 0
     step_size = 0.5
 
@@ -328,6 +330,7 @@ def Arch_spiral(a):
 
 
 def drawArchSpiral( spiral_param, canvas_width, canvas_height, N_of_iter):
+    # draw a spiral on a canvas, for testing purposes only
 
     N = 0
 
@@ -338,13 +341,13 @@ def drawArchSpiral( spiral_param, canvas_width, canvas_height, N_of_iter):
     M = Arch_spiral( spiral_param )
 
     for dx, dy in M:
-
         u, v = c_x + dx , c_y + dy
 
         if ((u<0)or(v<0)or(u>canvas_width-1)or(v>canvas_height-1)):
+            # out of borders
             continue
-        else:
-            im_canvas.putpixel( (u,v), (255,0,0,0) )
+
+        im_canvas.putpixel( (u,v), (255,0,0,0) )
 
         N += 1
         if N == N_of_iter:
@@ -355,11 +358,13 @@ def drawArchSpiral( spiral_param, canvas_width, canvas_height, N_of_iter):
 
 
 def Rect_spiral(a, reverse = 1):
-    # generator for rectangular spiral
-    #directions = [ (0,-1), (1,0), (0, 1), (-1, 0) ]
+    """
+       generator for rectangular spiral
+       directions = [ (0,-1), (1,0), (0, 1), (-1, 0) ]
 
-    # if reverse = 1, then we make the normal way,
-    #otherwise, if reverse = -1, then we do mirror reflection in (x,y)
+       if reverse = 1, then we make the normal way,
+       otherwise, if reverse = -1, then we do mirror reflection in (x,y)
+    """
 
     x, y = 0, 0
     yield (x,y)
@@ -413,6 +418,8 @@ def Rect_spiral(a, reverse = 1):
 
 
 def drawRectSpiral( spiral_param, canvas_width, canvas_height, N_of_iter):
+    # draws a rectangular spiral on 2d plane, for test only
+
     N = 0
 
     (c_x, c_y) = (  int( 0.5*canvas_width), int( 0.5*canvas_height ) )
@@ -426,9 +433,10 @@ def drawRectSpiral( spiral_param, canvas_width, canvas_height, N_of_iter):
         u, v = c_x + dx , c_y + dy
 
         if ((u<0)or(v<0)or(u>canvas_width-1)or(v>canvas_height-1)):
+            # out of borders
             continue
-        else:
-            im_canvas.putpixel( (u,v), (255,0,0,0) )
+
+        im_canvas.putpixel( (u,v), (255,0,0,0) )
 
         N += 1
         if N == N_of_iter:
@@ -439,19 +447,19 @@ def drawRectSpiral( spiral_param, canvas_width, canvas_height, N_of_iter):
 
 
 
-def computeFontSize(words_):
+def computeFontSize(words):
     #gets the words_ dictionary, i.e. the list of words, and their frequencies
     #returns the list of suggested fonts for each of them
 
     w_Font = []
 
-    keys_ = list(words_.keys())
+    keys = list(words.keys())
     #the 1st key is the word, the 2nd is the frequency
 
     #we simply make the font size = count of the words
 
-    for i in range(len(words_[keys_[1]])):
-        w_Font.append(words_[keys_[1]][i])
+    for i in range( len(words[keys[1]])):
+        w_Font.append(words[keys[1]][i])
 
 
     return w_Font
@@ -769,7 +777,7 @@ def drawOnCanvas(tokens_with_freq,   placeInfo ):
         y_shift = -Y_min
 
     X_max , Y_max = 0, 0
-    for i in range(0, len(place)):
+    for i in range( len(place) ):
         if place[i] is None:
             continue
 
@@ -793,22 +801,24 @@ def drawOnCanvas(tokens_with_freq,   placeInfo ):
     dd = ImageDraw.Draw(im_canvas)
     dd_white = ImageDraw.Draw(im_canvas_white)
 
+    color_schemes = [
+        [ (89, 97, 113), (115, 124, 140), (141, 150, 168), (179, 188, 204), (219, 227, 240) ],
+        [ (89, 97, 113), (115, 124, 140), (141, 150, 168) , (89, 97, 113), (89, 97, 113)],
+        [ (120, 120, 120), (0,100,149),  (242, 99, 95), (0, 76, 112), (244,208,12) ],
+        [ (14, 38, 50), (1,70,99),  (35, 118, 150), (180, 200, 207), (159,195,185) ],
+        [ (3, 113, 146), (99,167,190),  (10, 31, 78), (252, 105, 53), (252,105,53) ],
+        [ (12, 6, 54), (9,81,105),  (5, 155, 154), (83, 186, 131), (159,217,107) ] ,
+        [ (100, 101, 165), (105,117,167),  (244, 233, 109), (242, 138, 49), (241,88,56) ],
+        [ (171, 165, 191), (90,87,118),  (88, 62, 47), (241, 224, 214), (191,153,144) ],
+        [ (25, 46, 91), (30,101,167),  (115, 162, 192), (0, 116, 63), (241,161,4) ]
+    ]
 
-    #word_colors = [ (89, 97, 113), (115, 124, 140), (141, 150, 168), (179, 188, 204), (219, 227, 240) ]
-    #word_colors = [ (89, 97, 113), (115, 124, 140), (141, 150, 168) , (89, 97, 113), (89, 97, 113)]
-    #word_colors = [ (120, 120, 120), (0,100,149),  (242, 99, 95), (0, 76, 112), (244,208,12) ]
-    #word_colors = [ (14, 38, 50), (1,70,99),  (35, 118, 150), (180, 200, 207), (159,195,185) ]
 
-    #word_colors = [ (3, 113, 146), (99,167,190),  (10, 31, 78), (252, 105, 53), (252,105,53) ]
-    #word_colors = [ (12, 6, 54), (9,81,105),  (5, 155, 154), (83, 186, 131), (159,217,107) ]  # looks nice
-    #word_colors = [ (100, 101, 165), (105,117,167),  (244, 233, 109), (242, 138, 49), (241,88,56) ]
-    #word_colors = [ (171, 165, 191), (90,87,118),  (88, 62, 47), (241, 224, 214), (191,153,144) ]
-    word_colors = [ (25, 46, 91), (30,101,167),  (115, 162, 192), (0, 116, 63), (241,161,4) ]
-
+    word_colors = color_schemes[ random.randint(0, len(color_schemes) - 1) ]
 
     max_size = max(sizes)
 
-    for i in range(0, len(place)):
+    for i in range( len(place) ):
         if place[i] is None:
             print('the word <' + words[i] + '> was skipped' )
         else:
@@ -890,9 +900,7 @@ def placeWords(tokens_with_freq ):
     total_area = 0
     avg_quotient = 0
 
-
-
-    for i in range(0, len(words)):
+    for i in range( len(words) ):
 
         im_tmp = drawWord(words[i], sizes[i] )
         T = getBoxes_Nested( im_tmp , 7, 7 )
