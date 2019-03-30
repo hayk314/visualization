@@ -17,7 +17,7 @@ import re
 
 
 import fileReader as FR
-
+import spirals as SP
 
 class Node:
     """
@@ -309,141 +309,6 @@ def intersectionRect(r1, r2, shift1 = (0,0), shift2 = (0,0), extraSize = 3 ):
     return True
 
 
-def Arch_spiral(a):
-    # generator for the Archimedian spiral
-    r = 0
-    step_size = 0.5
-
-    u, v = 0, 0
-
-    yield(0,0)
-
-    while True:
-        r += step_size
-        x, y = a*r*math.cos(r), a*r*math.sin(r)
-
-        if (( int(x - u) == 0 ) and ( int(y - v) == 0 ) ):
-            continue
-        else:
-            u, v = int(x), int(y)
-            yield ( u, v )
-
-
-def drawArchSpiral( spiral_param, canvas_width, canvas_height, N_of_iter):
-    # draw a spiral on a canvas, for testing purposes only
-
-    N = 0
-
-    (c_x, c_y) = (  int( 0.5*canvas_width), int( 0.5*canvas_height ) )
-
-    im_canvas = Image.new('RGBA', (canvas_width, canvas_height), color=None)
-
-    M = Arch_spiral( spiral_param )
-
-    for dx, dy in M:
-        u, v = c_x + dx , c_y + dy
-
-        if ((u<0)or(v<0)or(u>canvas_width-1)or(v>canvas_height-1)):
-            # out of borders
-            continue
-
-        im_canvas.putpixel( (u,v), (255,0,0,0) )
-
-        N += 1
-        if N == N_of_iter:
-            break
-
-
-    im_canvas.show()
-
-
-def Rect_spiral(a, reverse = 1):
-    """
-       generator for rectangular spiral
-       directions = [ (0,-1), (1,0), (0, 1), (-1, 0) ]
-
-       if reverse = 1, then we make the normal way,
-       otherwise, if reverse = -1, then we do mirror reflection in (x,y)
-    """
-
-    x, y = 0, 0
-    yield (x,y)
-    m = a
-    i = 0
-
-    while True:
-        i = 0
-        while ( i < m ):
-            y -= 1
-            i += 1
-
-            if reverse == 1:
-                yield (x,y)
-            else:
-                yield (-x, -y)
-
-        i = 0
-        while ( i < m ):
-            x += 1
-            i += 1
-
-            if reverse == 1:
-                yield (x,y)
-            else:
-                yield (-x, -y)
-
-        i = 0
-        m = m + a
-
-        while (i < m):
-            y += 1
-            i += 1
-
-            if reverse == 1:
-                yield (x,y)
-            else:
-                yield (-x, -y)
-
-        i = 0
-        while (i<m):
-            x -= 1
-            i += 1
-
-            if reverse == 1:
-                yield (x,y)
-            else:
-                yield (-x, -y)
-
-        m = m + a
-
-
-def drawRectSpiral( spiral_param, canvas_width, canvas_height, N_of_iter):
-    # draws a rectangular spiral on 2d plane, for test only
-
-    N = 0
-
-    (c_x, c_y) = (  int( 0.5*canvas_width), int( 0.5*canvas_height ) )
-
-    im_canvas = Image.new('RGBA', (canvas_width, canvas_height), color=None)
-
-    M = Rect_spiral( spiral_param )
-
-    for dx, dy in M:
-
-        u, v = c_x + dx , c_y + dy
-
-        if ((u<0)or(v<0)or(u>canvas_width-1)or(v>canvas_height-1)):
-            # out of borders
-            continue
-
-        im_canvas.putpixel( (u,v), (255,0,0,0) )
-
-        N += 1
-        if N == N_of_iter:
-            break
-
-
-    im_canvas.show()
 
 
 
@@ -736,7 +601,7 @@ def copyTokens(tokens_with_freq, N_of_tokens_to_use):
     words = tokens_with_freq[0][0:N_of_tokens_to_use]
     sizes = tokens_with_freq[1][0:N_of_tokens_to_use]
 
-    for i in range(0, len(words)):
+    for i in range( len(words) ):
         res += sizes[i]*(words[i] + ' ')
 
     return res
@@ -939,6 +804,7 @@ def placeWords(tokens_with_freq ):
 
 
     c_W, c_H = 2000, 1200
+    #c_W, c_H = 3000, 1500
 
 
     print('(ii) Now trying to place the words.\n')
@@ -951,10 +817,9 @@ def placeWords(tokens_with_freq ):
     places = [ ]  #returned value; list of tuples representing places of words: if no suggested place, we put NONE
     ups_and_downs = [ random.randint(0,20)%2  for i in range(0, len(words) )]
 
-    strLog = '' #the log
+    strLog = '' # the log file
 
-    for i in range(0, len(words)):
-
+    for i in range( len(words) ):
 
         print(  words[i], end = ', ' )
 
@@ -983,9 +848,9 @@ def placeWords(tokens_with_freq ):
         strLog_word += '   Starting position: (' + str(w) + ',' +str(h) + ')\n'
 
         if ups_and_downs[i] == 1:
-            A = Arch_spiral(a)
+            A = SP.Archimedian(a).generator
         else:
-            A = Rect_spiral(2, ups_and_downs[i])
+            A = SP.Rectangular(2, ups_and_downs[i]).generator
 
         dx0, dy0 = 0, 0
 
@@ -1092,8 +957,8 @@ def placeWords(tokens_with_freq ):
 
     print('\n Words have been placed in ' + str( T_stop - T_start ) + ' seconds.\n')
 
-    with open('LogFile.txt', 'w+') as f:
-        f.write(strLog)
+    #with open('LogFile.txt', 'w+') as f:
+    #    f.write(strLog)
 
     return [ (c_W, c_H),  places , word_img_size, word_img_path ]
 
@@ -1125,5 +990,5 @@ def createWordle_fromFile( fName ):
 
 
 if __name__ == "__main__":
-
+    # waits for .txt fileName for processing
     createWordle_fromFile( sys.argv[1])
