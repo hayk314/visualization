@@ -6,283 +6,19 @@ from PIL import ImageColor
 from PIL import ImageFont
 from PIL import ImageDraw
 
-import math     #for sin, cos
-import random   #used for random placement of the initial position of a word
+import math     # for sin, cos
+import random   # used for random placement of the initial position of a word
 
-import timeit   #for calculating running time (TESTING purposes only)
+import timeit   # for calculating running time (TESTING purposes only)
 
 import numpy as np
 import sys
-import re
 
 
 import fileReader as FR
 import spirals as SP
-
-class Node:
-    """
-      used to model a rectangle in quad-tree partition of the 2d plane;
-      each Node models a rectangle in the partition and can have at most 4 sub-rectanlges
-      representing the members of quad-tree construction
-      the value of the node is a 4-tuple of integers representing a rectangle
-      in "left upper-coord, and right-buttom" form
-    """
-    def __init__(self, val, p):
-        self.value = val
-        self.parent = p  # is a Node  or None if this is the root
-
-        self.isFull = False # shows if the node has maximum number of children
-                            # i.e. has reached its full capacity (2 or 4 in our case)
-
-        self.child1 = None
-        self.child2 = None
-        self.child3 = None
-        self.child4 = None
-
-    def isLeaf(self):
-        # true, if this node is a leaf, i.e. has no children
-        return ( (self.child1 is None) and (self.child2 is None) and (self.child3 is None) and (self.child4 is None) )
-
-    def Children(self):
-        # return the list of children, if any
-        c = []
-        if self.child1 is not None:
-            c.append(self.child1)
-        if self.child2 is not None:
-            c.append(self.child2)
-        if self.child3 is not None:
-            c.append(self.child3)
-        if self.child4 is not None:
-            c.append(self.child4)
-
-        return c
-
-    def hasLeaf_ChildrenOnly(self):
-        # True, if the all children of this node (if any) are leaves
-        if (self.child1 is not None):
-            if self.child1.isLeaf() == False:
-                return False
-
-        if (self.child2 is not None):
-            if self.child2.isLeaf() == False:
-                return False
-
-        if (self.child3 is not None):
-            if self.child3.isLeaf() == False:
-                return False
-
-        if (self.child4 is not None):
-            if self.child4.isLeaf() == False:
-                return False
-
-        return True
-
-
-
-class Tree:
-    """
-      stores the entire quad-tree partition, where each member of the partition is a Node class
-    """
-
-    def __init__(self, root):
-        # root is a Node; serves as the root of this tree
-        self.root = root
-
-    def getLeafs(self):
-        #returns the leafs of the tree as a list
-
-        if self.root == None:
-            return []
-
-        res = []
-
-        c = self.root.Children()
-        while c:
-            c1 = []
-            for x in c:
-                #print(' '*i + 'Level ' + str(i) + ' : ' + str(x.value) )
-
-                if x.isLeaf():
-                    res.append(x)
-                else:
-                    for u in x.Children():
-                        c1.append(u)
-
-            c = c1
-
-        return res
-
-    def nodeCount(self):
-        # returns the leafs of the tree as a list
-
-        if self.root == None:
-            return 0
-
-        res = 1
-        c = self.root.Children()
-
-        while c:
-            c1 = []
-            res += len(c)
-
-            for x in c:
-                #print(' '*i + 'Level ' + str(i) + ' : ' + str(x.value) )
-                if x.isLeaf() == False:
-                    for u in x.Children():
-                        c1.append(u)
-
-            c = c1
-
-        return res
-
-
-def Tree_traverse(T):
-    # traverses the tree T from the root to its leaves
-    # used for testing purposes only
-
-    if T.root == None:
-        print('The tree is empty')
-        return
-
-    print('Level 0: ' + str(T.root.value) + '\n')
-
-    c = T.root.Children()
-    i = 0
-
-    while len(c) > 0:
-        i += 1
-        c1 = []
-        for x in c:
-            print(' '*i + 'Level ' + str(i) + ' : ' + str(x.value) )
-
-            if not x.isLeaf():
-                for u in x.Children():
-                    c1.append(u)
-
-        c = c1
-
-
-def get_Tree_values(T):
-    # traverses the tree T from the root to its leaves and returns a list of all values of all nodes
-
-    if T.root == None:
-        return []
-
-    res = [ T.root.value ]
-
-    c = T.root.Children()
-    i = 0
-
-    while len(c) > 0:
-        i += 1
-        c1 = []
-        for x in c:
-            #print(' '*i + 'Level ' + str(i) + ' : ' + str(x.value) )
-            res.append(x.value)
-
-            if not x.isLeaf():
-                for u in x.Children():
-                    c1.append(u)
-
-        c = c1
-
-    return res
-
-
-def Tree_compress(T):
-    """
-     compresses the tree T, by removing all leaves whose siblings
-     are leafs and whose parents have reached their full (child) capacity,
-     i.e. have MAX number of children (2 or 4 in our case)
-
-     NOTE!# T is passed by a reference, and all changes to its nodes affect the actual T
-    """
-
-    if T.root == None:
-        return T
-
-    current_level = [ T.root ]
-    all_nodes = [ [current_level] ]
-
-    while True:
-        c = []
-        for i in range( len(current_level) ):
-            x = current_level[i]
-            if x.child1 != None:
-                c.append(x.child1)
-            if x.child2 != None:
-                c.append(x.child2)
-            if x.child3 != None:
-                c.append(x.child3)
-            if x.child4 != None:
-                c.append(x.child4)
-
-        if c == []:
-            break
-
-        all_nodes.append(c)
-        current_level = c[:]
-
-
-    for i in range( len( all_nodes ) -1, 0, -1 ):
-        for j in range( len( all_nodes[i] ) ):
-            n = all_nodes[i][j]
-
-            if n != None:
-                p = n.parent
-                if p.isFull:
-                    # p has all 4 or all 2 children
-                    if p.hasLeaf_ChildrenOnly():
-                        # compression means that we destroy all children of a node
-                        # with only leaf children and where all child nodes are occupied
-                        p.child1 = None
-                        p.child2 = None
-                        p.child3 = None
-                        p.child4 = None
-
-    return T
-
-
-def colorBBoxesBorders(im, T, shift = (0,0) ):
-    """
-        takes an image @im and a Tree @T corresponding to the bounding box hierarchy (quad-tree partition)
-        colors only the borders of bounding rectangles
-
-        this function is for illustration/test purposes only
-    """
-
-    w = 1  # the (symmetric) width of the border of rectangles to be colored
-
-    im_1 = im.copy()
-    (W, H) = im_1.size
-
-    Boxes = get_Tree_values(T)
-
-    for i in range( len(Boxes) ):
-        z = Boxes[i]
-
-        for u in range(z[0] + shift[0] , z[2] + shift[0] ):
-            for v in range( z[1] + shift[1] - w, z[1] + shift[1] + w +1 ):
-                if ( (v >= 0 ) and (v < H) ):
-                    im_1.putpixel( (u,v), (255,0,0,0) )
-
-            for v in range( z[3] + shift[1] - w, z[3] + shift[1] + w +1 ):
-                if ( (v >= 0) and ( v<H ) ):
-                    im_1.putpixel( (u,v), (255,0,0,0) )
-
-
-        for u in range( z[1] + shift[1], z[3] + shift[1] ):
-            for v in range( z[0] + shift[0] - w, z[0] + shift[0] + w + 1 ):
-                if ( ( v >= 0 ) and ( v<W ) ):
-                    im_1.putpixel( (v,u), (255,0,0,0) )
-
-            for v in range( z[2] + shift[0] - w, z[2] + shift[0] + w + 1 ):
-                if ( ( v >= 0 ) and ( v<W ) ):
-                    im_1.putpixel( (v,u), (255,0,0,0) )
-
-
-    return im_1
-
+from Trees import Node
+from Trees import Tree
 
 
 def rectArea(r):
@@ -292,10 +28,10 @@ def rectArea(r):
 def intersectionRect(r1, r2, shift1 = (0,0), shift2 = (0,0), extraSize = 3 ):
     """
      gets two 4-tuples of integers representing a rectangle in min,max coord-s
-     optional params. @shifts can be used to move boxes on a large canvas (2d plane)
-                     @extraSize, force the rectangles to stay away from each other by the given size
+     optional params. @shifts can be used to move boxes on a larger canvas (2d plane)
+                      @extraSize, forces the rectangles to stay away from each other by the given size (number of pixels)
 
-     returns true, if the rectangles intersect
+     returns True if the rectangles intersect
     """
 
     if ((min(r1[0] - extraSize + shift1[0] , r1[2] + extraSize + shift1[0] ) > max( r2[0] - extraSize + shift2[0], r2[2] + extraSize + shift2[0] ) )
@@ -307,10 +43,6 @@ def intersectionRect(r1, r2, shift1 = (0,0), shift2 = (0,0), extraSize = 3 ):
         return False
 
     return True
-
-
-
-
 
 def computeFontSize(words):
     #gets the words_ dictionary, i.e. the list of words, and their frequencies
@@ -330,33 +62,32 @@ def computeFontSize(words):
     return w_Font
 
 
-def drawWord(word_, fsize):
-
-    #returns the cropped image of word_ in Font.size = fsize
+def drawWord(word, fsize):
+    # returns an image of the given word in the given font size
+    # the image is not cropped
 
     font = ImageFont.truetype("arial.ttf", fsize)
-    w, h = font.getsize(word_)
+    w, h = font.getsize(word)
 
-    im = Image.new('RGBA', (w,h), color=None)
+    im = Image.new('RGBA', (w,h), color = None)
     draw = ImageDraw.Draw(im)
-    draw.text((0, 0),word_, font=font)
-
+    draw.text((0, 0), word, font = font)
 
     return im
 
 
-def computeCanvasSize(words_):
+def computeCanvasSize(words):
     #gets the dictionary of words (with keys: ['words', 'freq', 'size'])
     #returns the proposed (width, height) of the canvas
 
     W, H = 0, 0
 
-    keys_  = list( words_.keys() )
+    keys = list( words.keys() )
 
-    for i in range(len(words_[keys_[2]])):
-        fsize = words_[keys_[2]][i]
+    for i in range(len(words[ keys[2] ])):
+        fsize = words[keys[2]][i]
         font = ImageFont.truetype("arial.ttf", fsize)
-        w, h = font.getsize(words_[keys_[0]][i])
+        w, h = font.getsize(words[ keys[0]][i])
 
         W += w
         H += h
@@ -364,51 +95,35 @@ def computeCanvasSize(words_):
     return  int(0.5*W), H
 
 
-def colorBoxes( im, Boxes, shift = (0,0) ):
-    #colors boxes in image in red
-
-    im_1 = im.copy()
-
-    for i in range( len(Boxes) ):
-        z = Boxes[i].value
-        for u in range(z[0] + shift[0] , z[2] + shift[0] ):
-            for v in range(z[1] +shift[1] , z[3] + shift[1] ):
-                im_1.putpixel( (u,v), (255,0,0,0) )
-
-    return im_1
-
 
 def getBoxes_Nested(im, minW, minH):
-    #returns the quad-tree of the image im, i.e.
-    #a Tree, where the value of each node is a 4-tuple of ints (can be 2 for some of the leafs),
-    #representing min-max of hierarchic boxes
-    #here minW and minH are the width, height of the minimal box
+    """
+      returns the quad-tree of the image @im, i.e.
+      a Tree, where the value of each node is a 4-tuple of ints (can be 2 for some of the leafs),
+      representing min-max of hierarchic boxes
+      here minW and minH are the width, height of the minimal box
+    """
 
-    box_0 = im.getbbox() #the initial box
+    box_0 = im.getbbox()  # the initial box
 
     p = Node(box_0, None) # the root of the tree
-
     T = Tree( p )
 
-    stack = [ p ] # (4 ints, a tuple)
-
+    stack = [ p ]  # (4 ints, a tuple)
 
     W, H = abs(box_0[0] - box_0[2]), abs(box_0[1] - box_0[3])
 
     if ( (H <= minH) and (W <= minW) ):
+        # we do not split further if the height and width are small enough
         return T
 
-    full_node = True
 
-    while (stack):
-
+    while stack:
         x = stack.pop()
-        x_box = x.value #the box coordinates
-        full_node = True #shows if the x as a parent is full
-
+        x_box = x.value    # the box coordinates
+        full_node = True   # shows if the x is full
 
         W, H = abs(x_box[0] - x_box[2]), abs(x_box[1] - x_box[3])
-
         if ( (H <= minH) and (W <= minW)):
             continue
 
@@ -427,7 +142,8 @@ def getBoxes_Nested(im, minW, minH):
         # (x0, x1, d1, x3), (d1+1, x1, x2, d2), (x0, d2+1, d1, x3), (d1+1, d2+1, x2, x3)
 
         #we now set the children of x
-        if ((H > minH) and (W > minW) ): #we need 4 sub-rectangles
+        if ((H > minH) and (W > minW) ):
+            #we need 4 sub-rectangles
 
             x_child = (x_box[0], x_box[1], d1, d2 )
             if im.crop(x_child).getbbox() is not None:
@@ -515,82 +231,78 @@ def computeWordArea( T ):
 
 
 def collision_test(T1, T2, shift1, shift2):
-    # the input is a pair of trees, representing the objects as a quad-tree
-    # shift_1 = (a1, b1) and shift2 = (a2, b2) are the left-top coordinats of the boxes on the large canvas
-    # this means that all boxes in T1, T2 must be shifted by (a_i, b_i)
+    """
+       the input is a pair of trees representing the objects as a quad-tree
+       shift_1 = (a1, b1) and shift2 = (a2, b2) are the left-top coordinats of the boxes on the large canvas
+       this means that all boxes in T_i must be shifted by (a_i, b_i), where i = 1, 2
 
+       return True iff the quad-trees have intersecting leaves, meaning the images they respresent actually intersect
+    """
 
-    r1 = T1.root
-    r2 = T2.root
+    r1, r2 = T1.root, T2.root
 
-    if ((not r1)or(not r2)):
+    if ( (not r1) or (not r2) ):
         return False
 
 
-    if intersectionRect(r1.value, r2.value, shift1, shift2 ) == False: #need to shift
-        return False
-
-    stack = [ (r1,r2) ]
+    stack = [ (r1, r2) ]
 
     while stack:
+        p1, p2 = stack.pop()   # the nodes of the 1st and the 2nd trees
 
-        pair = stack.pop()
-
-        p1, p2 = pair[0], pair[1]  #the node of the 1st and the 2nd trees
-
-        if intersectionRect(p1.value, p2.value, shift1, shift2) == False: #needs shift
-            continue #no need to go for sub-nodes
+        if intersectionRect(p1.value, p2.value, shift1, shift2) == False:
+            # if larger rectangles do not collide, their children will not collide either
+            # hence no need to go for sub-nodes
+            continue
 
         if ( p1.isLeaf() and p2.isLeaf() ):
-            return True #we've found a collision in leafs
+            # leaves collide, we're done
+            return True
 
+
+        c1, c2 = p1.Children(), p2.Children()
+
+        if not c1:
+            for x in c2:
+                stack.append( (p1, x) )
         else:
-            c1 = p1.Children()
-            c2 = p2.Children()
-
-            if (c1 == []):
-                for x in c2:
-                    stack.append( (p1,x) )
+            if not c2:
+                for x in c1:
+                    stack.append( (x, p2) )
             else:
-                if (c2 == []):
-                    for x in c1:
-                        stack.append( (x, p2) )
-                else: #none are empty, i.e. the nodes are not leafs
-                    for x in c1:
-                        for y in c2:
-                            stack.append((x,y))
+                # none are empty, i.e. the nodes are not leaves
+                for x in c1:
+                    for y in c2:
+                        stack.append( (x, y) )
 
 
     return False
 
 
 def insideCanvas( T, shift, canvas_size ):
-    #T is the tree of the word, shift is its upper-left corner coord in canvas
-    # and canvas_size is a tuple (width, height) of the canvas
+    """
+     @T is the tree-representation of a word, @shift is the word's bounding box's upper-left corner coord on canvas
+     @canvas_size is a tuple (width, height) of the canvas
 
-    #this function checks, if the word's leafs stay inside the canvas
+     returns True if the word's leaves stay inside the canvas
+    """
 
-    r = T.root
-
-    stack = [r]
-    W, H = canvas_size[0], canvas_size[1]
-    sh_w, sh_h = shift[0], shift[1]
+    stack = [ T.root ]
+    W, H = canvas_size
+    sh_w, sh_h = shift
 
 
     while stack:
         v = stack.pop()
 
-        coord = v.value #is a 4 tuple, left upper-coord, and right-buttom
-        if ( (coord[0] + sh_w < 0)or( coord[2] + sh_w > W )or(coord[1] + sh_h <0)or(coord[3] + sh_h>H) ) == False:
+        a, b, c, d = v.value # a 4 tuple, left upper-coord and right-buttom coordinates
+        if ( (a + sh_w < 0) or ( c + sh_w > W ) or (b + sh_h < 0) or (d + sh_h > H) ) == False:
             continue
-        else:
-            if v.isLeaf():
-                return False
-            else:
-                c = v.Children()
 
-                for x in c:
-                    stack.append(x)
+        if v.isLeaf():
+            return False
+
+        stack += v.Children()
 
     return True
 
@@ -601,8 +313,8 @@ def copyTokens(tokens_with_freq, N_of_tokens_to_use):
     words = tokens_with_freq[0][0:N_of_tokens_to_use]
     sizes = tokens_with_freq[1][0:N_of_tokens_to_use]
 
-    for i in range( len(words) ):
-        res += sizes[i]*(words[i] + ' ')
+    for i, word in enumerate(words):
+        res += sizes[i]*(word + ' ')
 
     return res
 
@@ -623,7 +335,7 @@ def drawOnCanvas(tokens_with_freq,   placeInfo ):
 
     X_min, Y_min = 0, 0
 
-    for i in range(0, len(place)):
+    for i in range(len(place)):
 
         if place[i] is None:
             continue
@@ -741,7 +453,7 @@ def placeWords(tokens_with_freq ):
     #returns canvas size, locations of upper-left corner of words and words' sizes
 
 
-    #1. we first create the QuadTrees for words, and determine a size for the canvas
+    #1. we first create the QuadTrees for all words and determine a size for the canvas
 
     words = tokens_with_freq[0]
     sizes = tokens_with_freq[1]
@@ -775,7 +487,7 @@ def placeWords(tokens_with_freq ):
         H_W_quotient.append( b/a )
 
 
-        Tree_compress(T) # we merge some leafs here, making the tree smaller
+        T.compress() # we merge some leafs here, making the tree smaller
         word_Trees.append( T )
 
         word_img_size.append(im_tmp.size)
@@ -803,8 +515,8 @@ def placeWords(tokens_with_freq ):
 
 
 
-    c_W, c_H = 2000, 1200
-    #c_W, c_H = 3000, 1500
+    #c_W, c_H = 2000, 1200
+    c_W, c_H = 3000, 1500
 
 
     print('(ii) Now trying to place the words.\n')

@@ -82,7 +82,8 @@ def tokenize_file_IntoWords(fName, printStepInfo = True):
 
 
     r1 = re.compile(r'[^\w -]') #remove all non-alphanumeric, non-space, non-hyperhen chars (unicode - supported)
-    strData = re.sub(r1, ' ', strData)
+    #strData = re.sub(r1, ' ', strData)
+    strData = re.sub(r1, '', strData)
 
     r1 = re.compile(' {2,}') #strips off the extra whitespaces
     strData = re.sub(r1, ' ', strData)
