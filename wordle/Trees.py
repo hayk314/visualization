@@ -2,6 +2,12 @@
 # create and test Trees for spatial partition
 
 
+
+def rectArea(r):
+    # returns the area of the rectangle given in min-max coordinates (top-left <--> bottom-right)
+    return abs( (r[0] - r[2])*(r[1] - r[3]) )
+
+
 class Node:
     """
       used to model a rectangle in quad-tree partition of the 2d plane;
@@ -10,6 +16,7 @@ class Node:
       the value of the node is a 4-tuple of integers representing a rectangle
       in "left upper-coord, and right-buttom" form
     """
+
     def __init__(self, val, p):
         self.value = val
         self.parent = p  # is a Node  or None if this is the root
@@ -59,6 +66,7 @@ class Node:
                 return False
 
         return True
+
 
 class Tree:
     """
@@ -116,8 +124,10 @@ class Tree:
 
 
     def getValues(self, output = False):
-        # traverses the tree T from the root to its leaves and returns a list of all values of all nodes
-        # if output == True, prints the values
+        """
+          traverses the tree T from the root to its leaves and returns a list of all values of all nodes
+          if output == True, prints the values
+        """
 
         if self.root == None:
             if output == True:
@@ -129,7 +139,7 @@ class Tree:
         c = self.root.Children()
         i = 0
 
-        while len(c) > 0:
+        while c:
             i += 1
             c1 = []
             for x in c:
@@ -195,3 +205,20 @@ class Tree:
                             p.child2 = None
                             p.child3 = None
                             p.child4 = None
+
+
+
+    def areaCovered( self ):
+        """
+          compute the numerical value of the 2d area covered by this Tree
+          the object represented by this tree is the disjoin union of its leaves;
+          leaves are rectangles, thus we need to compute the sum of the areas of these rectangles
+        """
+
+        a = 0
+        c = self.getLeafs()
+
+        for r in c:
+            a += rectArea(r.value)
+
+        return a
