@@ -22,6 +22,13 @@ import Trees
 from Trees import Node
 from Trees import Tree
 
+# constants:
+tokens_to_use = 250       # number of different tokens to use in the wordle
+stay_away = 1             # force any two words to stay at least this number of pixels away from each other
+font_size_min = 20        # the smallest font of a word
+font_size_max = 300       # the largest font of a word
+desired_HW_Ratio = 0.618  # height/widht ratio of the canvas
+quadTree_minSize = 5      # minimal height-width of the box in quadTree partition
 
 
 def proposeCanvasSize(quadTrees):
@@ -30,16 +37,44 @@ def proposeCanvasSize(quadTrees):
     boxArea = 0
 
     for t in quadTrees:
-        area += t.ered()               # this is the actual area covered by the image
+        area += t.areaCovered()               # this is the actual area covered by the image
         boxArea += Trees.rectArea(t.root)     # this is the area covered by the images's bounding box
 
 
 
+def normalizeWordSize(tokens, freq, N_of_tokens_to_use, max_size, min_size):
+    """
+     (linearly) scale the font sizes of tokens to the range [min_size, max_size]
+     and trim those tokens with size < min_size
+    """
+
+    words = tokens[:N_of_tokens_to_use]
+    sizes = freq[:N_of_tokens_to_use]
+
+    # sizes = [int(max_size*x/max(sizes)) for x in sizes]
+    # scale the range of sizes to the given range [min_size, max_size]
+    a, b = min(sizes), max(sizes)
+    sizes = [  int(((max_size - min_size )/(b - a))*( x - a ) + min_size )  for x in sizes ]
+
+    i = 0
+    while i < len(sizes):
+        if sizes[i] < min_size:
+            del sizes[i]
+            del words[i]
+        else:
+            i += 1
+
+
+
+    return words, sizes
+
 
 
 def drawWord(word, fsize):
-    # returns an image of the given word in the given font size
-    # the image is not cropped
+    """
+      returns an image of the given word in the given font size
+      the image is NOT cropped
+    """
 
     font = ImageFont.truetype("arial.ttf", fsize)
     w, h = font.getsize(word)
@@ -159,67 +194,55 @@ def drawOnCanvas(words, sizes, placeInfo ):
     return im_canvas_1
 
 
-def normalizeWordSize(tokens, freq, N_of_tokens_to_use, max_size, min_size):
+def createQuadTrees(words, sizes):
     """
-     scale the font sizes of tokens to the range [min_size, max_size]
-     and trim those tokens with size < min_size
+        given a list of words and their corresponding font-szies, we create QuadTrees for each word
+        and return 2 lists, one for the quadtrees and another for sizes of the cropped word-images
     """
-    words = tokens[:N_of_tokens_to_use]
-    sizes = freq[:N_of_tokens_to_use]
-
-    sizes = [int(max_size*x/max(sizes)) for x in sizes]
-
-    i = 0
-    while i < len(sizes):
-        if sizes[i] < min_size:
-            del sizes[i]
-            del words[i]
-        else:
-            i += 1
-
-    return words, sizes
-
-
-
-def placeWords(words, sizes):
-    # gets a list of tokens and their frequencies
-    # returns canvas size, locations of upper-left corner of words and words' sizes
-
-
-    #1. we first create the QuadTrees for all words and determine a size for the canvas
-
-    word_img_size = [] # list of tuples, collecting the drawn image sizes (width, height)
-    word_img_path = [] # shows the path passed through the spiral before hitting a free space
-
-    print('Number of words is ' + str(len(words)) + '\n')
-
-    word_Trees = []   # list of quad-trees for each token
-    H_W_quotient = [] # shows the quotient of Height/Width
-
-    T_start = timeit.default_timer()
+    tree_list, size_list = [], []
 
     for i in range( len(words) ):
         im_tmp = drawWord(words[i], sizes[i] )
         T = BBox.getQuadTree( im_tmp , 7, 7 )
         T.compress()
-        word_Trees.append( T )
+        tree_list.append( T )
 
         im_tmp = im_tmp.crop(im_tmp.getbbox())
-        word_img_size.append(im_tmp.size)
+        size_list.append(im_tmp.size)
 
+    return tree_list, size_list
+
+
+
+def placeWords(words, sizes):
+    """
+      gets a list of tokens and their frequencies
+      executes the placing strategy and
+      returns canvas size, locations of upper-left corner of words and words' sizes
+    """
+
+    # 1. we first create the QuadTrees for all words and determine a size for the canvas
+
+    word_img_path = [] # shows the path passed through the spiral before hitting a free space
+
+    print('Number of words equals', len(words), '\n')
+
+    T_start = timeit.default_timer()
+
+    # create the quadTrees and collect sizes (width, height) of the cropped images of the words
+    word_Trees, word_img_size = createQuadTrees(words, sizes)
 
     T_stop = timeit.default_timer()
-
+    print('(i)  QuadTrees have been made for all words in', T_stop - T_start, 'seconds.','\n')
 
     #2. We now find places for the words on our canvas
-
-    print('(i)  QuadTrees have been made for all words in ' + str( T_stop - T_start ) + ' seconds.\n')
 
     c_W, c_H = 2000, 1200
     #c_W, c_H = 3000, 1500
 
 
     print('(ii) Now trying to place the words.\n')
+    sys.stdout.flush()
 
     T_start = timeit.default_timer()
 
@@ -231,12 +254,12 @@ def placeWords(words, sizes):
 
     strLog = '' # the log file
 
-    for i in range( len(words) ):
+    for i, word in enumerate(words):
 
-        print(  words[i], end = ', ' )
-        sys.stdout.flush()
+        print( word , end = ' ' )
+        sys.stdout.flush()  # force the output to display what is in the buffer
 
-        strLog_word = '<' + words[i] + '>\n'
+        strLog_word = '<' + word + '>\n'
 
         a = 0.1 #the parameter of the spiral
         place_found = False
@@ -280,7 +303,6 @@ def placeWords(words, sizes):
         max_iter = 0
 
         for dx, dy in A:
-
             w, h = place1[0] + dx, place1[1] + dy
 
             if start_countdown == True:
@@ -290,7 +312,8 @@ def placeWords(words, sizes):
             else:
                 iter_ += 1
 
-            if ( (w<0)or(w>c_W)or(h<0)or(h>c_H) ): #fell outside the canvas area
+            if ( (w<0)or(w>c_W)or(h<0)or(h>c_H) ):
+                # fell outside the canvas area
                 if start_countdown == False:
                     start_countdown = True
                     max_iter  = 1 + 10*iter_
@@ -300,19 +323,18 @@ def placeWords(words, sizes):
 
 
             place1 = ( w, h )
-
             collision = False
 
             if last_hit_index < i:
                 j = last_hit_index
                 if places[j] is not None:
-                    if BBox.collisionTest(word_Trees[i], word_Trees[j], place1, places[j]) == True:
+                    if BBox.collisionTest(word_Trees[i], word_Trees[j], place1, places[j], stay_away) == True:
                         collision = True
 
             if collision == False:
-                for j in range(0, i ): #check for collisions with the rest
+                for j in range( i ): #check for collisions with the rest
                     if ((j != last_hit_index) and (places[j] is not None)):
-                        if BBox.collisionTest(word_Trees[i], word_Trees[j], place1, places[j]) == True:
+                        if BBox.collisionTest(word_Trees[i], word_Trees[j], place1, places[j], stay_away) == True:
                             collision = True
                             last_hit_index = j
                             break
@@ -330,12 +352,11 @@ def placeWords(words, sizes):
 
 
         if place_found == False:
-
             print('no place was found')
 
-            strLog_word += '    N of collision_free_outside canvas places =' + str(len(no_collision_place)) +'\n'
+            strLog_word += '    Number of collision_free_outside canvas places =' + str(len(no_collision_place)) +'\n'
 
-            if len(no_collision_place) == 0:
+            if not no_collision_place:
                 places.append(None)
             else:
                 if  i == 0 : # the first word
@@ -391,8 +412,8 @@ def createWordle_fromFile( fName ):
         print( str(s) +  (7-len(str(s)))*' ' + ':  ' + tokens[i]  )
 
 
-    N_of_words = 150
-    tokens, freq =  normalizeWordSize(tokens, freq, N_of_words, 250, 15)
+    #N_of_words = 150
+    tokens, freq =  normalizeWordSize(tokens, freq, tokens_to_use, font_size_max, font_size_min)
     finalPlaces = placeWords(tokens, freq)
 
     wordle = drawOnCanvas(tokens, freq, finalPlaces)

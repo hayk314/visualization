@@ -182,11 +182,13 @@ def insideCanvas( T, shift, canvas_size ):
 
 
 
-def collisionTest(T1, T2, shift1, shift2):
+def collisionTest(T1, T2, shift1, shift2, stay_away):
     """
        the input is a pair of trees representing the objects as a quad-tree
        shift_1 = (a1, b1) and shift2 = (a2, b2) are the left-top coordinats of the boxes on the large canvas
        this means that all boxes in T_i must be shifted by (a_i, b_i), where i = 1, 2
+
+       @ stay_away parameter forces bounding boxes to stay at least @stay_away pixels away from each other
 
        return True iff the quad-trees have intersecting leaves, meaning the images they respresent actually intersect
     """
