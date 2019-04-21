@@ -188,7 +188,7 @@ def collisionTest(T1, T2, shift1, shift2, stay_away):
        shift_1 = (a1, b1) and shift2 = (a2, b2) are the left-top coordinats of the boxes on the large canvas
        this means that all boxes in T_i must be shifted by (a_i, b_i), where i = 1, 2
 
-       @ stay_away parameter forces bounding boxes to stay at least @stay_away pixels away from each other
+       @stay_away parameter forces bounding boxes to stay at least @stay_away pixels away from each other
 
        return True iff the quad-trees have intersecting leaves, meaning the images they respresent actually intersect
     """
@@ -204,7 +204,7 @@ def collisionTest(T1, T2, shift1, shift2, stay_away):
     while stack:
         p1, p2 = stack.pop()   # the nodes of the 1st and the 2nd trees
 
-        if intersectionRect(p1.value, p2.value, shift1, shift2) == False:
+        if intersectionRect(p1.value, p2.value, shift1, shift2, stay_away) == False:
             # if larger rectangles do not collide, their children will not collide either
             # hence no need to go for sub-nodes
             continue

@@ -23,23 +23,32 @@ from Trees import Node
 from Trees import Tree
 
 # constants:
-tokens_to_use = 250       # number of different tokens to use in the wordle
-stay_away = 1             # force any two words to stay at least this number of pixels away from each other
-font_size_min = 20        # the smallest font of a word
-font_size_max = 300       # the largest font of a word
-desired_HW_Ratio = 0.618  # height/widht ratio of the canvas
-quadTree_minSize = 5      # minimal height-width of the box in quadTree partition
+TOKENS_TO_USE = 250       # number of different tokens to use in the wordle
+STAY_AWAY = 1             # force any two words to stay at least this number of pixels away from each other
+FONT_SIZE_MIN = 20        # the smallest font of a word
+FONT_SIZE_MAX = 400       # the largest font of a word
+DESIRED_HW_RATIO = 0.618  # height/widht ratio of the canvas
+QUADTREE_MINSIZE = 5      # minimal height-width of the box in quadTree partition
 
 
 def proposeCanvasSize(quadTrees):
     # pased on the list of quadtrees we propose a canvase size, width and height
     area = 0
-    boxArea = 0
+    boxArea = []
 
     for t in quadTrees:
-        area += t.areaCovered()               # this is the actual area covered by the image
-        boxArea += Trees.rectArea(t.root)     # this is the area covered by the images's bounding box
+        area += t.areaCovered()                            # this is the actual area covered by the image
+        boxArea.append( Trees.rectArea(t.root.value) )     # this is the area covered by the images's bounding box
 
+    ensure_space = 5    # force the sum of the total area to cover at least first @ensure_space tokens
+    #print(boxArea)     # notice that quadTrees come sorted in DESC order, i.e. the trees of the bigger words come first
+
+    total = area + sum ( boxArea[:ensure_space] )
+    w = int ( math.sqrt(total/DESIRED_HW_RATIO) ) + 1
+    h = int(DESIRED_HW_RATIO*w) + 1
+
+    print('Ratio of the area covered by trees over the total area of bounding boxes of words',  area/sum(boxArea))
+    return w, h
 
 
 def normalizeWordSize(tokens, freq, N_of_tokens_to_use, max_size, min_size):
@@ -203,7 +212,7 @@ def createQuadTrees(words, sizes):
 
     for i in range( len(words) ):
         im_tmp = drawWord(words[i], sizes[i] )
-        T = BBox.getQuadTree( im_tmp , 7, 7 )
+        T = BBox.getQuadTree( im_tmp , QUADTREE_MINSIZE, QUADTREE_MINSIZE )
         T.compress()
         tree_list.append( T )
 
@@ -237,7 +246,8 @@ def placeWords(words, sizes):
 
     #2. We now find places for the words on our canvas
 
-    c_W, c_H = 2000, 1200
+    c_W, c_H = 4000, 4000
+    #c_W, c_H = 2000, 1200
     #c_W, c_H = 3000, 1500
 
 
@@ -290,12 +300,11 @@ def placeWords(words, sizes):
             A = SP.Rectangular(2, ups_and_downs[i]).generator
 
         dx0, dy0 = 0, 0
-
         place1 = (w,h)
 
         word_img_path.append( (w,h) )
 
-        last_hit_index = 0 #we cache the index of last hit
+        last_hit_index = 0 # we cache the index of last hit
 
         iter_ = 0
 
@@ -328,13 +337,13 @@ def placeWords(words, sizes):
             if last_hit_index < i:
                 j = last_hit_index
                 if places[j] is not None:
-                    if BBox.collisionTest(word_Trees[i], word_Trees[j], place1, places[j], stay_away) == True:
+                    if BBox.collisionTest(word_Trees[i], word_Trees[j], place1, places[j], STAY_AWAY) == True:
                         collision = True
 
             if collision == False:
                 for j in range( i ): #check for collisions with the rest
                     if ((j != last_hit_index) and (places[j] is not None)):
-                        if BBox.collisionTest(word_Trees[i], word_Trees[j], place1, places[j], stay_away) == True:
+                        if BBox.collisionTest(word_Trees[i], word_Trees[j], place1, places[j], STAY_AWAY) == True:
                             collision = True
                             last_hit_index = j
                             break
@@ -413,7 +422,7 @@ def createWordle_fromFile( fName ):
 
 
     #N_of_words = 150
-    tokens, freq =  normalizeWordSize(tokens, freq, tokens_to_use, font_size_max, font_size_min)
+    tokens, freq =  normalizeWordSize(tokens, freq, TOKENS_TO_USE, FONT_SIZE_MAX, FONT_SIZE_MIN)
     finalPlaces = placeWords(tokens, freq)
 
     wordle = drawOnCanvas(tokens, freq, finalPlaces)
