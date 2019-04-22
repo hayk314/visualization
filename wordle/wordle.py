@@ -10,8 +10,6 @@ import math     # for sin, cos
 import random   # used for random placement of the initial position of a word
 
 import timeit   # for calculating running time (TESTING purposes only)
-
-import numpy as np
 import sys
 
 
@@ -23,10 +21,10 @@ from Trees import Node
 from Trees import Tree
 
 # constants:
-TOKENS_TO_USE = 200       # number of different tokens to use in the wordle
+TOKENS_TO_USE = 250       # number of different tokens to use in the wordle
 STAY_AWAY = 2             # force any two words to stay at least this number of pixels away from each other
-FONT_SIZE_MIN = 20        # the smallest font of a word
-FONT_SIZE_MAX = 300       # the largest font of a word
+FONT_SIZE_MIN = 15        # the smallest font of a word
+FONT_SIZE_MAX = 400       # the largest font of a word
 DESIRED_HW_RATIO = 0.618  # height/widht ratio of the canvas
 QUADTREE_MINSIZE = 5      # minimal height-width of the box in quadTree partition
 
@@ -49,30 +47,50 @@ class Token:
         self.place = None             # tuple, the coordinate of the upper-left cordner of the token on the final canvas
 
 
-def proposeCanvasSize(quadTrees):
-    # pased on the list of quadtrees we propose a canvase size, width and height
-    area = 0
-    boxArea = []
+def proposeCanvasSize(normalTokens):
+    """
+      Given a list of normalized tokens we propose a canvase size (width, height)
+      based on the areas covered by words. The areas are determined via leaves of the
+      corresponding quadTrees.
 
-    for t in quadTrees:
-        area += t.areaCovered()                            # this is the actual area covered by the image
-        boxArea.append( Trees.rectArea(t.root.value) )     # this is the area covered by the images's bounding box
+      It is assumed that tokens come sorted (DESC), i.e. bigger sized words come first.
+      We use this assumption when enforcing the canvas size to be larger
+      than total area of the bounding boxes of the first few tokens.
+    """
+
+    area = 0         # the area covered by the quadTrees, i.e. the actual shape of the token
+    boxArea = []     # the areas covered by the bounding box of the tokens
+
+    for token in normalTokens:
+        area += token.quadTree.areaCovered()
+        boxArea.append( Trees.rectArea(token.quadTree.root.value) )
 
     ensure_space = 5    # force the sum of the total area to cover at least first @ensure_space tokens
-    #print(boxArea)     # notice that quadTrees come sorted in DESC order, i.e. the trees of the bigger words come first
 
     total = area + sum ( boxArea[:ensure_space] )
-    w = int ( math.sqrt(total/DESIRED_HW_RATIO) ) + 1
+    w = int( math.sqrt(total/DESIRED_HW_RATIO) ) + 1
     h = int(DESIRED_HW_RATIO*w) + 1
 
     print('Ratio of the area covered by trees over the total area of bounding boxes of words',  area/sum(boxArea))
     return w, h
 
+def randomFlips(n, p):
+    # get an array of length n of random bits 0, 1 where prob(0) = p and prob(1) = 1 - p
+
+    ans = n*[0]
+    for i in range(n):
+        x = random.random()
+        if x > p:
+            ans[i] = 1
+
+    return ans
+
+
 
 def normalizeWordSize(tokens, freq, N_of_tokens_to_use, max_size, min_size):
     """
      (linearly) scale the font sizes of tokens to the range [min_size, max_size]
-     and trim those tokens with size < min_size
+     and take maximum @N_of_tokens_to_use of these tokens
     """
 
     words = tokens[:N_of_tokens_to_use]
@@ -84,8 +102,10 @@ def normalizeWordSize(tokens, freq, N_of_tokens_to_use, max_size, min_size):
     a, b = min(sizes), max(sizes)
     sizes = [  int(((max_size - min_size )/(b - a))*( x - a ) + min_size )  for x in sizes ]
 
+    flips =  randomFlips(len( words ), 0.8)  # allow 20% of rotation
+
     for i in range(len(sizes)):
-        normalTokens.append( Token( words[i], sizes[i] ) )
+        normalTokens.append( Token( words[i], sizes[i], 0 if flips[i] == 0 else 90 ) )
 
     return normalTokens
 
@@ -105,20 +125,29 @@ def drawWord(token):
     draw = ImageDraw.Draw(im)
     draw.text((0, 0), token.word, font = font)
 
+    #if token.drawAngle != 0:
+    #    im = im.rotate( token.drawAngle,  expand=1)
+
     return im
 
 
 def drawOnCanvas( normalTokens, canvas_size ):
+    """
+       given a list of tokens and a canvas size, we put the token images onto the canvas
+       the places of each token on this canvas has already been determined during placeWords() call.
+
+       Notice, that it is not required that the @place of each @token is inside the canvas;
+       if necessary we may enlarge the canvas size to embrace these missing images
+    """
 
     c_W,c_H = canvas_size        # the suggested canvas size, might change here
 
     # there might be some positions of words which fell out of the canvas
-    # we first need to go through these exceptions, and expand the canvas and (or) shift the coordinate's origin.
+    # we first need to go through these exceptions (if any) and expand the canvas and (or) shift the coordinate's origin.
 
     X_min, Y_min = 0, 0
 
     for i, token in enumerate(normalTokens):
-
         if token.place == None:
             continue
 
@@ -210,8 +239,7 @@ def drawOnCanvas( normalTokens, canvas_size ):
 
 def createQuadTrees(normalTokens):
     """
-        given a list of words and their corresponding font-szies, we create QuadTrees for each word
-        and return 2 lists, one for the quadtrees and another for sizes of the cropped word-images
+        given a list of tokens we fill their quadTree attributes and cropped image size
     """
 
     for i, token in enumerate(normalTokens):
@@ -264,36 +292,37 @@ def placeWords(normalTokens):
 
     ups_and_downs = [ random.randint(0,20)%2  for i in range( len(normalTokens) )]
 
-    strLog = '' # the log file
-
     for i, token in enumerate(normalTokens):
         print( token.word , end = ' ' )
         sys.stdout.flush()  # force the output to display what is in the buffer
 
-        strLog_word = '<' + token.word + '>\n'
-
-        a = 0.1 #the parameter of the spiral
-        place_found = False
+        a = 0.1                # the parameter of the spiral
+        place_found = False    # True, if a valid place was found for this token
 
         if ups_and_downs[i] == 1:
+            # add some randomness to the placing strategy
             a = -a
 
-        no_collision_place = [] # in case we don't get a place inside canvas,
+        no_collision_place = [] # in case we don't get a place inside the canvas,
                                 # we collect legal (i.e. collision-free) places for further use
 
         # get some starting position on the canvas, in a strip near half of the width of canvas
 
-        w, h = 0, 0
-        if i == 0:
-            w, h =  np.random.randint( int(0.3*c_W), int(0.5*c_W) ),   int(0.5*c_H) + np.random.randint( -50,50 )
-        else:
-            if token.fontSize < 0.3*FONT_SIZE_MAX:
-                w, h =  np.random.randint( int(0.3*c_W), int(0.7*c_W) ),   int(0.5*c_H) + np.random.randint( -50,50 )
-            else:
-                w, h =  np.random.randint( int(0.3*c_W), int(0.7*c_W) ),   int(0.5*c_H) + np.random.randint( -50,50 )
+        #if i == 0:
+        #    w, h =  random.randint( int(0.3*c_W), int(0.5*c_W) ),   int(0.5*c_H) + random.randint( -50,50 )
+        #else:
+        #    if token.fontSize < 0.3*FONT_SIZE_MAX:
+        #        w, h =  random.randint( int(0.3*c_W), int(0.7*c_W) ),   int(0.5*c_H) + random.randint( -50,50 )
+        #    else:
+        #        w, h =  random.randint( int(0.3*c_W), int(0.7*c_W) ),   int(0.5*c_H) + random.randint( -50,50 )
 
+        # determine a starting position on the canvas of this token
+        w, h =   random.randint( int(0.3*c_W), int(0.7*c_W) ) ,     (c_H >> 1) - (token.imgSize[1] >> 1)
+        if w < 0 or w >= c_W:
+            w = c_W >> 1
+        if h < 0 or h >= c_H:
+            h = c_H >> 1
 
-        strLog_word += '   Starting position: (' + str(w) + ',' +str(h) + ')\n'
 
         if ups_and_downs[i] == 1:
             A = SP.Archimedian(a).generator
@@ -323,13 +352,10 @@ def placeWords(normalTokens):
                 iter_ += 1
 
             if ( (w<0)or(w>c_W)or(h<0)or(h>c_H) ):
-                # fell outside the canvas area
+                #  to shape has fell outside the canvas
                 if start_countdown == False:
                     start_countdown = True
                     max_iter  = 1 + 10*iter_
-
-                    strLog_word += '    Exited the canvas on step =' + str(iter_) + ' at (' + str(w) + ','  + str(h) +')\n'
-                    strLog_word += '    Max_iter to complete =' + str(max_iter) +'\n'
 
 
             place1 = ( w, h )
@@ -338,11 +364,10 @@ def placeWords(normalTokens):
             if last_hit_index < i:
                 j = last_hit_index
                 if normalTokens[j].place != None:
-                    if BBox.collisionTest( token.quadTree, normalTokens[j].quadTree, place1, normalTokens[j].place, STAY_AWAY) == True:
-                        collision = True
+                    collision = BBox.collisionTest( token.quadTree, normalTokens[j].quadTree, place1, normalTokens[j].place, STAY_AWAY)
 
             if collision == False:
-                for j in range( i ): # check for collisions with the rest
+                for j in range( i ): # check for collisions with the rest of the tokens
                     if ((j != last_hit_index) and (normalTokens[j].place != None)):
                         if BBox.collisionTest(token.quadTree, normalTokens[j].quadTree, place1, normalTokens[j].place, STAY_AWAY) == True:
                             collision = True
@@ -353,21 +378,15 @@ def placeWords(normalTokens):
                 if BBox.insideCanvas( token.quadTree , place1, (c_W, c_H) ) == True:
                     token.place = place1
                     place_found = True
-                    strLog_word += '    Place was found\n'
-                    break # breaks the move in the Archimedian spiral
+                    break # breaks the spiral movement
 
 
 
-
-
-        strLog += strLog_word + '\n' + 'New size of the canvas = (' + str(c_W) +',' +  str(c_H)  +  ')\n\n'
 
     T_stop = timeit.default_timer()
 
     print('\n Words have been placed in ' + str( T_stop - T_start ) + ' seconds.\n')
 
-    #with open('LogFile.txt', 'w+') as f:
-    #    f.write(strLog)
 
     return c_W, c_H
 
