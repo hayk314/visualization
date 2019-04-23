@@ -19,15 +19,16 @@ import BBox
 import Trees
 from Trees import Node
 from Trees import Tree
+import colorHandler as CH
 
 # constants:
-TOKENS_TO_USE = 250       # number of different tokens to use in the wordle
+TOKENS_TO_USE = 400       # number of different tokens to use in the wordle
 STAY_AWAY = 2             # force any two words to stay at least this number of pixels away from each other
-FONT_SIZE_MIN = 15        # the smallest font of a word
-FONT_SIZE_MAX = 400       # the largest font of a word
+FONT_SIZE_MIN = 10        # the smallest font of a word
+FONT_SIZE_MAX = 300       # the largest font of a word
 DESIRED_HW_RATIO = 0.618  # height/widht ratio of the canvas
 QUADTREE_MINSIZE = 5      # minimal height-width of the box in quadTree partition
-
+FONT_NAME = "arial.ttf"   # the font (true type) used to draw the word shapes
 
 
 class Token:
@@ -45,6 +46,7 @@ class Token:
         self.imgSize = None           # tuple of integers (width, height)
         self.quadTree = None          # the quadTree of the image of this word with the above characteristics
         self.place = None             # tuple, the coordinate of the upper-left cordner of the token on the final canvas
+        self.color = None             # the fill color on canvas (R, G, B) triple
 
 
 def proposeCanvasSize(normalTokens):
@@ -118,7 +120,7 @@ def drawWord(token):
       the image is NOT cropped
     """
 
-    font = ImageFont.truetype("arial.ttf", token.fontSize)
+    font = ImageFont.truetype(FONT_NAME, token.fontSize)
     w, h = font.getsize(token.word)
 
     im = Image.new('RGBA', (w,h), color = None)
@@ -175,10 +177,10 @@ def drawOnCanvas( normalTokens, canvas_size ):
         if Y_max < token.place[1] + token.imgSize[1]:
             Y_max = token.place[1] + token.imgSize[1]
 
-    if c_W < X_max:
-        c_W = X_max
-    if c_H < Y_max:
-        c_H = Y_max
+    #if c_W < X_max:
+    c_W = max(c_W,  X_max )
+    #if c_H < Y_max:
+    c_H = max(c_H, Y_max )
 
     im_canvas = Image.new('RGBA', (c_W + 10 ,c_H + 10 ), color = None )
     im_canvas_white = Image.new('RGBA', (c_W + 10 ,c_H + 10 ), color = (255,255,255,255) )
@@ -186,48 +188,23 @@ def drawOnCanvas( normalTokens, canvas_size ):
     dd = ImageDraw.Draw(im_canvas)
     dd_white = ImageDraw.Draw(im_canvas_white)
 
-    color_schemes = [
-        [ (89, 97, 113), (115, 124, 140), (141, 150, 168), (179, 188, 204), (219, 227, 240) ],
-        [ (89, 97, 113), (115, 124, 140), (141, 150, 168) , (89, 97, 113), (89, 97, 113)],
-        [ (120, 120, 120), (0,100,149),  (242, 99, 95), (0, 76, 112), (244,208,12) ],
-        [ (14, 38, 50), (1,70,99),  (35, 118, 150), (180, 200, 207), (159,195,185) ],
-        [ (3, 113, 146), (99,167,190),  (10, 31, 78), (252, 105, 53), (252,105,53) ],
-        [ (12, 6, 54), (9,81,105),  (5, 155, 154), (83, 186, 131), (159,217,107) ] ,
-        [ (100, 101, 165), (105,117,167),  (244, 233, 109), (242, 138, 49), (241,88,56) ],
-        [ (171, 165, 191), (90,87,118),  (88, 62, 47), (241, 224, 214), (191,153,144) ],
-        [ (25, 46, 91), (30,101,167),  (115, 162, 192), (0, 116, 63), (241,161,4) ]
-    ]
 
-    # chose the color scheme randomly
-    word_colors = color_schemes[ random.randint(0, len(color_schemes) - 1) ]
-
-    max_size = FONT_SIZE_MAX
+    # add color to each word to be placed on canvas
+    CH.colorTokens(normalTokens)
 
     for i, token in enumerate(normalTokens):
         if token.place == None:
             print('the word <' + token.word + '> was skipped' )
             continue
 
-        font1 = ImageFont.truetype("arial.ttf", token.fontSize)
-
-        if token.fontSize >= 0.7*max_size:
-            c = word_colors[-1]
-        elif ((token.fontSize >= 0.5*max_size)and(token.fontSize < 0.7*max_size) ):
-            c = word_colors[-2]
-        elif ((token.fontSize >= 0.35*max_size)and(token.fontSize < 0.5*max_size) ):
-            c = word_colors[-3]
-        elif ((token.fontSize >= 0.15*max_size)and(token.fontSize < 0.35*max_size) ):
-            c = word_colors[-4]
-        else:
-            c = word_colors[-5]
-
+        font1 = ImageFont.truetype(FONT_NAME, token.fontSize)
+        c = token.color
 
         dd.text( token.place, token.word, fill = c,  font = font1 )
         dd_white.text( token.place, token.word, fill = c,  font = font1 )
 
 
-    margin_size = 10
-
+    margin_size = 10 # the border margin size
     box = im_canvas.getbbox()
 
 
@@ -278,8 +255,9 @@ def placeWords(normalTokens):
     #2. We now find places for the words on our canvas
 
     #c_W, c_H = 4000, 4000
-    #c_W, c_H = 2000, 1200
+    #c_W, c_H = 2000, 1000
     c_W, c_H = 3000, 1500
+    #c_W, c_H = 1000, 1000
 
 
     print('(ii) Now trying to place the words.\n')
@@ -291,40 +269,28 @@ def placeWords(normalTokens):
 
 
     ups_and_downs = [ random.randint(0,20)%2  for i in range( len(normalTokens) )]
+    #ups_and_downs = [ random.randint(0,51)%3  for i in range( len(normalTokens) )]
 
     for i, token in enumerate(normalTokens):
         print( token.word , end = ' ' )
-        sys.stdout.flush()  # force the output to display what is in the buffer
+        sys.stdout.flush()     # force the output to display what is in the buffer
 
-        a = 0.1                # the parameter of the spiral
-        place_found = False    # True, if a valid place was found for this token
+        a = 0.2                # the parameter of the spiral
 
         if ups_and_downs[i] == 1:
             # add some randomness to the placing strategy
             a = -a
 
-        no_collision_place = [] # in case we don't get a place inside the canvas,
-                                # we collect legal (i.e. collision-free) places for further use
 
-        # get some starting position on the canvas, in a strip near half of the width of canvas
-
-        #if i == 0:
-        #    w, h =  random.randint( int(0.3*c_W), int(0.5*c_W) ),   int(0.5*c_H) + random.randint( -50,50 )
-        #else:
-        #    if token.fontSize < 0.3*FONT_SIZE_MAX:
-        #        w, h =  random.randint( int(0.3*c_W), int(0.7*c_W) ),   int(0.5*c_H) + random.randint( -50,50 )
-        #    else:
-        #        w, h =  random.randint( int(0.3*c_W), int(0.7*c_W) ),   int(0.5*c_H) + random.randint( -50,50 )
-
-        # determine a starting position on the canvas of this token
-        w, h =   random.randint( int(0.3*c_W), int(0.7*c_W) ) ,     (c_H >> 1) - (token.imgSize[1] >> 1)
+        # determine a starting position on the canvas of this token, near half of the width of canvas
+        w, h =   random.randint( int(0.3*c_W), int(0.7*c_W) ) ,  (c_H >> 1) - (token.imgSize[1] >> 1)
         if w < 0 or w >= c_W:
             w = c_W >> 1
         if h < 0 or h >= c_H:
             h = c_H >> 1
 
 
-        if ups_and_downs[i] == 1:
+        if ups_and_downs[i] == 0:
             A = SP.Archimedian(a).generator
         else:
             A = SP.Rectangular(2, ups_and_downs[i]).generator
@@ -351,8 +317,8 @@ def placeWords(normalTokens):
             else:
                 iter_ += 1
 
-            if ( (w<0)or(w>c_W)or(h<0)or(h>c_H) ):
-                #  to shape has fell outside the canvas
+            if ( w < 0 or w >= c_W or h < 0 or h > c_H ):
+                #  the shape has fallen outside the canvas
                 if start_countdown == False:
                     start_countdown = True
                     max_iter  = 1 + 10*iter_
@@ -367,18 +333,26 @@ def placeWords(normalTokens):
                     collision = BBox.collisionTest( token.quadTree, normalTokens[j].quadTree, place1, normalTokens[j].place, STAY_AWAY)
 
             if collision == False:
+                # NO collision with the cached index
                 for j in range( i ): # check for collisions with the rest of the tokens
                     if ((j != last_hit_index) and (normalTokens[j].place != None)):
                         if BBox.collisionTest(token.quadTree, normalTokens[j].quadTree, place1, normalTokens[j].place, STAY_AWAY) == True:
                             collision = True
                             last_hit_index = j
-                            break
+
+                            break # no need to check with the rest of the tokens, try a new position now
 
             if collision == False:
                 if BBox.insideCanvas( token.quadTree , place1, (c_W, c_H) ) == True:
+                    # at this point we have found a place inside the canvas where the current token has NO collision
+                    # with the already placed tokens; The search has been completed.
                     token.place = place1
-                    place_found = True
-                    break # breaks the spiral movement
+                    break   # breaks the spiral movement
+                else:
+                    if token.place == None:
+                        # even though this place is outside the canvas, it is collision free and we
+                        # store it in any case to ensure that the token will be placed
+                        token.place = place1
 
 
 
