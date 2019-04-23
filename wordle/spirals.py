@@ -1,51 +1,51 @@
 # Author: Hayk Aleksanyan
 # create and test Archimedian and rectangular spirals
+
 import math
+import random
 import numpy as np
 from PIL import Image
 
 
 class SpiralBase:
-    # the base class of spiral, anything in common for all spirals goes here
+    """
+       the base class of spiral, anything in common for all spirals (space filling curves) goes here
+    """
 
     def __init__(self, generator = None ):
-        # the generator of the spiral, this is initialized through a derived class for specific spiral types
+        # the generator of the spiral, will be initialized through a derived class for specific spiral types
         self.generator = generator
 
 
-    def draw(self, width, height, N_of_iter, dumpSnapshots = False):
+    def draw(self, width, height, N_of_iter, dumpSnapshots = False, snapshotFreq = 10):
         """
          draw the spiral based on the generator @gen on a 2d canvas of the given @width and @height
          use next @N_of_iter items of the generator
 
-         if @dumpSnapshots == True, then we save the result of iteration each 5 itervals
+         if @dumpSnapshots == True, then we save the result of iteration each @snapshotFreq itervals
 
          NOTE!! <draw> method will alter the state of the generator, this is only for testing purposes
         """
-        N = 0
 
         (c_x, c_y) = (  int( 0.5*width), int( 0.5*height ) )
         im_canvas = np.zeros(( width, height ), dtype = 'uint8' )
-        #im_canvas = Image.new('RGBA', (width, height), color = None)
 
-        t = 0
-
+        N, t = 0, 0        # counting iterations
         M = self.generator
+
         for dx, dy in M:
             u, v = c_x + dx , c_y + dy
             if ( (u < 0 ) or ( v < 0 ) or ( u > width - 1 ) or ( v > height - 1 ) ):
                 # out of borders
                 continue
-            #im_canvas.putpixel( (u,v), (255,0,0,0) )
 
             N += 1
-            #im_canvas[u,v] = int( 255*(max(0.5, float(N/N_of_iter))) )
             im_canvas[u,v] = 255
             print(N, end = ' ', flush = True)
             if N == N_of_iter:
                 break
 
-            if dumpSnapshots == True and N % 5 == 0:
+            if dumpSnapshots == True and N % snapshotFreq == 0:
                 t += 1
                 im_1 = Image.fromarray(im_canvas)
                 im_1.save("test_" + str(t) + ".png")
@@ -69,9 +69,8 @@ class SpiralBase:
 
 
 
-
-
 class Archimedian(SpiralBase):
+    # models the Archimedian spiral with the given parameter
 
     def __init__(self, param):
         self.param = param
@@ -82,6 +81,7 @@ class Archimedian(SpiralBase):
          generator for the Archimedian spiral r = a*\phi (in polar coordinates)
          generated coordinates are in (x,y) plane
         """
+
         r = 0
         step_size = 0.5
 
@@ -94,18 +94,17 @@ class Archimedian(SpiralBase):
             x, y = a*r*math.cos(r), a*r*math.sin(r)
 
             if (( int(x - u) == 0 ) and ( int(y - v) == 0 ) ):
+                # forcing a move
                 continue
             else:
                 u, v = int(x), int(y)
                 yield ( u, v )
 
-            #yield (int(x), int(y))
-
 
 class Rectangular(SpiralBase):
-    # rectangular spiral
-    def __init__(self, param, reverse = 1):
+    # Models a Rectangular spiral  with the given parameters
 
+    def __init__(self, param, reverse = 1):
         self.param = param
         self.reverse = reverse
 
@@ -122,6 +121,7 @@ class Rectangular(SpiralBase):
 
         x, y = 0, 0
         yield (x,y)
+
         m = a
         i = 0
 
@@ -132,7 +132,7 @@ class Rectangular(SpiralBase):
                 i += 1
 
                 if reverse == 1:
-                    yield (x,y)
+                    yield (x, y)
                 else:
                     yield (-x, -y)
 
@@ -142,7 +142,7 @@ class Rectangular(SpiralBase):
                 i += 1
 
                 if reverse == 1:
-                    yield (x,y)
+                    yield (x, y)
                 else:
                     yield (-x, -y)
 
@@ -154,7 +154,7 @@ class Rectangular(SpiralBase):
                 i += 1
 
                 if reverse == 1:
-                    yield (x,y)
+                    yield (x, y)
                 else:
                     yield (-x, -y)
 
@@ -164,8 +164,48 @@ class Rectangular(SpiralBase):
                 i += 1
 
                 if reverse == 1:
-                    yield (x,y)
+                    yield (x, y)
                 else:
                     yield (-x, -y)
 
             m = m + a
+
+
+class RandomWalk(SpiralBase):
+    # Models symmetric random walk on integer lattice starting at the origin having the given step size
+
+    def __init__(self, param):
+        self.param = param
+        self.generator = self.walker(self.param)
+
+    def walker(self, a):
+        """
+         generator for random walk with step size = a
+         the walk start from the origin (0,0)
+         move directions = [ (0,-1), (1,0), (0, 1), (-1, 0) ]
+        """
+
+        x, y = 0, 0
+        yield (x,y)
+
+        cache = set()
+        cache.add((0,0))
+
+        while True:
+            p = random.randint(0,3)
+
+            if p == 0:
+                y -= a
+            elif p == 1:
+                x += a
+            elif p == 2:
+                y += a
+            else:
+                x -= a
+
+            if (x,y) in cache:
+                # force a new position
+                continue
+            cache.add(  (x,y) )
+
+            yield (x,y)
