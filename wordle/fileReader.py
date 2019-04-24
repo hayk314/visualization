@@ -7,8 +7,7 @@ import chardet # for determining the encoding of files
 
 from pathlib import Path
 
-from os import getcwd
-from os import listdir
+from os import getcwd, listdir
 from os.path import isfile, join
 
 

@@ -1,10 +1,7 @@
 # Implemented by: Hayk Aleksanyan
 # based on the approach by Jonathan Feinberg, see http://static.mrfeinberg.com/bv_ch03.pdf
 
-from PIL import Image
-from PIL import ImageColor
-from PIL import ImageFont
-from PIL import ImageDraw
+from PIL import Image, ImageColor, ImageFont, ImageDraw
 
 import math     # for sin, cos
 import random   # used for random placement of the initial position of a word
@@ -17,8 +14,7 @@ import fileReader as FR
 import spirals as SP
 import BBox
 import Trees
-from Trees import Node
-from Trees import Tree
+from Trees import Node, Tree
 import colorHandler as CH
 
 # constants:
@@ -77,7 +73,10 @@ def proposeCanvasSize(normalTokens):
     return w, h
 
 def randomFlips(n, p):
-    # get an array of length n of random bits 0, 1 where prob(0) = p and prob(1) = 1 - p
+    """
+     Return an array of length n of random bits {0, 1} where Probability(0) = p and Probability(1) = 1 - p
+     this is used for randomly selecting some of the tokens for vertical placement.
+    """
 
     ans = n*[0]
     for i in range(n):
@@ -177,10 +176,8 @@ def drawOnCanvas( normalTokens, canvas_size ):
         if Y_max < token.place[1] + token.imgSize[1]:
             Y_max = token.place[1] + token.imgSize[1]
 
-    #if c_W < X_max:
-    c_W = max(c_W,  X_max )
-    #if c_H < Y_max:
-    c_H = max(c_H, Y_max )
+    c_W = max(c_W, X_max)
+    c_H = max(c_H, Y_max)
 
     im_canvas = Image.new('RGBA', (c_W + 10 ,c_H + 10 ), color = None )
     im_canvas_white = Image.new('RGBA', (c_W + 10 ,c_H + 10 ), color = (255,255,255,255) )

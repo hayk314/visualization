@@ -54,8 +54,9 @@ def getRandomColor():
         s = 0.5
     l = random.random()
     if l > 0.5:
+        l = 1 - l
         #l = max(1 - l, 0.4)
-        l = 0.5
+        #l = 0.5
 
     # s = 1
     # l = 0.5
