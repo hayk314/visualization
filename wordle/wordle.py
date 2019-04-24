@@ -88,9 +88,9 @@ def randomFlips(n, p):
 
 
 
-def normalizeWordSize(tokens, freq, N_of_tokens_to_use, max_size, min_size):
+def normalizeWordSize(tokens, freq, N_of_tokens_to_use):
     """
-     (linearly) scale the font sizes of tokens to the range [min_size, max_size]
+     (linearly) scale the font sizes of tokens to a new range depending on the ratio of the current min-max
      and take maximum @N_of_tokens_to_use of these tokens
     """
 
@@ -101,9 +101,25 @@ def normalizeWordSize(tokens, freq, N_of_tokens_to_use, max_size, min_size):
 
     # scale the range of sizes to the given range [min_size, max_size]
     a, b = min(sizes), max(sizes)
-    sizes = [  int(((max_size - min_size )/(b - a))*( x - a ) + min_size )  for x in sizes ]
+    print( '\nthe ratio of maximal font size over minimal equals ',  b/a  )
+    if a == b:
+        sizes = len(sizes)*[30]
+    else:
+        if b <= 8*a:
+            m, M = 20, 1 + int(20*b/a)
+        elif b <= 32*a:
+            m, M = 20, 1 + int(10*b/a)
+        elif b <= 64*a:
+            m, M = 20, 1 + int(5*b/a)
+        else:
+            m, M = FONT_SIZE_MIN, FONT_SIZE_MAX
 
-    flips =  randomFlips(len( words ), 0.8)  # allow 20% of rotation
+        sizes = [  int(((M - m )/(b - a))*( x - a ) + m )  for x in sizes ]
+
+    print( 'after scaling of fonts min = {}, max = {} '.format( min(sizes), max(sizes) ), '\n'  )
+
+    # NOT in use currently
+    flips = randomFlips(len( words ), 0.8)  # allow 20% of rotation
 
     for i in range(len(sizes)):
         normalTokens.append( Token( words[i], sizes[i], 0 if flips[i] == 0 else 90 ) )
@@ -210,7 +226,6 @@ def drawOnCanvas( normalTokens, canvas_size ):
 
     return im_canvas_1
 
-
 def createQuadTrees(normalTokens):
     """
         given a list of tokens we fill their quadTree attributes and cropped image size
@@ -224,9 +239,6 @@ def createQuadTrees(normalTokens):
 
         token.quadTree = T
         token.imgSize = im_tmp.size
-
-
-
 
 def placeWords(normalTokens):
     """
@@ -361,9 +373,6 @@ def placeWords(normalTokens):
 
     return c_W, c_H
 
-
-
-
 def createWordle_fromFile( fName ):
     # the master function, creates the wordle from a given text file
 
@@ -377,7 +386,7 @@ def createWordle_fromFile( fName ):
         print( str(s) +  (7-len(str(s)))*' ' + ':  ' + tokens[i]  )
 
 
-    normalTokens =  normalizeWordSize(tokens, freq, TOKENS_TO_USE, FONT_SIZE_MAX, FONT_SIZE_MIN)
+    normalTokens =  normalizeWordSize(tokens, freq, TOKENS_TO_USE)
     canvas_W, canvas_H = placeWords(normalTokens)
 
     wordle = drawOnCanvas(normalTokens, (canvas_W, canvas_H ) )
