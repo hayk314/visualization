@@ -1,4 +1,4 @@
-# Implemented by: Hayk Aleksanyan
+# Designed and implemented by: Hayk Aleksanyan
 # based on the approach by Jonathan Feinberg, see http://static.mrfeinberg.com/bv_ch03.pdf
 
 from PIL import Image, ImageColor, ImageFont, ImageDraw
@@ -21,10 +21,10 @@ import colorHandler as CH
 TOKENS_TO_USE = 400       # number of different tokens to use in the wordle
 STAY_AWAY = 2             # force any two words to stay at least this number of pixels away from each other
 FONT_SIZE_MIN = 10        # the smallest font of a word
-FONT_SIZE_MAX = 300       # the largest font of a word
+FONT_SIZE_MAX = 300       # the largest font of a word, might go slightly above this value
 DESIRED_HW_RATIO = 0.618  # height/widht ratio of the canvas
 QUADTREE_MINSIZE = 5      # minimal height-width of the box in quadTree partition
-FONT_NAME = "arial.ttf"   # the font (true type) used to draw the word shapes
+FONT_NAME = "fonts/arial.ttf"   # the font (true type) used to draw the word shapes
 
 
 class Token:
@@ -63,7 +63,7 @@ def proposeCanvasSize(normalTokens):
         area += token.quadTree.areaCovered()
         boxArea.append( Trees.rectArea(token.quadTree.root.value) )
 
-    ensure_space = 5    # force the sum of the total area to cover at least first @ensure_space tokens
+    ensure_space = 5    # force the sum of the total area to cover at least the first @ensure_space tokens
 
     total = area + sum ( boxArea[:ensure_space] )
     w = int( math.sqrt(total/DESIRED_HW_RATIO) ) + 1
@@ -99,18 +99,20 @@ def normalizeWordSize(tokens, freq, N_of_tokens_to_use):
 
     normalTokens = [ ] # the list of Tokens to be returned
 
-    # scale the range of sizes to the given range [min_size, max_size]
+    # scale the range of sizes; the scaling rules applied below are fixed from some heuristic considerations
+    # the user of this code is welcome to apply their own reasoning
+
     a, b = min(sizes), max(sizes)
-    print( '\nthe ratio of maximal font size over minimal equals ',  b/a  )
+    print( '\nThe ratio of MAX font-size over MIN equals ',  b/a  )
     if a == b:
         sizes = len(sizes)*[30]
     else:
         if b <= 8*a:
             m, M = 20, 1 + int(20*b/a)
         elif b <= 32*a:
-            m, M = 20, 1 + int(10*b/a)
+            m, M = 15, 1 + int(10*b/a)
         elif b <= 64*a:
-            m, M = 20, 1 + int(5*b/a)
+            m, M = 15, 1 + int(5*b/a)
         else:
             m, M = FONT_SIZE_MIN, FONT_SIZE_MAX
 
@@ -118,7 +120,7 @@ def normalizeWordSize(tokens, freq, N_of_tokens_to_use):
 
     print( 'after scaling of fonts min = {}, max = {} '.format( min(sizes), max(sizes) ), '\n'  )
 
-    # NOT in use currently
+    # TODO vertical placement NOT in use currently
     flips = randomFlips(len( words ), 0.8)  # allow 20% of rotation
 
     for i in range(len(sizes)):
@@ -142,13 +144,14 @@ def drawWord(token):
     draw = ImageDraw.Draw(im)
     draw.text((0, 0), token.word, font = font)
 
-    #if token.drawAngle != 0:
-    #    im = im.rotate( token.drawAngle,  expand=1)
+    # TODO the rotation is not being used currently
+    # if token.drawAngle != 0:
+    #    im = im.rotate( token.drawAngle,  expand = 1)
 
     return im
 
 
-def drawOnCanvas( normalTokens, canvas_size ):
+def drawOnCanvas(normalTokens, canvas_size):
     """
        given a list of tokens and a canvas size, we put the token images onto the canvas
        the places of each token on this canvas has already been determined during placeWords() call.
@@ -159,7 +162,7 @@ def drawOnCanvas( normalTokens, canvas_size ):
 
     c_W,c_H = canvas_size        # the suggested canvas size, might change here
 
-    # there might be some positions of words which fell out of the canvas
+    # there can be some positions of words which fell out of the canvas
     # we first need to go through these exceptions (if any) and expand the canvas and (or) shift the coordinate's origin.
 
     X_min, Y_min = 0, 0
@@ -168,18 +171,12 @@ def drawOnCanvas( normalTokens, canvas_size ):
         if token.place == None:
             continue
 
-        if X_min > token.place[0]:
-            X_min = token.place[0]
-
-        if Y_min > token.place[1]:
-            Y_min = token.place[1]
-
+        if X_min > token.place[0]:  X_min = token.place[0]
+        if Y_min > token.place[1]:  Y_min = token.place[1]
 
     x_shift, y_shift = 0, 0
-    if X_min < 0:
-        x_shift = -X_min
-    if Y_min < 0:
-        y_shift = -Y_min
+    if X_min < 0:   x_shift = -X_min
+    if Y_min < 0:   y_shift = -Y_min
 
     X_max , Y_max = 0, 0
     for i, token in enumerate(normalTokens):
@@ -373,30 +370,51 @@ def placeWords(normalTokens):
 
     return c_W, c_H
 
-def createWordle_fromFile( fName ):
+def createWordle_fromFile( fName, interActive = False ):
     # the master function, creates the wordle from a given text file
 
     tokens = FR.tokenize_file_IntoWords(fName)
     tokens, freq = FR.tokenGroup(tokens)
 
-    print('\n')
+    print('\n ===== Top', min(10, len(tokens) ),  'most frequent tokens =====\n')
 
     for i in range(  min(10, len(tokens) ) ):
         s = freq[i]
-        print( str(s) +  (7-len(str(s)))*' ' + ':  ' + tokens[i]  )
+        print( str(s) +  (7 - len(str(s)))*' ' + ':  ' + tokens[i]  )
 
 
     normalTokens =  normalizeWordSize(tokens, freq, TOKENS_TO_USE)
     canvas_W, canvas_H = placeWords(normalTokens)
 
     wordle = drawOnCanvas(normalTokens, (canvas_W, canvas_H ) )
-
     wordle.save( fName[0:-4] + '_wordle.png')
-
     print( 'the wordle image was sucessfully saved on the disc as <' + fName[0:-4]  + '_wordle.png >' )
+
+    if interActive == True:
+        # we allow the user to repaint the existing tokens with other color schemes as many times as they wish
+        print('\n=========== You may repaint the existing wordle with other color schemes =========== \n')
+        print('To stop, please type the text inside the quotes: "done"')
+        print('To try a new scheme type any char\n')
+
+        version = 1
+        while True:
+            userInput = input(str(version) + '.   waiting for new user input ... ')
+            if userInput == 'done':
+                print('exiting...')
+                break
+            wordle = drawOnCanvas(normalTokens, (canvas_W, canvas_H))
+            newFileName = fName[0:-4] + '_wordle_v' + str(version) + '.png'
+            wordle.save( newFileName)
+            print( '=== saved on the disc as <', newFileName, '>\n')
+            version += 1
 
 
 
 if __name__ == "__main__":
-    # waits for .txt fileName for processing
-    createWordle_fromFile( sys.argv[1])
+    # waits for .txt fileName and interactive flag {0, 1} for processing
+
+    interActive = False
+    if len(sys.argv) > 2 and sys.argv[2] == '1':
+        interActive = True
+
+    createWordle_fromFile( sys.argv[1], interActive )
