@@ -3,8 +3,8 @@
 
 from PIL import Image, ImageColor, ImageFont, ImageDraw
 
-import math     # for sin, cos
-import random   # used for random placement of the initial position of a word
+import math
+import random
 
 import timeit   # for calculating running time (TESTING purposes only)
 import sys
@@ -29,7 +29,7 @@ FONT_NAME = "fonts/arial.ttf"   # the font (true type) used to draw the word sha
 
 class Token:
     """
-        encapsulate the main information on a token into a single class
+        encapsulates the main information on a token into a single class
         Token here represents a word to be placed on canvas for the final wordle Image
 
         most of the attributes are filled with functions during processing of the tokens
@@ -38,10 +38,10 @@ class Token:
     def __init__(self, word, fontSize = 10, drawAngle = 0):
         self.word = word
         self.fontSize = fontSize      # an integer
-        self.drawAngle = drawAngle    # an integer, representing the rotation angle of the image; 0 - for NO rotation
-        self.imgSize = None           # tuple of integers (width, height)
+        self.drawAngle = drawAngle    # an integer representing the rotation angle of the image; 0 - for NO rotation
+        self.imgSize = None           # integers (width, height) size of the image of this word with the given fontSize
         self.quadTree = None          # the quadTree of the image of this word with the above characteristics
-        self.place = None             # tuple, the coordinate of the upper-left cordner of the token on the final canvas
+        self.place = None             # tuple, the coordinate of the upper-left corner of the token on the final canvas
         self.color = None             # the fill color on canvas (R, G, B) triple
 
 
@@ -108,7 +108,7 @@ def normalizeWordSize(tokens, freq, N_of_tokens_to_use):
         sizes = len(sizes)*[30]
     else:
         if b <= 8*a:
-            m, M = 20, 1 + int(20*b/a)
+            m, M = 15, 1 + int(30*b/a)
         elif b <= 32*a:
             m, M = 15, 1 + int(10*b/a)
         elif b <= 64*a:
