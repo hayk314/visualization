@@ -37,11 +37,13 @@ class SpiralBase:
             u, v = c_x + dx , c_y + dy
             if ( (u < 0 ) or ( v < 0 ) or ( u > width - 1 ) or ( v > height - 1 ) ):
                 # out of borders
-                continue
+                print('\nFell outside the border of the canvas on coordinate = ', u, v, '\n')
+                break
 
             N += 1
             im_canvas[u,v] = 255
-            print(N, end = ' ', flush = True)
+            if N%10 == 0:
+                print(N, end = ' ', flush = True)
             if N == N_of_iter:
                 break
 
@@ -75,6 +77,7 @@ class Archimedian(SpiralBase):
     def __init__(self, param):
         self.param = param
         self.generator = self.Arch_spiral(self.param)
+        self.name = "Archimedian"
 
     def Arch_spiral(self, a):
         """
@@ -107,6 +110,7 @@ class Rectangular(SpiralBase):
     def __init__(self, param, reverse = 1):
         self.param = param
         self.reverse = reverse
+        self.name = "Rectangular"
 
         self.generator = self.Rect_spiral(self.param, self.reverse)
 
@@ -177,19 +181,23 @@ class RandomWalk(SpiralBase):
     def __init__(self, param):
         self.param = param
         self.generator = self.walker(self.param)
+        self.name = "RandomWalk"
 
     def walker(self, a):
         """
          generator for random walk with step size = a
          the walk start from the origin (0,0)
          move directions = [ (0,-1), (1,0), (0, 1), (-1, 0) ]
+
+         NOTE!! this is not a practically useful method for trying in the placement strategy in the wordle
+         because the walk may wander in the visited set before getting to new unseen sites.
         """
 
         x, y = 0, 0
         yield (x,y)
 
-        cache = set()
-        cache.add((0,0))
+        #cache = set()
+        #cache.add((0,0))
 
         while True:
             p = random.randint(0,3)
@@ -203,9 +211,10 @@ class RandomWalk(SpiralBase):
             else:
                 x -= a
 
-            if (x,y) in cache:
-                # force a new position
-                continue
-            cache.add(  (x,y) )
+            # with caching the visited sets of the random walk we can force a new position on each yield
+            # however this will take a considerably longer time than the ordinary spirals above
+            #if (x,y) in cache:
+            #    continue
+            #cache.add(  (x,y) )
 
             yield (x,y)
