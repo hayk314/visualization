@@ -9,23 +9,6 @@ For the time being, the code in [wordle](https://github.com/hayk314/visualizatio
 ## Wordle, what is it?
 
 In short, wordle is a cloud made of words. Example is better than precept as they say. A cloud of words, a wordle, 
-created with the code from the [wordle](https://github.com/hayk314/visualization/tree/master/wordle) folder applied
-on a single chapter of Macbeth looks as follows
-
-Sample wordle image created with the code from the [wordle](https://github.com/hayk314/visualization/tree/master/wordle) folder
-![Wordle](https://github.com/hayk314/visualization/blob/master/sample_wordle.png)
-
-# Text Visualization Tools
-
-Our aim with this repository is to develop tools for text visualization. As a warm-up, we start with by now a classical tool, called **wordle**. We implement it from scratch in Python 3 from the basic principles and relying on the approach outlined by the original creator of the wordle Jonathan Feinberg, see [this chapter](http://static.mrfeinberg.com/bv_ch03.pdf) for more details. As time permits, our plan is to gradually add more tools to this repository and enhance the existing ones. 
-
-For the time being, the code in [wordle](https://github.com/hayk314/visualization/tree/master/wordle) folder is an **end-to-end** implementation of the word cloud. One may speed up this program with some more work, but for now, we concentrate on a higher level details and leave such improvements for the future or for an interested Reader/User (who is very welcome to introduce improvements to this repository).
-
-*This repository and this Readme file, in particular, are in their early days and are subject to change.*
-
-## Wordle, what is it?
-
-In short, wordle is a cloud made of words. Example is better than precept as they say. A cloud of words, a wordle, 
 created with the code from the [wordle](https://github.com/hayk314/visualization/tree/master/wordle) folder on a single chapter of Macbeth looks as follows:
 
 ![Wordle](https://github.com/hayk314/visualization/blob/master/sample_wordle.png)
