@@ -79,6 +79,43 @@ class Archimedian(SpiralBase):
         self.generator = self.Arch_spiral(self.param)
         self.name = "Archimedian"
 
+        self.cache = [(0,0)]
+        self.cstate = {'r':0, 'x':0, 'y':0}
+        self.iterN = 0
+
+    def precompute(self, a):
+        # populate cache
+
+        N = len(self.cache)
+
+        step_size = 0.5
+        r, x, y  = self.cstate['r'], self.cstate['x'], self.cstate['y']
+        u, v = int(x), int(y)
+
+        count = 0
+        while count < 500:
+            r += step_size
+            x, y = a*r*math.cos(r), a*r*math.sin(r)
+            if (( int(x - u) == 0 ) and ( int(y - v) == 0 ) ):
+                # forcing a move
+                continue
+            u, v = int(x), int(y)
+            self.cache.append(  (u,v) )
+
+            count += 1
+
+        self.cstate['r'], self.cstate['x'],  self.cstate['y'] = r , x , y
+
+
+    def getNext(self):
+        if self.iterN == len(self.cache):
+            self.precompute(self.param)
+
+        self.iterN += 1
+        return self.cache[self.iterN - 1]
+
+
+
     def Arch_spiral(self, a):
         """
          generator for the Archimedian spiral r = a*\phi (in polar coordinates)
@@ -113,6 +150,84 @@ class Rectangular(SpiralBase):
         self.name = "Rectangular"
 
         self.generator = self.Rect_spiral(self.param, self.reverse)
+
+        self.cache = [(0,0)]
+        self.cstate = {'x':0, 'y':0}
+        self.iterN = 0
+
+    def precompute(self, a, reverse):
+        # populate cache
+
+        N = len(self.cache)
+        x, y  = self.cstate['x'], self.cstate['y']
+
+        m, i = a, 0
+
+        count = 0
+        while count < 500:
+            i = 0
+            while ( i < m ):
+                y -= 1
+                i += 1
+
+                if reverse == 1:
+                    self.cache.append(  (x,y) )
+                else:
+                    self.cache.append((-x, -y))
+
+                count += 1
+
+            i = 0
+            while ( i < m ):
+                x += 1
+                i += 1
+
+                if reverse == 1:
+                    self.cache.append(  (x,y) )
+                else:
+                    self.cache.append((-x, -y))
+
+                count += 1
+
+            i = 0
+            m = m + a
+
+            while (i < m):
+                y += 1
+                i += 1
+
+                if reverse == 1:
+                    self.cache.append(  (x,y) )
+                else:
+                    self.cache.append((-x, -y))
+
+                count += 1
+
+            i = 0
+            while (i<m):
+                x -= 1
+                i += 1
+
+                if reverse == 1:
+                    self.cache.append(  (x,y) )
+                else:
+                    self.cache.append((-x, -y))
+
+                count += 1
+
+            m = m + a
+
+
+        self.cstate['x'],  self.cstate['y'] = x , y
+
+
+    def getNext(self):
+        if self.iterN == len(self.cache):
+            self.precompute(self.param, self.reverse)
+
+        self.iterN += 1
+        return self.cache[self.iterN - 1]
+
 
     def Rect_spiral(self, a, reverse = 1):
         """

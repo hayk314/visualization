@@ -115,7 +115,7 @@ def normalizeWordSize(tokens, freq, N_of_tokens_to_use):
             m, M = 15, 1 + int(5*b/a)
         else:
             m, M = FONT_SIZE_MIN, FONT_SIZE_MAX
-
+        m, M = FONT_SIZE_MIN, FONT_SIZE_MAX
         sizes = [  int(((M - m )/(b - a))*( x - a ) + m )  for x in sizes ]
 
     print( 'after scaling of fonts min = {}, max = {} '.format( min(sizes), max(sizes) ), '\n'  )
@@ -225,7 +225,7 @@ def drawOnCanvas(normalTokens, canvas_size):
 
 def createQuadTrees(normalTokens):
     """
-        given a list of tokens we fill their quadTree attributes and cropped image size
+        given a list of tokens we fill their quadTree attributes and image size
     """
 
     for i, token in enumerate(normalTokens):
@@ -246,13 +246,11 @@ def placeWords(normalTokens):
 
     # 1. we first create the QuadTrees for all words and determine a size for the canvas
 
-    word_img_path = [] # shows the path passed through the spiral before hitting a free space
-
     print('Number of tokens equals', len(normalTokens), '\n')
 
     T_start = timeit.default_timer()
 
-    # create the quadTrees and collect sizes (width, height) of the cropped images of the words
+    # create the quadTrees and collect sizes (width, height) of the word shapes
     createQuadTrees(normalTokens)
 
     T_stop = timeit.default_timer()
@@ -276,6 +274,8 @@ def placeWords(normalTokens):
 
     ups_and_downs = [ random.randint(0,20)%2  for i in range( len(normalTokens) )]
     #ups_and_downs = [ random.randint(0,51)%3  for i in range( len(normalTokens) )]
+    A_type1 = SP.Archimedian(0.2)
+    A_type2 = SP.Rectangular(2)
 
     for i, token in enumerate(normalTokens):
         print( token.word , end = ' ' )
@@ -297,14 +297,18 @@ def placeWords(normalTokens):
 
 
         if ups_and_downs[i] == 0:
-            A = SP.Archimedian(a).generator
+            #A = SP.Archimedian(a).generator
+            #A = SP.Archimedian(a)
+            A = A_type1
+            A.iterN = 0
         else:
-            A = SP.Rectangular(2, ups_and_downs[i]).generator
+            #A = SP.Rectangular(2, ups_and_downs[i]).generator
+            #A = SP.Rectangular(2, ups_and_downs[i])
+            A = A_type2
+            A.iterN = 0
 
         dx0, dy0 = 0, 0
         place1 = (w, h)
-
-        word_img_path.append( (w,h) )
 
         last_hit_index = 0 # we cache the index of last hit
 
@@ -313,7 +317,9 @@ def placeWords(normalTokens):
         start_countdown = False
         max_iter = 0
 
-        for dx, dy in A:
+        #for dx, dy in A:
+        while True:
+            dx, dy = A.getNext()
             w, h = place1[0] + dx, place1[1] + dy
 
             if start_countdown == True:
