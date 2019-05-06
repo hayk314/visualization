@@ -99,7 +99,7 @@ cpdef placeWords(normalTokens):
 
     # 2. We now find places for the words on our canvas
 
-    cdef int c_W = 2500
+    cdef int c_W = 3000
     cdef int c_H = 1500
 
     cdef int dx0 = 0

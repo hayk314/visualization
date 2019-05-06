@@ -108,11 +108,13 @@ def normalizeWordSize(tokens, freq, N_of_tokens_to_use):
         sizes = len(sizes)*[30]
     else:
         if b <= 8*a:
-            m, M = 15, 1 + int(30*b/a)
+            m, M = 15, 1 + int(20*b/a)
+        elif b <= 16*a:
+            m, M = 14, 1 + int(18*b/a)
         elif b <= 32*a:
-            m, M = 15, 1 + int(10*b/a)
+            m, M = 13, 1 + int(9*b/a)
         elif b <= 64*a:
-            m, M = 15, 1 + int(5*b/a)
+            m, M = 11, 1 + int(4.7*b/a)
         else:
             m, M = FONT_SIZE_MIN, FONT_SIZE_MAX
 
@@ -195,12 +197,16 @@ def drawOnCanvas(normalTokens, canvas_size):
     im_canvas = Image.new('RGBA', (c_W + 10 ,c_H + 10 ), color = None )
     im_canvas_white = Image.new('RGBA', (c_W + 10 ,c_H + 10 ), color = (255,255,255,255) )
 
+    # decide the background color with a coin flip; 0 -for white; 1 - for black (will need brigher colors)
+    background = random.randint(0,1)
+
     dd = ImageDraw.Draw(im_canvas)
-    dd_white = ImageDraw.Draw(im_canvas_white)
+    if background == 0: # white
+        dd_white = ImageDraw.Draw(im_canvas_white)
 
 
-    # add color to each word to be placed on canvas
-    CH.colorTokens(normalTokens)
+    # add color to each word to be placed on canvas, pass on the background info as well
+    CH.colorTokens(normalTokens, background)
 
     for i, token in enumerate(normalTokens):
         if token.place == None:
@@ -211,15 +217,19 @@ def drawOnCanvas(normalTokens, canvas_size):
         c = token.color
 
         dd.text( token.place, token.word, fill = c,  font = font1 )
-        dd_white.text( token.place, token.word, fill = c,  font = font1 )
+        if background == 0:
+            dd_white.text( token.place, token.word, fill = c,  font = font1 )
 
 
     margin_size = 10 # the border margin size
     box = im_canvas.getbbox()
 
-
-    im_canvas_1 = Image.new('RGBA', ( box[2] - box[0] + 2*margin_size, box[3] - box[1] + 2*margin_size ), color = (100,100,100,100)  )
-    im_canvas_1.paste( im_canvas_white.crop(box), ( margin_size, margin_size, margin_size + box[2] - box[0], margin_size + box[3] - box[1] ) )
+    if background == 0:
+        im_canvas_1 = Image.new('RGBA', ( box[2] - box[0] + 2*margin_size, box[3] - box[1] + 2*margin_size ), color = (100,100,100,100)  )
+        im_canvas_1.paste( im_canvas_white.crop(box), ( margin_size, margin_size, margin_size + box[2] - box[0], margin_size + box[3] - box[1] ) )
+    else:
+        im_canvas_1 = Image.new('RGB', ( box[2] - box[0] + 2*margin_size, box[3] - box[1] + 2*margin_size ), color = (0,0,0)  )
+        im_canvas_1.paste( im_canvas.crop(box), ( margin_size, margin_size, margin_size + box[2] - box[0], margin_size + box[3] - box[1] ) )
 
     return im_canvas_1
 

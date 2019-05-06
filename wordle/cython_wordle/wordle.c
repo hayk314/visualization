@@ -2467,15 +2467,15 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
   /* "wordle.pyx":102
  *     # 2. We now find places for the words on our canvas
  * 
- *     cdef int c_W = 2500             # <<<<<<<<<<<<<<
+ *     cdef int c_W = 3000             # <<<<<<<<<<<<<<
  *     cdef int c_H = 1500
  * 
  */
-  __pyx_v_c_W = 0x9C4;
+  __pyx_v_c_W = 0xBB8;
 
   /* "wordle.pyx":103
  * 
- *     cdef int c_W = 2500
+ *     cdef int c_W = 3000
  *     cdef int c_H = 1500             # <<<<<<<<<<<<<<
  * 
  *     cdef int dx0 = 0

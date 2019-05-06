@@ -38,9 +38,9 @@ def hslToRgb(h, s, l):
 
     return int(r * 255), int(g * 255), int(b * 255)
 
-def getRandomColor(h = -1, s = -1, l = -1):
+def getRandomColor(h = -1, s = -1, l = -1, bright = False):
     """
-        return a random RGB triple which is not very bright as a color
+        return a random RGB triple which is not very bright as a color, if @bright == False; and is bright otherwise
         we allow for some of the components of the HSL be predefined, and others being chosen at random
         to fix the specific HSL coordinate change the -1 value to the one you wish from interval [0,1]
 
@@ -52,44 +52,61 @@ def getRandomColor(h = -1, s = -1, l = -1):
         h = random.random()
     if s == -1 or not 0 <= s <= 1:
         s = random.random()
-        if s > 0.8:
-            s = 0.5
+        if bright == False:
+            if s > 0.8:
+                s = 0.5
+        else:
+            if s < 0.5:
+                s = 1 - s
     if l == -1 or not 0 <= l <= 1:
         l = random.random()
-        if l > 0.5:
-            l = 1 - l
+        if bright == False:
+            if l > 0.5:
+                l = 1 - l
+        else:
+            if l < 0.5:
+                l = 1 - l
 
     return hslToRgb(h, s, l)
 
 
 
-def colorTokens(normalTokens):
+def colorTokens(normalTokens, background = 0):
     """
       given a list of Tokens (see the wordle for Token class) we add their color attributes
+      @background == 0 means WHITE; == 1 means Black background, needs brighter colors
       by picking a random color scheme and applying on the Tokens
     """
 
-    scheme = random.randint(0, 3)
+    if background == 0:
+        scheme = random.randint(0, 3)
+        if scheme == 0:
+            print('\nColor scheme: Random\n')
+            randomColors(normalTokens)
+        elif scheme == 1:
+            print('\nColor scheme: Jet\n')
+            jetColors(normalTokens)
+        elif scheme == 2:
+            print('\nColor scheme: Grayish\n')
+            grayishRandomColors(normalTokens)
+        elif scheme == 3:
+            print('\nColor scheme: From a fixed list\n')
+            chooseFromFixedSchemes(normalTokens)
+    else:
+            print('\nColor scheme: Random, black background\n')
+            randomColors(normalTokens, background = 1)
 
-    if scheme == 0:
-        print('\nColor scheme: Random\n')
-        randomColors(normalTokens)
-    elif scheme == 1:
-        print('\nColor scheme: Jet\n')
-        jetColors(normalTokens)
-    elif scheme == 2:
-        print('\nColor scheme: Grayish\n')
-        grayishRandomColors(normalTokens)
-    elif scheme == 3:
-        print('\nColor scheme: From a fixed list\n')
-        chooseFromFixedSchemes(normalTokens)
 
 
-
-def randomColors(normalTokens):
-    # apply random colors of slightly darker gamma
+def randomColors(normalTokens, background = 0):
+    # apply random colors of slightly darker gamma on white background == 0
+    # and bright colors on black background == 1
     for token in normalTokens:
-        token.color = getRandomColor()
+        if background == 0:
+            token.color = getRandomColor()
+        else:
+            token.color = getRandomColor(h = -1, s = -1, l = -1, bright = True)
+
 
 def jetColors(normalTokens):
     # apply jet color (heatmap) scheme on tokens
