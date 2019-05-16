@@ -769,6 +769,19 @@ static const char *__pyx_f[] = {
 };
 
 /*--- Type declarations ---*/
+struct __pyx_opt_args_6wordle_drawWord;
+
+/* "wordle.pyx":45
+ * 
+ * 
+ * cpdef drawWord(token, useColor = False):             # <<<<<<<<<<<<<<
+ *     """
+ *       gets an instance of Token class and draws the word it represents
+ */
+struct __pyx_opt_args_6wordle_drawWord {
+  int __pyx_n;
+  PyObject *useColor;
+};
 
 /* --- Runtime support code (head) --- */
 /* Refnanny.proto */
@@ -1198,7 +1211,7 @@ static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
 
 /* Module declarations from 'wordle' */
-static PyObject *__pyx_f_6wordle_drawWord(PyObject *); /*proto*/
+static PyObject *__pyx_f_6wordle_drawWord(PyObject *, int __pyx_skip_dispatch, struct __pyx_opt_args_6wordle_drawWord *__pyx_optional_args); /*proto*/
 static PyObject *__pyx_f_6wordle_createQuadTrees(PyObject *); /*proto*/
 static PyObject *__pyx_f_6wordle_placeWords(PyObject *, int __pyx_skip_dispatch); /*proto*/
 #define __Pyx_MODULE_NAME "wordle"
@@ -1212,9 +1225,9 @@ static PyObject *__pyx_builtin_range;
 static const char __pyx_k_u[] = "u";
 static const char __pyx_k_v[] = "v";
 static const char __pyx_k_SP[] = "SP";
-static const char __pyx_k__2[] = "\n";
-static const char __pyx_k__5[] = " ";
-static const char __pyx_k__7[] = "";
+static const char __pyx_k__3[] = "\n";
+static const char __pyx_k__6[] = " ";
+static const char __pyx_k__8[] = "";
 static const char __pyx_k_PIL[] = "PIL";
 static const char __pyx_k_doc[] = "__doc__";
 static const char __pyx_k_end[] = "end";
@@ -1226,6 +1239,7 @@ static const char __pyx_k_Node[] = "Node";
 static const char __pyx_k_RGBA[] = "RGBA";
 static const char __pyx_k_Tree[] = "Tree";
 static const char __pyx_k_crop[] = "crop";
+static const char __pyx_k_fill[] = "fill";
 static const char __pyx_k_font[] = "font";
 static const char __pyx_k_init[] = "__init__";
 static const char __pyx_k_main[] = "__main__";
@@ -1243,9 +1257,12 @@ static const char __pyx_k_place[] = "place";
 static const char __pyx_k_print[] = "print";
 static const char __pyx_k_range[] = "range";
 static const char __pyx_k_start[] = "start";
+static const char __pyx_k_token[] = "token";
+static const char __pyx_k_expand[] = "expand";
 static const char __pyx_k_import[] = "__import__";
 static const char __pyx_k_module[] = "__module__";
 static const char __pyx_k_random[] = "random";
+static const char __pyx_k_rotate[] = "rotate";
 static const char __pyx_k_stdout[] = "stdout";
 static const char __pyx_k_timeit[] = "timeit";
 static const char __pyx_k_wordle[] = "wordle";
@@ -1262,6 +1279,7 @@ static const char __pyx_k_fontSize[] = "fontSize";
 static const char __pyx_k_quadTree[] = "quadTree";
 static const char __pyx_k_qualname[] = "__qualname__";
 static const char __pyx_k_truetype[] = "truetype";
+static const char __pyx_k_useColor[] = "useColor";
 static const char __pyx_k_FONT_NAME[] = "FONT_NAME";
 static const char __pyx_k_ImageDraw[] = "ImageDraw";
 static const char __pyx_k_ImageFont[] = "ImageFont";
@@ -1308,9 +1326,9 @@ static PyObject *__pyx_n_s_Token___init;
 static PyObject *__pyx_n_s_Tree;
 static PyObject *__pyx_n_s_Trees;
 static PyObject *__pyx_kp_s_Words_have_been_placed_in;
-static PyObject *__pyx_kp_s__2;
-static PyObject *__pyx_kp_s__5;
-static PyObject *__pyx_kp_s__7;
+static PyObject *__pyx_kp_s__3;
+static PyObject *__pyx_kp_s__6;
+static PyObject *__pyx_kp_s__8;
 static PyObject *__pyx_kp_s_arial_ttf;
 static PyObject *__pyx_n_s_cline_in_traceback;
 static PyObject *__pyx_n_s_collisionTest;
@@ -1323,6 +1341,8 @@ static PyObject *__pyx_n_s_drawAngle;
 static PyObject *__pyx_kp_s_encapsulates_the_main_informati;
 static PyObject *__pyx_n_s_end;
 static PyObject *__pyx_n_s_enumerate;
+static PyObject *__pyx_n_s_expand;
+static PyObject *__pyx_n_s_fill;
 static PyObject *__pyx_n_s_flush;
 static PyObject *__pyx_n_s_font;
 static PyObject *__pyx_n_s_fontSize;
@@ -1348,6 +1368,7 @@ static PyObject *__pyx_n_s_qualname;
 static PyObject *__pyx_n_s_randint;
 static PyObject *__pyx_n_s_random;
 static PyObject *__pyx_n_s_range;
+static PyObject *__pyx_n_s_rotate;
 static PyObject *__pyx_kp_s_seconds;
 static PyObject *__pyx_kp_s_seconds_2;
 static PyObject *__pyx_n_s_self;
@@ -1359,14 +1380,17 @@ static PyObject *__pyx_n_s_sys;
 static PyObject *__pyx_n_s_test;
 static PyObject *__pyx_n_s_text;
 static PyObject *__pyx_n_s_timeit;
+static PyObject *__pyx_n_s_token;
 static PyObject *__pyx_n_s_truetype;
 static PyObject *__pyx_n_s_u;
+static PyObject *__pyx_n_s_useColor;
 static PyObject *__pyx_n_s_v;
 static PyObject *__pyx_n_s_word;
 static PyObject *__pyx_n_s_wordle;
 static PyObject *__pyx_kp_s_wordle_pyx;
 static PyObject *__pyx_pf_6wordle_5Token___init__(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_word, PyObject *__pyx_v_fontSize, PyObject *__pyx_v_drawAngle); /* proto */
-static PyObject *__pyx_pf_6wordle_placeWords(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_normalTokens); /* proto */
+static PyObject *__pyx_pf_6wordle_drawWord(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_token, PyObject *__pyx_v_useColor); /* proto */
+static PyObject *__pyx_pf_6wordle_2placeWords(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_normalTokens); /* proto */
 static PyObject *__pyx_int_0;
 static PyObject *__pyx_int_1;
 static PyObject *__pyx_int_2;
@@ -1374,13 +1398,14 @@ static PyObject *__pyx_int_5;
 static PyObject *__pyx_int_10;
 static PyObject *__pyx_int_20;
 static PyObject *__pyx_tuple_;
-static PyObject *__pyx_tuple__3;
+static PyObject *__pyx_tuple__2;
 static PyObject *__pyx_tuple__4;
-static PyObject *__pyx_tuple__6;
-static PyObject *__pyx_tuple__8;
+static PyObject *__pyx_tuple__5;
+static PyObject *__pyx_tuple__7;
 static PyObject *__pyx_tuple__9;
-static PyObject *__pyx_tuple__11;
-static PyObject *__pyx_codeobj__10;
+static PyObject *__pyx_tuple__10;
+static PyObject *__pyx_tuple__12;
+static PyObject *__pyx_codeobj__11;
 /* Late includes */
 
 /* "wordle.pyx":33
@@ -1572,12 +1597,14 @@ static PyObject *__pyx_pf_6wordle_5Token___init__(CYTHON_UNUSED PyObject *__pyx_
 /* "wordle.pyx":45
  * 
  * 
- * cdef drawWord(token):             # <<<<<<<<<<<<<<
+ * cpdef drawWord(token, useColor = False):             # <<<<<<<<<<<<<<
  *     """
  *       gets an instance of Token class and draws the word it represents
  */
 
-static PyObject *__pyx_f_6wordle_drawWord(PyObject *__pyx_v_token) {
+static PyObject *__pyx_pw_6wordle_1drawWord(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyObject *__pyx_f_6wordle_drawWord(PyObject *__pyx_v_token, CYTHON_UNUSED int __pyx_skip_dispatch, struct __pyx_opt_args_6wordle_drawWord *__pyx_optional_args) {
+  PyObject *__pyx_v_useColor = ((PyObject *)Py_False);
   PyObject *__pyx_v_font = NULL;
   PyObject *__pyx_v_w = NULL;
   PyObject *__pyx_v_h = NULL;
@@ -1593,7 +1620,13 @@ static PyObject *__pyx_f_6wordle_drawWord(PyObject *__pyx_v_token) {
   int __pyx_t_6;
   PyObject *__pyx_t_7 = NULL;
   PyObject *(*__pyx_t_8)(PyObject *);
+  int __pyx_t_9;
   __Pyx_RefNannySetupContext("drawWord", 0);
+  if (__pyx_optional_args) {
+    if (__pyx_optional_args->__pyx_n > 0) {
+      __pyx_v_useColor = __pyx_optional_args->useColor;
+    }
+  }
 
   /* "wordle.pyx":52
  *     """
@@ -1776,7 +1809,7 @@ static PyObject *__pyx_f_6wordle_drawWord(PyObject *__pyx_v_token) {
  * 
  *     im = Image.new('RGBA', (w,h), color = None)             # <<<<<<<<<<<<<<
  *     draw = ImageDraw.Draw(im)
- *     draw.text((0, 0), token.word, font = font)
+ *     if useColor == False:
  */
   __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_Image); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 55, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -1814,8 +1847,8 @@ static PyObject *__pyx_f_6wordle_drawWord(PyObject *__pyx_v_token) {
  * 
  *     im = Image.new('RGBA', (w,h), color = None)
  *     draw = ImageDraw.Draw(im)             # <<<<<<<<<<<<<<
- *     draw.text((0, 0), token.word, font = font)
- * 
+ *     if useColor == False:
+ *         draw.text((0, 0), token.word, font = font)
  */
   __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_ImageDraw); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -1871,34 +1904,143 @@ static PyObject *__pyx_f_6wordle_drawWord(PyObject *__pyx_v_token) {
   /* "wordle.pyx":57
  *     im = Image.new('RGBA', (w,h), color = None)
  *     draw = ImageDraw.Draw(im)
- *     draw.text((0, 0), token.word, font = font)             # <<<<<<<<<<<<<<
- * 
- *     # TODO the rotation is not being used currently
+ *     if useColor == False:             # <<<<<<<<<<<<<<
+ *         draw.text((0, 0), token.word, font = font)
+ *     else:
  */
-  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_draw, __pyx_n_s_text); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 57, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_token, __pyx_n_s_word); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 57, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 57, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_INCREF(__pyx_tuple_);
-  __Pyx_GIVEREF(__pyx_tuple_);
-  PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_tuple_);
-  __Pyx_GIVEREF(__pyx_t_3);
-  PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_3);
-  __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 57, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_font, __pyx_v_font) < 0) __PYX_ERR(0, 57, __pyx_L1_error)
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 57, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_7 = PyObject_RichCompare(__pyx_v_useColor, Py_False, Py_EQ); __Pyx_XGOTREF(__pyx_t_7); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 57, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_t_7); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 57, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  if (__pyx_t_9) {
 
-  /* "wordle.pyx":63
- *     #    im = im.rotate( token.drawAngle,  expand = 1)
+    /* "wordle.pyx":58
+ *     draw = ImageDraw.Draw(im)
+ *     if useColor == False:
+ *         draw.text((0, 0), token.word, font = font)             # <<<<<<<<<<<<<<
+ *     else:
+ *         draw.text((0, 0), token.word, font = font, fill = token.color)
+ */
+    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_draw, __pyx_n_s_text); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 58, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_token, __pyx_n_s_word); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 58, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 58, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_INCREF(__pyx_tuple_);
+    __Pyx_GIVEREF(__pyx_tuple_);
+    PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_tuple_);
+    __Pyx_GIVEREF(__pyx_t_3);
+    PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_3);
+    __pyx_t_3 = 0;
+    __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 58, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_font, __pyx_v_font) < 0) __PYX_ERR(0, 58, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 58, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+    /* "wordle.pyx":57
+ *     im = Image.new('RGBA', (w,h), color = None)
+ *     draw = ImageDraw.Draw(im)
+ *     if useColor == False:             # <<<<<<<<<<<<<<
+ *         draw.text((0, 0), token.word, font = font)
+ *     else:
+ */
+    goto __pyx_L5;
+  }
+
+  /* "wordle.pyx":60
+ *         draw.text((0, 0), token.word, font = font)
+ *     else:
+ *         draw.text((0, 0), token.word, font = font, fill = token.color)             # <<<<<<<<<<<<<<
+ * 
+ *     if token.drawAngle != 0:
+ */
+  /*else*/ {
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_draw, __pyx_n_s_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 60, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_token, __pyx_n_s_word); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 60, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 60, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_INCREF(__pyx_tuple__2);
+    __Pyx_GIVEREF(__pyx_tuple__2);
+    PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_tuple__2);
+    __Pyx_GIVEREF(__pyx_t_3);
+    PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_3);
+    __pyx_t_3 = 0;
+    __pyx_t_3 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 60, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_font, __pyx_v_font) < 0) __PYX_ERR(0, 60, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_token, __pyx_n_s_color); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 60, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_fill, __pyx_t_7) < 0) __PYX_ERR(0, 60, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 60, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  }
+  __pyx_L5:;
+
+  /* "wordle.pyx":62
+ *         draw.text((0, 0), token.word, font = font, fill = token.color)
+ * 
+ *     if token.drawAngle != 0:             # <<<<<<<<<<<<<<
+ *         im = im.rotate( token.drawAngle,  expand = 1)
+ * 
+ */
+  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_token, __pyx_n_s_drawAngle); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __pyx_t_3 = PyObject_RichCompare(__pyx_t_7, __pyx_int_0, Py_NE); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (__pyx_t_9) {
+
+    /* "wordle.pyx":63
+ * 
+ *     if token.drawAngle != 0:
+ *         im = im.rotate( token.drawAngle,  expand = 1)             # <<<<<<<<<<<<<<
+ * 
+ *     return im
+ */
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_im, __pyx_n_s_rotate); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 63, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_token, __pyx_n_s_drawAngle); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 63, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 63, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_GIVEREF(__pyx_t_7);
+    PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_7);
+    __pyx_t_7 = 0;
+    __pyx_t_7 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 63, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_7);
+    if (PyDict_SetItem(__pyx_t_7, __pyx_n_s_expand, __pyx_int_1) < 0) __PYX_ERR(0, 63, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_2, __pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 63, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+    __Pyx_DECREF_SET(__pyx_v_im, __pyx_t_1);
+    __pyx_t_1 = 0;
+
+    /* "wordle.pyx":62
+ *         draw.text((0, 0), token.word, font = font, fill = token.color)
+ * 
+ *     if token.drawAngle != 0:             # <<<<<<<<<<<<<<
+ *         im = im.rotate( token.drawAngle,  expand = 1)
+ * 
+ */
+  }
+
+  /* "wordle.pyx":65
+ *         im = im.rotate( token.drawAngle,  expand = 1)
  * 
  *     return im             # <<<<<<<<<<<<<<
  * 
@@ -1912,7 +2054,7 @@ static PyObject *__pyx_f_6wordle_drawWord(PyObject *__pyx_v_token) {
   /* "wordle.pyx":45
  * 
  * 
- * cdef drawWord(token):             # <<<<<<<<<<<<<<
+ * cpdef drawWord(token, useColor = False):             # <<<<<<<<<<<<<<
  *     """
  *       gets an instance of Token class and draws the word it represents
  */
@@ -1938,7 +2080,99 @@ static PyObject *__pyx_f_6wordle_drawWord(PyObject *__pyx_v_token) {
   return __pyx_r;
 }
 
-/* "wordle.pyx":66
+/* Python wrapper */
+static PyObject *__pyx_pw_6wordle_1drawWord(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static char __pyx_doc_6wordle_drawWord[] = "\n      gets an instance of Token class and draws the word it represents\n      returns an image of the given word in the given font size\n      the image is NOT cropped\n    ";
+static PyObject *__pyx_pw_6wordle_1drawWord(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  PyObject *__pyx_v_token = 0;
+  PyObject *__pyx_v_useColor = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("drawWord (wrapper)", 0);
+  {
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_token,&__pyx_n_s_useColor,0};
+    PyObject* values[2] = {0,0};
+    values[1] = ((PyObject *)Py_False);
+    if (unlikely(__pyx_kwds)) {
+      Py_ssize_t kw_args;
+      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
+      switch (pos_args) {
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        CYTHON_FALLTHROUGH;
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = PyDict_Size(__pyx_kwds);
+      switch (pos_args) {
+        case  0:
+        if (likely((values[0] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_token)) != 0)) kw_args--;
+        else goto __pyx_L5_argtuple_error;
+        CYTHON_FALLTHROUGH;
+        case  1:
+        if (kw_args > 0) {
+          PyObject* value = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_useColor);
+          if (value) { values[1] = value; kw_args--; }
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "drawWord") < 0)) __PYX_ERR(0, 45, __pyx_L3_error)
+      }
+    } else {
+      switch (PyTuple_GET_SIZE(__pyx_args)) {
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        CYTHON_FALLTHROUGH;
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+    }
+    __pyx_v_token = values[0];
+    __pyx_v_useColor = values[1];
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("drawWord", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 45, __pyx_L3_error)
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("wordle.drawWord", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_6wordle_drawWord(__pyx_self, __pyx_v_token, __pyx_v_useColor);
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_6wordle_drawWord(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_token, PyObject *__pyx_v_useColor) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  struct __pyx_opt_args_6wordle_drawWord __pyx_t_2;
+  __Pyx_RefNannySetupContext("drawWord", 0);
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_2.__pyx_n = 1;
+  __pyx_t_2.useColor = __pyx_v_useColor;
+  __pyx_t_1 = __pyx_f_6wordle_drawWord(__pyx_v_token, 0, &__pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("wordle.drawWord", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "wordle.pyx":68
  * 
  * 
  * cdef createQuadTrees(normalTokens):             # <<<<<<<<<<<<<<
@@ -1966,7 +2200,7 @@ static PyObject *__pyx_f_6wordle_createQuadTrees(PyObject *__pyx_v_normalTokens)
   PyObject *__pyx_t_11 = NULL;
   __Pyx_RefNannySetupContext("createQuadTrees", 0);
 
-  /* "wordle.pyx":71
+  /* "wordle.pyx":73
  *     """
  * 
  *     for i, token in enumerate(normalTokens):             # <<<<<<<<<<<<<<
@@ -1979,26 +2213,26 @@ static PyObject *__pyx_f_6wordle_createQuadTrees(PyObject *__pyx_v_normalTokens)
     __pyx_t_2 = __pyx_v_normalTokens; __Pyx_INCREF(__pyx_t_2); __pyx_t_3 = 0;
     __pyx_t_4 = NULL;
   } else {
-    __pyx_t_3 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_v_normalTokens); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 71, __pyx_L1_error)
+    __pyx_t_3 = -1; __pyx_t_2 = PyObject_GetIter(__pyx_v_normalTokens); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 73, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_4 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 71, __pyx_L1_error)
+    __pyx_t_4 = Py_TYPE(__pyx_t_2)->tp_iternext; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 73, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_4)) {
       if (likely(PyList_CheckExact(__pyx_t_2))) {
         if (__pyx_t_3 >= PyList_GET_SIZE(__pyx_t_2)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_5 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_3); __Pyx_INCREF(__pyx_t_5); __pyx_t_3++; if (unlikely(0 < 0)) __PYX_ERR(0, 71, __pyx_L1_error)
+        __pyx_t_5 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_3); __Pyx_INCREF(__pyx_t_5); __pyx_t_3++; if (unlikely(0 < 0)) __PYX_ERR(0, 73, __pyx_L1_error)
         #else
-        __pyx_t_5 = PySequence_ITEM(__pyx_t_2, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 71, __pyx_L1_error)
+        __pyx_t_5 = PySequence_ITEM(__pyx_t_2, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 73, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_5);
         #endif
       } else {
         if (__pyx_t_3 >= PyTuple_GET_SIZE(__pyx_t_2)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_5 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_3); __Pyx_INCREF(__pyx_t_5); __pyx_t_3++; if (unlikely(0 < 0)) __PYX_ERR(0, 71, __pyx_L1_error)
+        __pyx_t_5 = PyTuple_GET_ITEM(__pyx_t_2, __pyx_t_3); __Pyx_INCREF(__pyx_t_5); __pyx_t_3++; if (unlikely(0 < 0)) __PYX_ERR(0, 73, __pyx_L1_error)
         #else
-        __pyx_t_5 = PySequence_ITEM(__pyx_t_2, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 71, __pyx_L1_error)
+        __pyx_t_5 = PySequence_ITEM(__pyx_t_2, __pyx_t_3); __pyx_t_3++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 73, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_5);
         #endif
       }
@@ -2008,7 +2242,7 @@ static PyObject *__pyx_f_6wordle_createQuadTrees(PyObject *__pyx_v_normalTokens)
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 71, __pyx_L1_error)
+          else __PYX_ERR(0, 73, __pyx_L1_error)
         }
         break;
       }
@@ -2018,39 +2252,39 @@ static PyObject *__pyx_f_6wordle_createQuadTrees(PyObject *__pyx_v_normalTokens)
     __pyx_t_5 = 0;
     __Pyx_INCREF(__pyx_t_1);
     __Pyx_XDECREF_SET(__pyx_v_i, __pyx_t_1);
-    __pyx_t_5 = __Pyx_PyInt_AddObjC(__pyx_t_1, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 71, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyInt_AddObjC(__pyx_t_1, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 73, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_1);
     __pyx_t_1 = __pyx_t_5;
     __pyx_t_5 = 0;
 
-    /* "wordle.pyx":72
+    /* "wordle.pyx":74
  * 
  *     for i, token in enumerate(normalTokens):
  *         im_tmp = drawWord(token)             # <<<<<<<<<<<<<<
  *         T = BBox.getQuadTree( im_tmp , QUADTREE_MINSIZE, QUADTREE_MINSIZE )
  *         T.compress()
  */
-    __pyx_t_5 = __pyx_f_6wordle_drawWord(__pyx_v_token); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 72, __pyx_L1_error)
+    __pyx_t_5 = __pyx_f_6wordle_drawWord(__pyx_v_token, 0, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 74, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_XDECREF_SET(__pyx_v_im_tmp, __pyx_t_5);
     __pyx_t_5 = 0;
 
-    /* "wordle.pyx":73
+    /* "wordle.pyx":75
  *     for i, token in enumerate(normalTokens):
  *         im_tmp = drawWord(token)
  *         T = BBox.getQuadTree( im_tmp , QUADTREE_MINSIZE, QUADTREE_MINSIZE )             # <<<<<<<<<<<<<<
  *         T.compress()
  *         im_tmp = im_tmp.crop(im_tmp.getbbox())
  */
-    __pyx_t_6 = __Pyx_GetModuleGlobalName(__pyx_n_s_BBox); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 73, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_GetModuleGlobalName(__pyx_n_s_BBox); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 75, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_getQuadTree); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 73, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_getQuadTree); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 75, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_6 = __Pyx_GetModuleGlobalName(__pyx_n_s_QUADTREE_MINSIZE); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 73, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_GetModuleGlobalName(__pyx_n_s_QUADTREE_MINSIZE); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 75, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_8 = __Pyx_GetModuleGlobalName(__pyx_n_s_QUADTREE_MINSIZE); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 73, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_GetModuleGlobalName(__pyx_n_s_QUADTREE_MINSIZE); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 75, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __pyx_t_9 = NULL;
     __pyx_t_10 = 0;
@@ -2067,7 +2301,7 @@ static PyObject *__pyx_f_6wordle_createQuadTrees(PyObject *__pyx_v_normalTokens)
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_7)) {
       PyObject *__pyx_temp[4] = {__pyx_t_9, __pyx_v_im_tmp, __pyx_t_6, __pyx_t_8};
-      __pyx_t_5 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 73, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 75, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
@@ -2077,7 +2311,7 @@ static PyObject *__pyx_f_6wordle_createQuadTrees(PyObject *__pyx_v_normalTokens)
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_7)) {
       PyObject *__pyx_temp[4] = {__pyx_t_9, __pyx_v_im_tmp, __pyx_t_6, __pyx_t_8};
-      __pyx_t_5 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 73, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_10, 3+__pyx_t_10); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 75, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
@@ -2085,7 +2319,7 @@ static PyObject *__pyx_f_6wordle_createQuadTrees(PyObject *__pyx_v_normalTokens)
     } else
     #endif
     {
-      __pyx_t_11 = PyTuple_New(3+__pyx_t_10); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 73, __pyx_L1_error)
+      __pyx_t_11 = PyTuple_New(3+__pyx_t_10); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 75, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_11);
       if (__pyx_t_9) {
         __Pyx_GIVEREF(__pyx_t_9); PyTuple_SET_ITEM(__pyx_t_11, 0, __pyx_t_9); __pyx_t_9 = NULL;
@@ -2099,7 +2333,7 @@ static PyObject *__pyx_f_6wordle_createQuadTrees(PyObject *__pyx_v_normalTokens)
       PyTuple_SET_ITEM(__pyx_t_11, 2+__pyx_t_10, __pyx_t_8);
       __pyx_t_6 = 0;
       __pyx_t_8 = 0;
-      __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_11, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 73, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_11, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 75, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
     }
@@ -2107,14 +2341,14 @@ static PyObject *__pyx_f_6wordle_createQuadTrees(PyObject *__pyx_v_normalTokens)
     __Pyx_XDECREF_SET(__pyx_v_T, __pyx_t_5);
     __pyx_t_5 = 0;
 
-    /* "wordle.pyx":74
+    /* "wordle.pyx":76
  *         im_tmp = drawWord(token)
  *         T = BBox.getQuadTree( im_tmp , QUADTREE_MINSIZE, QUADTREE_MINSIZE )
  *         T.compress()             # <<<<<<<<<<<<<<
  *         im_tmp = im_tmp.crop(im_tmp.getbbox())
  * 
  */
-    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_T, __pyx_n_s_compress); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 74, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_T, __pyx_n_s_compress); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 76, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __pyx_t_11 = NULL;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_7))) {
@@ -2127,25 +2361,25 @@ static PyObject *__pyx_f_6wordle_createQuadTrees(PyObject *__pyx_v_normalTokens)
       }
     }
     if (__pyx_t_11) {
-      __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_t_11); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 74, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_t_11); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 76, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
     } else {
-      __pyx_t_5 = __Pyx_PyObject_CallNoArg(__pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 74, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyObject_CallNoArg(__pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 76, __pyx_L1_error)
     }
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-    /* "wordle.pyx":75
+    /* "wordle.pyx":77
  *         T = BBox.getQuadTree( im_tmp , QUADTREE_MINSIZE, QUADTREE_MINSIZE )
  *         T.compress()
  *         im_tmp = im_tmp.crop(im_tmp.getbbox())             # <<<<<<<<<<<<<<
  * 
  *         token.quadTree = T
  */
-    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_im_tmp, __pyx_n_s_crop); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 75, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_im_tmp, __pyx_n_s_crop); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 77, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
-    __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_im_tmp, __pyx_n_s_getbbox); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 75, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_im_tmp, __pyx_n_s_getbbox); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 77, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __pyx_t_6 = NULL;
     if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_8))) {
@@ -2158,10 +2392,10 @@ static PyObject *__pyx_f_6wordle_createQuadTrees(PyObject *__pyx_v_normalTokens)
       }
     }
     if (__pyx_t_6) {
-      __pyx_t_11 = __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_t_6); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 75, __pyx_L1_error)
+      __pyx_t_11 = __Pyx_PyObject_CallOneArg(__pyx_t_8, __pyx_t_6); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 77, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     } else {
-      __pyx_t_11 = __Pyx_PyObject_CallNoArg(__pyx_t_8); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 75, __pyx_L1_error)
+      __pyx_t_11 = __Pyx_PyObject_CallNoArg(__pyx_t_8); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 77, __pyx_L1_error)
     }
     __Pyx_GOTREF(__pyx_t_11);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
@@ -2176,14 +2410,14 @@ static PyObject *__pyx_f_6wordle_createQuadTrees(PyObject *__pyx_v_normalTokens)
       }
     }
     if (!__pyx_t_8) {
-      __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_t_11); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 75, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_t_11); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 77, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
       __Pyx_GOTREF(__pyx_t_5);
     } else {
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_7)) {
         PyObject *__pyx_temp[2] = {__pyx_t_8, __pyx_t_11};
-        __pyx_t_5 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 75, __pyx_L1_error)
+        __pyx_t_5 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 77, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
         __Pyx_GOTREF(__pyx_t_5);
         __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
@@ -2192,20 +2426,20 @@ static PyObject *__pyx_f_6wordle_createQuadTrees(PyObject *__pyx_v_normalTokens)
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_7)) {
         PyObject *__pyx_temp[2] = {__pyx_t_8, __pyx_t_11};
-        __pyx_t_5 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 75, __pyx_L1_error)
+        __pyx_t_5 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 77, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
         __Pyx_GOTREF(__pyx_t_5);
         __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
       } else
       #endif
       {
-        __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 75, __pyx_L1_error)
+        __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 77, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_GIVEREF(__pyx_t_8); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_8); __pyx_t_8 = NULL;
         __Pyx_GIVEREF(__pyx_t_11);
         PyTuple_SET_ITEM(__pyx_t_6, 0+1, __pyx_t_11);
         __pyx_t_11 = 0;
-        __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_6, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 75, __pyx_L1_error)
+        __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_6, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 77, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_5);
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       }
@@ -2214,28 +2448,28 @@ static PyObject *__pyx_f_6wordle_createQuadTrees(PyObject *__pyx_v_normalTokens)
     __Pyx_DECREF_SET(__pyx_v_im_tmp, __pyx_t_5);
     __pyx_t_5 = 0;
 
-    /* "wordle.pyx":77
+    /* "wordle.pyx":79
  *         im_tmp = im_tmp.crop(im_tmp.getbbox())
  * 
  *         token.quadTree = T             # <<<<<<<<<<<<<<
  *         token.imgSize = im_tmp.size
  * 
  */
-    if (__Pyx_PyObject_SetAttrStr(__pyx_v_token, __pyx_n_s_quadTree, __pyx_v_T) < 0) __PYX_ERR(0, 77, __pyx_L1_error)
+    if (__Pyx_PyObject_SetAttrStr(__pyx_v_token, __pyx_n_s_quadTree, __pyx_v_T) < 0) __PYX_ERR(0, 79, __pyx_L1_error)
 
-    /* "wordle.pyx":78
+    /* "wordle.pyx":80
  * 
  *         token.quadTree = T
  *         token.imgSize = im_tmp.size             # <<<<<<<<<<<<<<
  * 
  * 
  */
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_im_tmp, __pyx_n_s_size); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 78, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_im_tmp, __pyx_n_s_size); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 80, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    if (__Pyx_PyObject_SetAttrStr(__pyx_v_token, __pyx_n_s_imgSize, __pyx_t_5) < 0) __PYX_ERR(0, 78, __pyx_L1_error)
+    if (__Pyx_PyObject_SetAttrStr(__pyx_v_token, __pyx_n_s_imgSize, __pyx_t_5) < 0) __PYX_ERR(0, 80, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-    /* "wordle.pyx":71
+    /* "wordle.pyx":73
  *     """
  * 
  *     for i, token in enumerate(normalTokens):             # <<<<<<<<<<<<<<
@@ -2246,7 +2480,7 @@ static PyObject *__pyx_f_6wordle_createQuadTrees(PyObject *__pyx_v_normalTokens)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "wordle.pyx":66
+  /* "wordle.pyx":68
  * 
  * 
  * cdef createQuadTrees(normalTokens):             # <<<<<<<<<<<<<<
@@ -2278,7 +2512,7 @@ static PyObject *__pyx_f_6wordle_createQuadTrees(PyObject *__pyx_v_normalTokens)
   return __pyx_r;
 }
 
-/* "wordle.pyx":81
+/* "wordle.pyx":83
  * 
  * 
  * cpdef placeWords(normalTokens):             # <<<<<<<<<<<<<<
@@ -2286,7 +2520,7 @@ static PyObject *__pyx_f_6wordle_createQuadTrees(PyObject *__pyx_v_normalTokens)
  *       gets a list of tokens and their frequencies
  */
 
-static PyObject *__pyx_pw_6wordle_1placeWords(PyObject *__pyx_self, PyObject *__pyx_v_normalTokens); /*proto*/
+static PyObject *__pyx_pw_6wordle_3placeWords(PyObject *__pyx_self, PyObject *__pyx_v_normalTokens); /*proto*/
 static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTHON_UNUSED int __pyx_skip_dispatch) {
   PyObject *__pyx_v_T_start = NULL;
   PyObject *__pyx_v_T_stop = NULL;
@@ -2333,42 +2567,42 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
   PyObject *__pyx_t_19 = NULL;
   __Pyx_RefNannySetupContext("placeWords", 0);
 
-  /* "wordle.pyx":90
+  /* "wordle.pyx":92
  *     # 1. we first create the QuadTrees for all words and determine a size for the canvas
  * 
  *     print('Number of tokens equals', len(normalTokens), '\n')             # <<<<<<<<<<<<<<
  * 
  *     T_start = timeit.default_timer()
  */
-  __pyx_t_1 = PyObject_Length(__pyx_v_normalTokens); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 90, __pyx_L1_error)
-  __pyx_t_2 = PyInt_FromSsize_t(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 90, __pyx_L1_error)
+  __pyx_t_1 = PyObject_Length(__pyx_v_normalTokens); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 92, __pyx_L1_error)
+  __pyx_t_2 = PyInt_FromSsize_t(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 92, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyTuple_New(3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 90, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_New(3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 92, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_INCREF(__pyx_kp_s_Number_of_tokens_equals);
   __Pyx_GIVEREF(__pyx_kp_s_Number_of_tokens_equals);
   PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_kp_s_Number_of_tokens_equals);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_t_2);
-  __Pyx_INCREF(__pyx_kp_s__2);
-  __Pyx_GIVEREF(__pyx_kp_s__2);
-  PyTuple_SET_ITEM(__pyx_t_3, 2, __pyx_kp_s__2);
+  __Pyx_INCREF(__pyx_kp_s__3);
+  __Pyx_GIVEREF(__pyx_kp_s__3);
+  PyTuple_SET_ITEM(__pyx_t_3, 2, __pyx_kp_s__3);
   __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 90, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 92, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "wordle.pyx":92
+  /* "wordle.pyx":94
  *     print('Number of tokens equals', len(normalTokens), '\n')
  * 
  *     T_start = timeit.default_timer()             # <<<<<<<<<<<<<<
  * 
  *     # create the quadTrees and collect sizes (width, height) of the word shapes
  */
-  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_timeit); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 92, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_timeit); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 94, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_default_timer); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 92, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_default_timer); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 94, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_t_3 = NULL;
@@ -2382,37 +2616,37 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
     }
   }
   if (__pyx_t_3) {
-    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 92, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 94, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   } else {
-    __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 92, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 94, __pyx_L1_error)
   }
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_v_T_start = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "wordle.pyx":95
+  /* "wordle.pyx":97
  * 
  *     # create the quadTrees and collect sizes (width, height) of the word shapes
  *     createQuadTrees(normalTokens)             # <<<<<<<<<<<<<<
  * 
  *     T_stop = timeit.default_timer()
  */
-  __pyx_t_2 = __pyx_f_6wordle_createQuadTrees(__pyx_v_normalTokens); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 95, __pyx_L1_error)
+  __pyx_t_2 = __pyx_f_6wordle_createQuadTrees(__pyx_v_normalTokens); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 97, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "wordle.pyx":97
+  /* "wordle.pyx":99
  *     createQuadTrees(normalTokens)
  * 
  *     T_stop = timeit.default_timer()             # <<<<<<<<<<<<<<
  *     print('(i)  QuadTrees have been made for all words in', T_stop - T_start, 'seconds.','\n')
  * 
  */
-  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_timeit); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 97, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_timeit); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 99, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_default_timer); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 97, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_default_timer); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 99, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_t_4 = NULL;
@@ -2426,26 +2660,26 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
     }
   }
   if (__pyx_t_4) {
-    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 97, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 99, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   } else {
-    __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 97, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 99, __pyx_L1_error)
   }
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_T_stop = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "wordle.pyx":98
+  /* "wordle.pyx":100
  * 
  *     T_stop = timeit.default_timer()
  *     print('(i)  QuadTrees have been made for all words in', T_stop - T_start, 'seconds.','\n')             # <<<<<<<<<<<<<<
  * 
  *     # 2. We now find places for the words on our canvas
  */
-  __pyx_t_2 = PyNumber_Subtract(__pyx_v_T_stop, __pyx_v_T_start); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 98, __pyx_L1_error)
+  __pyx_t_2 = PyNumber_Subtract(__pyx_v_T_stop, __pyx_v_T_start); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 100, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyTuple_New(4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 98, __pyx_L1_error)
+  __pyx_t_3 = PyTuple_New(4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 100, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_INCREF(__pyx_kp_s_i_QuadTrees_have_been_made_for);
   __Pyx_GIVEREF(__pyx_kp_s_i_QuadTrees_have_been_made_for);
@@ -2455,16 +2689,16 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
   __Pyx_INCREF(__pyx_kp_s_seconds);
   __Pyx_GIVEREF(__pyx_kp_s_seconds);
   PyTuple_SET_ITEM(__pyx_t_3, 2, __pyx_kp_s_seconds);
-  __Pyx_INCREF(__pyx_kp_s__2);
-  __Pyx_GIVEREF(__pyx_kp_s__2);
-  PyTuple_SET_ITEM(__pyx_t_3, 3, __pyx_kp_s__2);
+  __Pyx_INCREF(__pyx_kp_s__3);
+  __Pyx_GIVEREF(__pyx_kp_s__3);
+  PyTuple_SET_ITEM(__pyx_t_3, 3, __pyx_kp_s__3);
   __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 98, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 100, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "wordle.pyx":102
+  /* "wordle.pyx":104
  *     # 2. We now find places for the words on our canvas
  * 
  *     cdef int c_W = 3000             # <<<<<<<<<<<<<<
@@ -2473,7 +2707,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  */
   __pyx_v_c_W = 0xBB8;
 
-  /* "wordle.pyx":103
+  /* "wordle.pyx":105
  * 
  *     cdef int c_W = 3000
  *     cdef int c_H = 1500             # <<<<<<<<<<<<<<
@@ -2482,7 +2716,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  */
   __pyx_v_c_H = 0x5DC;
 
-  /* "wordle.pyx":105
+  /* "wordle.pyx":107
  *     cdef int c_H = 1500
  * 
  *     cdef int dx0 = 0             # <<<<<<<<<<<<<<
@@ -2491,7 +2725,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  */
   __pyx_v_dx0 = 0;
 
-  /* "wordle.pyx":106
+  /* "wordle.pyx":108
  * 
  *     cdef int dx0 = 0
  *     cdef int dy0 = 0             # <<<<<<<<<<<<<<
@@ -2500,7 +2734,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  */
   __pyx_v_dy0 = 0;
 
-  /* "wordle.pyx":107
+  /* "wordle.pyx":109
  *     cdef int dx0 = 0
  *     cdef int dy0 = 0
  *     cdef int w = 0             # <<<<<<<<<<<<<<
@@ -2509,7 +2743,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  */
   __pyx_v_w = 0;
 
-  /* "wordle.pyx":108
+  /* "wordle.pyx":110
  *     cdef int dy0 = 0
  *     cdef int w = 0
  *     cdef int h = 0             # <<<<<<<<<<<<<<
@@ -2518,7 +2752,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  */
   __pyx_v_h = 0;
 
-  /* "wordle.pyx":109
+  /* "wordle.pyx":111
  *     cdef int w = 0
  *     cdef int h = 0
  *     cdef int dx = 0             # <<<<<<<<<<<<<<
@@ -2527,7 +2761,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  */
   __pyx_v_dx = 0;
 
-  /* "wordle.pyx":110
+  /* "wordle.pyx":112
  *     cdef int h = 0
  *     cdef int dx = 0
  *     cdef int dy = 0             # <<<<<<<<<<<<<<
@@ -2536,7 +2770,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  */
   __pyx_v_dy = 0;
 
-  /* "wordle.pyx":112
+  /* "wordle.pyx":114
  *     cdef int dy = 0
  * 
  *     cdef int last_hit_index = 0 # we cache the index of last hit             # <<<<<<<<<<<<<<
@@ -2545,30 +2779,30 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  */
   __pyx_v_last_hit_index = 0;
 
-  /* "wordle.pyx":114
+  /* "wordle.pyx":116
  *     cdef int last_hit_index = 0 # we cache the index of last hit
  * 
  *     print('(ii) Now trying to place the words.\n')             # <<<<<<<<<<<<<<
  *     sys.stdout.flush()
  * 
  */
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 114, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__4, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 116, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "wordle.pyx":115
+  /* "wordle.pyx":117
  * 
  *     print('(ii) Now trying to place the words.\n')
  *     sys.stdout.flush()             # <<<<<<<<<<<<<<
  * 
  *     T_start = timeit.default_timer()
  */
-  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_sys); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 115, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_sys); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 117, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_stdout); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 115, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_stdout); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 117, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_flush); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 115, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_flush); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 117, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_t_4 = NULL;
@@ -2582,25 +2816,25 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
     }
   }
   if (__pyx_t_4) {
-    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 115, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 117, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   } else {
-    __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 115, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 117, __pyx_L1_error)
   }
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "wordle.pyx":117
+  /* "wordle.pyx":119
  *     sys.stdout.flush()
  * 
  *     T_start = timeit.default_timer()             # <<<<<<<<<<<<<<
  * 
  *     # 3a. we start with the 1st word
  */
-  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_timeit); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 117, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_timeit); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 119, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_default_timer); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 117, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_default_timer); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 119, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_t_3 = NULL;
@@ -2614,38 +2848,38 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
     }
   }
   if (__pyx_t_3) {
-    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 117, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 119, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   } else {
-    __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 117, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 119, __pyx_L1_error)
   }
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF_SET(__pyx_v_T_start, __pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "wordle.pyx":122
+  /* "wordle.pyx":124
  * 
  * 
  *     ups_and_downs = [ random.randint(0,20)%2  for i in range( len(normalTokens) )]             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 122, __pyx_L1_error)
+  __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 124, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = PyObject_Length(__pyx_v_normalTokens); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 122, __pyx_L1_error)
-  __pyx_t_4 = PyInt_FromSsize_t(__pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 122, __pyx_L1_error)
+  __pyx_t_1 = PyObject_Length(__pyx_v_normalTokens); if (unlikely(__pyx_t_1 == ((Py_ssize_t)-1))) __PYX_ERR(0, 124, __pyx_L1_error)
+  __pyx_t_4 = PyInt_FromSsize_t(__pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 124, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_builtin_range, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 122, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_builtin_range, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 124, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   if (likely(PyList_CheckExact(__pyx_t_3)) || PyTuple_CheckExact(__pyx_t_3)) {
     __pyx_t_4 = __pyx_t_3; __Pyx_INCREF(__pyx_t_4); __pyx_t_1 = 0;
     __pyx_t_5 = NULL;
   } else {
-    __pyx_t_1 = -1; __pyx_t_4 = PyObject_GetIter(__pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 122, __pyx_L1_error)
+    __pyx_t_1 = -1; __pyx_t_4 = PyObject_GetIter(__pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 124, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_5 = Py_TYPE(__pyx_t_4)->tp_iternext; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 122, __pyx_L1_error)
+    __pyx_t_5 = Py_TYPE(__pyx_t_4)->tp_iternext; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 124, __pyx_L1_error)
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   for (;;) {
@@ -2653,17 +2887,17 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
       if (likely(PyList_CheckExact(__pyx_t_4))) {
         if (__pyx_t_1 >= PyList_GET_SIZE(__pyx_t_4)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_3 = PyList_GET_ITEM(__pyx_t_4, __pyx_t_1); __Pyx_INCREF(__pyx_t_3); __pyx_t_1++; if (unlikely(0 < 0)) __PYX_ERR(0, 122, __pyx_L1_error)
+        __pyx_t_3 = PyList_GET_ITEM(__pyx_t_4, __pyx_t_1); __Pyx_INCREF(__pyx_t_3); __pyx_t_1++; if (unlikely(0 < 0)) __PYX_ERR(0, 124, __pyx_L1_error)
         #else
-        __pyx_t_3 = PySequence_ITEM(__pyx_t_4, __pyx_t_1); __pyx_t_1++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 122, __pyx_L1_error)
+        __pyx_t_3 = PySequence_ITEM(__pyx_t_4, __pyx_t_1); __pyx_t_1++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 124, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         #endif
       } else {
         if (__pyx_t_1 >= PyTuple_GET_SIZE(__pyx_t_4)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_4, __pyx_t_1); __Pyx_INCREF(__pyx_t_3); __pyx_t_1++; if (unlikely(0 < 0)) __PYX_ERR(0, 122, __pyx_L1_error)
+        __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_4, __pyx_t_1); __Pyx_INCREF(__pyx_t_3); __pyx_t_1++; if (unlikely(0 < 0)) __PYX_ERR(0, 124, __pyx_L1_error)
         #else
-        __pyx_t_3 = PySequence_ITEM(__pyx_t_4, __pyx_t_1); __pyx_t_1++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 122, __pyx_L1_error)
+        __pyx_t_3 = PySequence_ITEM(__pyx_t_4, __pyx_t_1); __pyx_t_1++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 124, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         #endif
       }
@@ -2673,7 +2907,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 122, __pyx_L1_error)
+          else __PYX_ERR(0, 124, __pyx_L1_error)
         }
         break;
       }
@@ -2681,25 +2915,25 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
     }
     __Pyx_XDECREF_SET(__pyx_v_i, __pyx_t_3);
     __pyx_t_3 = 0;
-    __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_random); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 122, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_random); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 124, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_randint); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 122, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_randint); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 124, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_tuple__4, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 122, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_tuple__5, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 124, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_6 = __Pyx_PyInt_RemainderObjC(__pyx_t_3, __pyx_int_2, 2, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 122, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyInt_RemainderObjC(__pyx_t_3, __pyx_int_2, 2, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 124, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(__Pyx_ListComp_Append(__pyx_t_2, (PyObject*)__pyx_t_6))) __PYX_ERR(0, 122, __pyx_L1_error)
+    if (unlikely(__Pyx_ListComp_Append(__pyx_t_2, (PyObject*)__pyx_t_6))) __PYX_ERR(0, 124, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   }
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_v_ups_and_downs = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "wordle.pyx":125
+  /* "wordle.pyx":127
  * 
  * 
  *     for i, token in enumerate(normalTokens):             # <<<<<<<<<<<<<<
@@ -2712,26 +2946,26 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
     __pyx_t_4 = __pyx_v_normalTokens; __Pyx_INCREF(__pyx_t_4); __pyx_t_1 = 0;
     __pyx_t_5 = NULL;
   } else {
-    __pyx_t_1 = -1; __pyx_t_4 = PyObject_GetIter(__pyx_v_normalTokens); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 125, __pyx_L1_error)
+    __pyx_t_1 = -1; __pyx_t_4 = PyObject_GetIter(__pyx_v_normalTokens); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 127, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_5 = Py_TYPE(__pyx_t_4)->tp_iternext; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 125, __pyx_L1_error)
+    __pyx_t_5 = Py_TYPE(__pyx_t_4)->tp_iternext; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 127, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_5)) {
       if (likely(PyList_CheckExact(__pyx_t_4))) {
         if (__pyx_t_1 >= PyList_GET_SIZE(__pyx_t_4)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_6 = PyList_GET_ITEM(__pyx_t_4, __pyx_t_1); __Pyx_INCREF(__pyx_t_6); __pyx_t_1++; if (unlikely(0 < 0)) __PYX_ERR(0, 125, __pyx_L1_error)
+        __pyx_t_6 = PyList_GET_ITEM(__pyx_t_4, __pyx_t_1); __Pyx_INCREF(__pyx_t_6); __pyx_t_1++; if (unlikely(0 < 0)) __PYX_ERR(0, 127, __pyx_L1_error)
         #else
-        __pyx_t_6 = PySequence_ITEM(__pyx_t_4, __pyx_t_1); __pyx_t_1++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 125, __pyx_L1_error)
+        __pyx_t_6 = PySequence_ITEM(__pyx_t_4, __pyx_t_1); __pyx_t_1++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 127, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
         #endif
       } else {
         if (__pyx_t_1 >= PyTuple_GET_SIZE(__pyx_t_4)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_6 = PyTuple_GET_ITEM(__pyx_t_4, __pyx_t_1); __Pyx_INCREF(__pyx_t_6); __pyx_t_1++; if (unlikely(0 < 0)) __PYX_ERR(0, 125, __pyx_L1_error)
+        __pyx_t_6 = PyTuple_GET_ITEM(__pyx_t_4, __pyx_t_1); __Pyx_INCREF(__pyx_t_6); __pyx_t_1++; if (unlikely(0 < 0)) __PYX_ERR(0, 127, __pyx_L1_error)
         #else
-        __pyx_t_6 = PySequence_ITEM(__pyx_t_4, __pyx_t_1); __pyx_t_1++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 125, __pyx_L1_error)
+        __pyx_t_6 = PySequence_ITEM(__pyx_t_4, __pyx_t_1); __pyx_t_1++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 127, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
         #endif
       }
@@ -2741,7 +2975,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 125, __pyx_L1_error)
+          else __PYX_ERR(0, 127, __pyx_L1_error)
         }
         break;
       }
@@ -2751,48 +2985,48 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
     __pyx_t_6 = 0;
     __Pyx_INCREF(__pyx_t_2);
     __Pyx_XDECREF_SET(__pyx_v_i, __pyx_t_2);
-    __pyx_t_6 = __Pyx_PyInt_AddObjC(__pyx_t_2, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 125, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyInt_AddObjC(__pyx_t_2, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 127, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_2);
     __pyx_t_2 = __pyx_t_6;
     __pyx_t_6 = 0;
 
-    /* "wordle.pyx":126
+    /* "wordle.pyx":128
  * 
  *     for i, token in enumerate(normalTokens):
  *         print( token.word, end = ' ' )             # <<<<<<<<<<<<<<
  *         sys.stdout.flush()     # force the output to display what is in the buffer
  * 
  */
-    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_token, __pyx_n_s_word); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 126, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_token, __pyx_n_s_word); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 128, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 126, __pyx_L1_error)
+    __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 128, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_GIVEREF(__pyx_t_6);
     PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_6);
     __pyx_t_6 = 0;
-    __pyx_t_6 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 126, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 128, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_end, __pyx_kp_s__5) < 0) __PYX_ERR(0, 126, __pyx_L1_error)
-    __pyx_t_7 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_t_3, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 126, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_end, __pyx_kp_s__6) < 0) __PYX_ERR(0, 128, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_t_3, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 128, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-    /* "wordle.pyx":127
+    /* "wordle.pyx":129
  *     for i, token in enumerate(normalTokens):
  *         print( token.word, end = ' ' )
  *         sys.stdout.flush()     # force the output to display what is in the buffer             # <<<<<<<<<<<<<<
  * 
  *         a = 0.2                # the parameter of the spiral
  */
-    __pyx_t_6 = __Pyx_GetModuleGlobalName(__pyx_n_s_sys); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 127, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_GetModuleGlobalName(__pyx_n_s_sys); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 129, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_stdout); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 127, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_stdout); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 129, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_flush); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 127, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_flush); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 129, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_t_3 = NULL;
@@ -2806,16 +3040,16 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
       }
     }
     if (__pyx_t_3) {
-      __pyx_t_7 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 127, __pyx_L1_error)
+      __pyx_t_7 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 129, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     } else {
-      __pyx_t_7 = __Pyx_PyObject_CallNoArg(__pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 127, __pyx_L1_error)
+      __pyx_t_7 = __Pyx_PyObject_CallNoArg(__pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 129, __pyx_L1_error)
     }
     __Pyx_GOTREF(__pyx_t_7);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-    /* "wordle.pyx":129
+    /* "wordle.pyx":131
  *         sys.stdout.flush()     # force the output to display what is in the buffer
  * 
  *         a = 0.2                # the parameter of the spiral             # <<<<<<<<<<<<<<
@@ -2824,23 +3058,23 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  */
     __pyx_v_a = 0.2;
 
-    /* "wordle.pyx":131
+    /* "wordle.pyx":133
  *         a = 0.2                # the parameter of the spiral
  * 
  *         if ups_and_downs[i] == 1:             # <<<<<<<<<<<<<<
  *             # add some randomness to the placing strategy
  *             a = -a
  */
-    __pyx_t_7 = __Pyx_PyObject_GetItem(__pyx_v_ups_and_downs, __pyx_v_i); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 131, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyObject_GetItem(__pyx_v_ups_and_downs, __pyx_v_i); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 133, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
-    __pyx_t_6 = __Pyx_PyInt_EqObjC(__pyx_t_7, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 131, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyInt_EqObjC(__pyx_t_7, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 133, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 131, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 133, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     if (__pyx_t_8) {
 
-      /* "wordle.pyx":133
+      /* "wordle.pyx":135
  *         if ups_and_downs[i] == 1:
  *             # add some randomness to the placing strategy
  *             a = -a             # <<<<<<<<<<<<<<
@@ -2849,7 +3083,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  */
       __pyx_v_a = (-__pyx_v_a);
 
-      /* "wordle.pyx":131
+      /* "wordle.pyx":133
  *         a = 0.2                # the parameter of the spiral
  * 
  *         if ups_and_downs[i] == 1:             # <<<<<<<<<<<<<<
@@ -2858,21 +3092,21 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  */
     }
 
-    /* "wordle.pyx":137
+    /* "wordle.pyx":139
  * 
  *         # determine a starting position on the canvas of this token, near half of the width of canvas
  *         w = random.randint( int(0.3*c_W), int(0.7*c_W) )             # <<<<<<<<<<<<<<
  *         h = (c_H >> 1) - (token.imgSize[1] >> 1)
  * 
  */
-    __pyx_t_7 = __Pyx_GetModuleGlobalName(__pyx_n_s_random); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 137, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_GetModuleGlobalName(__pyx_n_s_random); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 139, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_randint); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 137, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_randint); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 139, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-    __pyx_t_7 = __Pyx_PyInt_FromDouble((0.3 * __pyx_v_c_W)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 137, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyInt_FromDouble((0.3 * __pyx_v_c_W)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 139, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
-    __pyx_t_9 = __Pyx_PyInt_FromDouble((0.7 * __pyx_v_c_W)); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 137, __pyx_L1_error)
+    __pyx_t_9 = __Pyx_PyInt_FromDouble((0.7 * __pyx_v_c_W)); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 139, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_9);
     __pyx_t_10 = NULL;
     __pyx_t_11 = 0;
@@ -2889,7 +3123,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_3)) {
       PyObject *__pyx_temp[3] = {__pyx_t_10, __pyx_t_7, __pyx_t_9};
-      __pyx_t_6 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_11, 2+__pyx_t_11); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 137, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_11, 2+__pyx_t_11); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 139, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
@@ -2899,7 +3133,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
       PyObject *__pyx_temp[3] = {__pyx_t_10, __pyx_t_7, __pyx_t_9};
-      __pyx_t_6 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_11, 2+__pyx_t_11); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 137, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_11, 2+__pyx_t_11); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 139, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
@@ -2907,7 +3141,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
     } else
     #endif
     {
-      __pyx_t_12 = PyTuple_New(2+__pyx_t_11); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 137, __pyx_L1_error)
+      __pyx_t_12 = PyTuple_New(2+__pyx_t_11); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 139, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_12);
       if (__pyx_t_10) {
         __Pyx_GIVEREF(__pyx_t_10); PyTuple_SET_ITEM(__pyx_t_12, 0, __pyx_t_10); __pyx_t_10 = NULL;
@@ -2918,41 +3152,41 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
       PyTuple_SET_ITEM(__pyx_t_12, 1+__pyx_t_11, __pyx_t_9);
       __pyx_t_7 = 0;
       __pyx_t_9 = 0;
-      __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_12, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 137, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_12, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 139, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
     }
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_11 = __Pyx_PyInt_As_int(__pyx_t_6); if (unlikely((__pyx_t_11 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 137, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_PyInt_As_int(__pyx_t_6); if (unlikely((__pyx_t_11 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 139, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __pyx_v_w = __pyx_t_11;
 
-    /* "wordle.pyx":138
+    /* "wordle.pyx":140
  *         # determine a starting position on the canvas of this token, near half of the width of canvas
  *         w = random.randint( int(0.3*c_W), int(0.7*c_W) )
  *         h = (c_H >> 1) - (token.imgSize[1] >> 1)             # <<<<<<<<<<<<<<
  * 
  *         if w < 0 or w >= c_W:
  */
-    __pyx_t_6 = __Pyx_PyInt_From_long((__pyx_v_c_H >> 1)); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 138, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyInt_From_long((__pyx_v_c_H >> 1)); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 140, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_token, __pyx_n_s_imgSize); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 138, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_token, __pyx_n_s_imgSize); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 140, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_12 = __Pyx_GetItemInt(__pyx_t_3, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 138, __pyx_L1_error)
+    __pyx_t_12 = __Pyx_GetItemInt(__pyx_t_3, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 140, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_12);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = __Pyx_PyInt_RshiftObjC(__pyx_t_12, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 138, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyInt_RshiftObjC(__pyx_t_12, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 140, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-    __pyx_t_12 = PyNumber_Subtract(__pyx_t_6, __pyx_t_3); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 138, __pyx_L1_error)
+    __pyx_t_12 = PyNumber_Subtract(__pyx_t_6, __pyx_t_3); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 140, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_12);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_11 = __Pyx_PyInt_As_int(__pyx_t_12); if (unlikely((__pyx_t_11 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 138, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_PyInt_As_int(__pyx_t_12); if (unlikely((__pyx_t_11 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 140, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
     __pyx_v_h = __pyx_t_11;
 
-    /* "wordle.pyx":140
+    /* "wordle.pyx":142
  *         h = (c_H >> 1) - (token.imgSize[1] >> 1)
  * 
  *         if w < 0 or w >= c_W:             # <<<<<<<<<<<<<<
@@ -2970,7 +3204,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
     __pyx_L9_bool_binop_done:;
     if (__pyx_t_8) {
 
-      /* "wordle.pyx":141
+      /* "wordle.pyx":143
  * 
  *         if w < 0 or w >= c_W:
  *             w = c_W >> 1             # <<<<<<<<<<<<<<
@@ -2979,7 +3213,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  */
       __pyx_v_w = (__pyx_v_c_W >> 1);
 
-      /* "wordle.pyx":140
+      /* "wordle.pyx":142
  *         h = (c_H >> 1) - (token.imgSize[1] >> 1)
  * 
  *         if w < 0 or w >= c_W:             # <<<<<<<<<<<<<<
@@ -2988,7 +3222,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  */
     }
 
-    /* "wordle.pyx":142
+    /* "wordle.pyx":144
  *         if w < 0 or w >= c_W:
  *             w = c_W >> 1
  *         if h < 0 or h >= c_H:             # <<<<<<<<<<<<<<
@@ -3006,7 +3240,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
     __pyx_L12_bool_binop_done:;
     if (__pyx_t_8) {
 
-      /* "wordle.pyx":143
+      /* "wordle.pyx":145
  *             w = c_W >> 1
  *         if h < 0 or h >= c_H:
  *             h = c_H >> 1             # <<<<<<<<<<<<<<
@@ -3015,7 +3249,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  */
       __pyx_v_h = (__pyx_v_c_H >> 1);
 
-      /* "wordle.pyx":142
+      /* "wordle.pyx":144
  *         if w < 0 or w >= c_W:
  *             w = c_W >> 1
  *         if h < 0 or h >= c_H:             # <<<<<<<<<<<<<<
@@ -3024,32 +3258,32 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  */
     }
 
-    /* "wordle.pyx":146
+    /* "wordle.pyx":148
  * 
  * 
  *         if ups_and_downs[i] == 0:             # <<<<<<<<<<<<<<
  *             A = SP.Archimedian()
  *             A.start(a)
  */
-    __pyx_t_12 = __Pyx_PyObject_GetItem(__pyx_v_ups_and_downs, __pyx_v_i); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 146, __pyx_L1_error)
+    __pyx_t_12 = __Pyx_PyObject_GetItem(__pyx_v_ups_and_downs, __pyx_v_i); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 148, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_12);
-    __pyx_t_3 = __Pyx_PyInt_EqObjC(__pyx_t_12, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 146, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyInt_EqObjC(__pyx_t_12, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 148, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-    __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 146, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 148, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     if (__pyx_t_8) {
 
-      /* "wordle.pyx":147
+      /* "wordle.pyx":149
  * 
  *         if ups_and_downs[i] == 0:
  *             A = SP.Archimedian()             # <<<<<<<<<<<<<<
  *             A.start(a)
  *         else:
  */
-      __pyx_t_12 = __Pyx_GetModuleGlobalName(__pyx_n_s_SP); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 147, __pyx_L1_error)
+      __pyx_t_12 = __Pyx_GetModuleGlobalName(__pyx_n_s_SP); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 149, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_12);
-      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_12, __pyx_n_s_Archimedian); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 147, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_12, __pyx_n_s_Archimedian); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 149, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
       __pyx_t_12 = NULL;
@@ -3063,26 +3297,26 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
         }
       }
       if (__pyx_t_12) {
-        __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_12); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 147, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_12); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 149, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
       } else {
-        __pyx_t_3 = __Pyx_PyObject_CallNoArg(__pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 147, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_PyObject_CallNoArg(__pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 149, __pyx_L1_error)
       }
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       __Pyx_XDECREF_SET(__pyx_v_A, __pyx_t_3);
       __pyx_t_3 = 0;
 
-      /* "wordle.pyx":148
+      /* "wordle.pyx":150
  *         if ups_and_downs[i] == 0:
  *             A = SP.Archimedian()
  *             A.start(a)             # <<<<<<<<<<<<<<
  *         else:
  *             A = SP.Rectangular()
  */
-      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_A, __pyx_n_s_start); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 148, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_A, __pyx_n_s_start); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 150, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_12 = PyFloat_FromDouble(__pyx_v_a); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 148, __pyx_L1_error)
+      __pyx_t_12 = PyFloat_FromDouble(__pyx_v_a); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 150, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_12);
       __pyx_t_9 = NULL;
       if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_6))) {
@@ -3095,14 +3329,14 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
         }
       }
       if (!__pyx_t_9) {
-        __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_12); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 148, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_12); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 150, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
         __Pyx_GOTREF(__pyx_t_3);
       } else {
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_6)) {
           PyObject *__pyx_temp[2] = {__pyx_t_9, __pyx_t_12};
-          __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 148, __pyx_L1_error)
+          __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 150, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
@@ -3111,20 +3345,20 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_6)) {
           PyObject *__pyx_temp[2] = {__pyx_t_9, __pyx_t_12};
-          __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 148, __pyx_L1_error)
+          __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 150, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
         } else
         #endif
         {
-          __pyx_t_7 = PyTuple_New(1+1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 148, __pyx_L1_error)
+          __pyx_t_7 = PyTuple_New(1+1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 150, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_7);
           __Pyx_GIVEREF(__pyx_t_9); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_9); __pyx_t_9 = NULL;
           __Pyx_GIVEREF(__pyx_t_12);
           PyTuple_SET_ITEM(__pyx_t_7, 0+1, __pyx_t_12);
           __pyx_t_12 = 0;
-          __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_7, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 148, __pyx_L1_error)
+          __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_7, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 150, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
         }
@@ -3132,7 +3366,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-      /* "wordle.pyx":146
+      /* "wordle.pyx":148
  * 
  * 
  *         if ups_and_downs[i] == 0:             # <<<<<<<<<<<<<<
@@ -3142,7 +3376,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
       goto __pyx_L14;
     }
 
-    /* "wordle.pyx":150
+    /* "wordle.pyx":152
  *             A.start(a)
  *         else:
  *             A = SP.Rectangular()             # <<<<<<<<<<<<<<
@@ -3150,9 +3384,9 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  * 
  */
     /*else*/ {
-      __pyx_t_6 = __Pyx_GetModuleGlobalName(__pyx_n_s_SP); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 150, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_GetModuleGlobalName(__pyx_n_s_SP); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 152, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_Rectangular); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 150, __pyx_L1_error)
+      __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_Rectangular); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 152, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       __pyx_t_6 = NULL;
@@ -3166,33 +3400,33 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
         }
       }
       if (__pyx_t_6) {
-        __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 150, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 152, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       } else {
-        __pyx_t_3 = __Pyx_PyObject_CallNoArg(__pyx_t_7); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 150, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_PyObject_CallNoArg(__pyx_t_7); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 152, __pyx_L1_error)
       }
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_XDECREF_SET(__pyx_v_A, __pyx_t_3);
       __pyx_t_3 = 0;
 
-      /* "wordle.pyx":151
+      /* "wordle.pyx":153
  *         else:
  *             A = SP.Rectangular()
  *             A.start(2)             # <<<<<<<<<<<<<<
  * 
  *         dx0, dy0 = 0, 0
  */
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_A, __pyx_n_s_start); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 151, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_A, __pyx_n_s_start); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 153, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_tuple__6, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 151, __pyx_L1_error)
+      __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_tuple__7, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 153, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     }
     __pyx_L14:;
 
-    /* "wordle.pyx":153
+    /* "wordle.pyx":155
  *             A.start(2)
  * 
  *         dx0, dy0 = 0, 0             # <<<<<<<<<<<<<<
@@ -3204,18 +3438,18 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
     __pyx_v_dx0 = __pyx_t_11;
     __pyx_v_dy0 = __pyx_t_14;
 
-    /* "wordle.pyx":154
+    /* "wordle.pyx":156
  * 
  *         dx0, dy0 = 0, 0
  *         place1 = (w, h)             # <<<<<<<<<<<<<<
  * 
  *         last_hit_index = 0 # we cache the index of last hit
  */
-    __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_w); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 154, __pyx_L1_error)
+    __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_w); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 156, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_7);
-    __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_h); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 154, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_h); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 156, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 154, __pyx_L1_error)
+    __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 156, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_GIVEREF(__pyx_t_7);
     PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_7);
@@ -3226,7 +3460,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
     __Pyx_XDECREF_SET(__pyx_v_place1, __pyx_t_6);
     __pyx_t_6 = 0;
 
-    /* "wordle.pyx":156
+    /* "wordle.pyx":158
  *         place1 = (w, h)
  * 
  *         last_hit_index = 0 # we cache the index of last hit             # <<<<<<<<<<<<<<
@@ -3235,7 +3469,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  */
     __pyx_v_last_hit_index = 0;
 
-    /* "wordle.pyx":158
+    /* "wordle.pyx":160
  *         last_hit_index = 0 # we cache the index of last hit
  * 
  *         iter_ = 0             # <<<<<<<<<<<<<<
@@ -3245,7 +3479,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
     __Pyx_INCREF(__pyx_int_0);
     __Pyx_XDECREF_SET(__pyx_v_iter_, __pyx_int_0);
 
-    /* "wordle.pyx":160
+    /* "wordle.pyx":162
  *         iter_ = 0
  * 
  *         start_countdown = False             # <<<<<<<<<<<<<<
@@ -3254,7 +3488,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  */
     __pyx_v_start_countdown = 0;
 
-    /* "wordle.pyx":161
+    /* "wordle.pyx":163
  * 
  *         start_countdown = False
  *         max_iter = 0             # <<<<<<<<<<<<<<
@@ -3264,7 +3498,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
     __Pyx_INCREF(__pyx_int_0);
     __Pyx_XDECREF_SET(__pyx_v_max_iter, __pyx_int_0);
 
-    /* "wordle.pyx":163
+    /* "wordle.pyx":165
  *         max_iter = 0
  * 
  *         while True:             # <<<<<<<<<<<<<<
@@ -3273,52 +3507,52 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  */
     while (1) {
 
-      /* "wordle.pyx":164
+      /* "wordle.pyx":166
  * 
  *         while True:
  *             w = place1[0] + A.u             # <<<<<<<<<<<<<<
  *             h = place1[1] + A.v
  *             A.getNext()
  */
-      __pyx_t_6 = __Pyx_GetItemInt(__pyx_v_place1, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 164, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_GetItemInt(__pyx_v_place1, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 166, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_A, __pyx_n_s_u); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 164, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_A, __pyx_n_s_u); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 166, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_7 = PyNumber_Add(__pyx_t_6, __pyx_t_3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 164, __pyx_L1_error)
+      __pyx_t_7 = PyNumber_Add(__pyx_t_6, __pyx_t_3); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 166, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_t_14 = __Pyx_PyInt_As_int(__pyx_t_7); if (unlikely((__pyx_t_14 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 164, __pyx_L1_error)
+      __pyx_t_14 = __Pyx_PyInt_As_int(__pyx_t_7); if (unlikely((__pyx_t_14 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 166, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       __pyx_v_w = __pyx_t_14;
 
-      /* "wordle.pyx":165
+      /* "wordle.pyx":167
  *         while True:
  *             w = place1[0] + A.u
  *             h = place1[1] + A.v             # <<<<<<<<<<<<<<
  *             A.getNext()
  * 
  */
-      __pyx_t_7 = __Pyx_GetItemInt(__pyx_v_place1, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 165, __pyx_L1_error)
+      __pyx_t_7 = __Pyx_GetItemInt(__pyx_v_place1, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 167, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_A, __pyx_n_s_v); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 165, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_A, __pyx_n_s_v); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 167, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_6 = PyNumber_Add(__pyx_t_7, __pyx_t_3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 165, __pyx_L1_error)
+      __pyx_t_6 = PyNumber_Add(__pyx_t_7, __pyx_t_3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 167, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_t_14 = __Pyx_PyInt_As_int(__pyx_t_6); if (unlikely((__pyx_t_14 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 165, __pyx_L1_error)
+      __pyx_t_14 = __Pyx_PyInt_As_int(__pyx_t_6); if (unlikely((__pyx_t_14 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 167, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       __pyx_v_h = __pyx_t_14;
 
-      /* "wordle.pyx":166
+      /* "wordle.pyx":168
  *             w = place1[0] + A.u
  *             h = place1[1] + A.v
  *             A.getNext()             # <<<<<<<<<<<<<<
  * 
  * 
  */
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_A, __pyx_n_s_getNext); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 166, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_A, __pyx_n_s_getNext); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 168, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __pyx_t_7 = NULL;
       if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
@@ -3331,16 +3565,16 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
         }
       }
       if (__pyx_t_7) {
-        __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 166, __pyx_L1_error)
+        __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 168, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       } else {
-        __pyx_t_6 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 166, __pyx_L1_error)
+        __pyx_t_6 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 168, __pyx_L1_error)
       }
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-      /* "wordle.pyx":169
+      /* "wordle.pyx":171
  * 
  * 
  *             if start_countdown == True:             # <<<<<<<<<<<<<<
@@ -3350,32 +3584,32 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
       __pyx_t_8 = ((__pyx_v_start_countdown == 1) != 0);
       if (__pyx_t_8) {
 
-        /* "wordle.pyx":170
+        /* "wordle.pyx":172
  * 
  *             if start_countdown == True:
  *                 max_iter -= 1             # <<<<<<<<<<<<<<
  *                 if max_iter == 0:
  *                     break
  */
-        __pyx_t_6 = __Pyx_PyInt_SubtractObjC(__pyx_v_max_iter, __pyx_int_1, 1, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 170, __pyx_L1_error)
+        __pyx_t_6 = __Pyx_PyInt_SubtractObjC(__pyx_v_max_iter, __pyx_int_1, 1, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 172, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_DECREF_SET(__pyx_v_max_iter, __pyx_t_6);
         __pyx_t_6 = 0;
 
-        /* "wordle.pyx":171
+        /* "wordle.pyx":173
  *             if start_countdown == True:
  *                 max_iter -= 1
  *                 if max_iter == 0:             # <<<<<<<<<<<<<<
  *                     break
  *             else:
  */
-        __pyx_t_6 = __Pyx_PyInt_EqObjC(__pyx_v_max_iter, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 171, __pyx_L1_error)
+        __pyx_t_6 = __Pyx_PyInt_EqObjC(__pyx_v_max_iter, __pyx_int_0, 0, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 173, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
-        __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 171, __pyx_L1_error)
+        __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 173, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
         if (__pyx_t_8) {
 
-          /* "wordle.pyx":172
+          /* "wordle.pyx":174
  *                 max_iter -= 1
  *                 if max_iter == 0:
  *                     break             # <<<<<<<<<<<<<<
@@ -3384,7 +3618,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  */
           goto __pyx_L16_break;
 
-          /* "wordle.pyx":171
+          /* "wordle.pyx":173
  *             if start_countdown == True:
  *                 max_iter -= 1
  *                 if max_iter == 0:             # <<<<<<<<<<<<<<
@@ -3393,7 +3627,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  */
         }
 
-        /* "wordle.pyx":169
+        /* "wordle.pyx":171
  * 
  * 
  *             if start_countdown == True:             # <<<<<<<<<<<<<<
@@ -3403,7 +3637,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
         goto __pyx_L17;
       }
 
-      /* "wordle.pyx":174
+      /* "wordle.pyx":176
  *                     break
  *             else:
  *                 iter_ += 1             # <<<<<<<<<<<<<<
@@ -3411,14 +3645,14 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  *             if ( w < 0 or w >= c_W or h < 0 or h > c_H ):
  */
       /*else*/ {
-        __pyx_t_6 = __Pyx_PyInt_AddObjC(__pyx_v_iter_, __pyx_int_1, 1, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 174, __pyx_L1_error)
+        __pyx_t_6 = __Pyx_PyInt_AddObjC(__pyx_v_iter_, __pyx_int_1, 1, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 176, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_DECREF_SET(__pyx_v_iter_, __pyx_t_6);
         __pyx_t_6 = 0;
       }
       __pyx_L17:;
 
-      /* "wordle.pyx":176
+      /* "wordle.pyx":178
  *                 iter_ += 1
  * 
  *             if ( w < 0 or w >= c_W or h < 0 or h > c_H ):             # <<<<<<<<<<<<<<
@@ -3448,7 +3682,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
       __pyx_L20_bool_binop_done:;
       if (__pyx_t_8) {
 
-        /* "wordle.pyx":178
+        /* "wordle.pyx":180
  *             if ( w < 0 or w >= c_W or h < 0 or h > c_H ):
  *                 #  the shape has fallen outside the canvas
  *                 if start_countdown == False:             # <<<<<<<<<<<<<<
@@ -3458,7 +3692,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
         __pyx_t_8 = ((__pyx_v_start_countdown == 0) != 0);
         if (__pyx_t_8) {
 
-          /* "wordle.pyx":179
+          /* "wordle.pyx":181
  *                 #  the shape has fallen outside the canvas
  *                 if start_countdown == False:
  *                     start_countdown = True             # <<<<<<<<<<<<<<
@@ -3467,22 +3701,22 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  */
           __pyx_v_start_countdown = 1;
 
-          /* "wordle.pyx":180
+          /* "wordle.pyx":182
  *                 if start_countdown == False:
  *                     start_countdown = True
  *                     max_iter  = 1 + 10*iter_             # <<<<<<<<<<<<<<
  * 
  * 
  */
-          __pyx_t_6 = PyNumber_Multiply(__pyx_int_10, __pyx_v_iter_); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 180, __pyx_L1_error)
+          __pyx_t_6 = PyNumber_Multiply(__pyx_int_10, __pyx_v_iter_); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 182, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_6);
-          __pyx_t_3 = __Pyx_PyInt_AddCObj(__pyx_int_1, __pyx_t_6, 1, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 180, __pyx_L1_error)
+          __pyx_t_3 = __Pyx_PyInt_AddCObj(__pyx_int_1, __pyx_t_6, 1, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 182, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
           __Pyx_DECREF_SET(__pyx_v_max_iter, __pyx_t_3);
           __pyx_t_3 = 0;
 
-          /* "wordle.pyx":178
+          /* "wordle.pyx":180
  *             if ( w < 0 or w >= c_W or h < 0 or h > c_H ):
  *                 #  the shape has fallen outside the canvas
  *                 if start_countdown == False:             # <<<<<<<<<<<<<<
@@ -3491,7 +3725,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  */
         }
 
-        /* "wordle.pyx":176
+        /* "wordle.pyx":178
  *                 iter_ += 1
  * 
  *             if ( w < 0 or w >= c_W or h < 0 or h > c_H ):             # <<<<<<<<<<<<<<
@@ -3500,18 +3734,18 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  */
       }
 
-      /* "wordle.pyx":183
+      /* "wordle.pyx":185
  * 
  * 
  *             place1 = ( w, h )             # <<<<<<<<<<<<<<
  *             collision = False
  * 
  */
-      __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_w); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 183, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_w); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 185, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_h); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 183, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_h); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 185, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 183, __pyx_L1_error)
+      __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 185, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_GIVEREF(__pyx_t_3);
       PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_3);
@@ -3522,7 +3756,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
       __Pyx_DECREF_SET(__pyx_v_place1, __pyx_t_7);
       __pyx_t_7 = 0;
 
-      /* "wordle.pyx":184
+      /* "wordle.pyx":186
  * 
  *             place1 = ( w, h )
  *             collision = False             # <<<<<<<<<<<<<<
@@ -3532,76 +3766,76 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
       __Pyx_INCREF(Py_False);
       __Pyx_XDECREF_SET(__pyx_v_collision, Py_False);
 
-      /* "wordle.pyx":186
+      /* "wordle.pyx":188
  *             collision = False
  * 
  *             if last_hit_index < i:             # <<<<<<<<<<<<<<
  *                 j = last_hit_index
  *                 if normalTokens[j].place != None:
  */
-      __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_last_hit_index); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 186, __pyx_L1_error)
+      __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_last_hit_index); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 188, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_6 = PyObject_RichCompare(__pyx_t_7, __pyx_v_i, Py_LT); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 186, __pyx_L1_error)
+      __pyx_t_6 = PyObject_RichCompare(__pyx_t_7, __pyx_v_i, Py_LT); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 188, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 186, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 188, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       if (__pyx_t_8) {
 
-        /* "wordle.pyx":187
+        /* "wordle.pyx":189
  * 
  *             if last_hit_index < i:
  *                 j = last_hit_index             # <<<<<<<<<<<<<<
  *                 if normalTokens[j].place != None:
  *                     collision = BBox.collisionTest( token.quadTree, normalTokens[j].quadTree, place1, normalTokens[j].place, STAY_AWAY)
  */
-        __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_last_hit_index); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 187, __pyx_L1_error)
+        __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_last_hit_index); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 189, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_XDECREF_SET(__pyx_v_j, __pyx_t_6);
         __pyx_t_6 = 0;
 
-        /* "wordle.pyx":188
+        /* "wordle.pyx":190
  *             if last_hit_index < i:
  *                 j = last_hit_index
  *                 if normalTokens[j].place != None:             # <<<<<<<<<<<<<<
  *                     collision = BBox.collisionTest( token.quadTree, normalTokens[j].quadTree, place1, normalTokens[j].place, STAY_AWAY)
  * 
  */
-        __pyx_t_6 = __Pyx_PyObject_GetItem(__pyx_v_normalTokens, __pyx_v_j); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 188, __pyx_L1_error)
+        __pyx_t_6 = __Pyx_PyObject_GetItem(__pyx_v_normalTokens, __pyx_v_j); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 190, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
-        __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_place); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 188, __pyx_L1_error)
+        __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_place); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 190, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_7);
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-        __pyx_t_6 = PyObject_RichCompare(__pyx_t_7, Py_None, Py_NE); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 188, __pyx_L1_error)
+        __pyx_t_6 = PyObject_RichCompare(__pyx_t_7, Py_None, Py_NE); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 190, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-        __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 188, __pyx_L1_error)
+        __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 190, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
         if (__pyx_t_8) {
 
-          /* "wordle.pyx":189
+          /* "wordle.pyx":191
  *                 j = last_hit_index
  *                 if normalTokens[j].place != None:
  *                     collision = BBox.collisionTest( token.quadTree, normalTokens[j].quadTree, place1, normalTokens[j].place, STAY_AWAY)             # <<<<<<<<<<<<<<
  * 
  *             if collision == False:
  */
-          __pyx_t_7 = __Pyx_GetModuleGlobalName(__pyx_n_s_BBox); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 189, __pyx_L1_error)
+          __pyx_t_7 = __Pyx_GetModuleGlobalName(__pyx_n_s_BBox); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 191, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_7);
-          __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_collisionTest); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 189, __pyx_L1_error)
+          __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_collisionTest); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 191, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-          __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_token, __pyx_n_s_quadTree); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 189, __pyx_L1_error)
+          __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_token, __pyx_n_s_quadTree); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 191, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_7);
-          __pyx_t_12 = __Pyx_PyObject_GetItem(__pyx_v_normalTokens, __pyx_v_j); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 189, __pyx_L1_error)
+          __pyx_t_12 = __Pyx_PyObject_GetItem(__pyx_v_normalTokens, __pyx_v_j); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 191, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_12);
-          __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_12, __pyx_n_s_quadTree); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 189, __pyx_L1_error)
+          __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_12, __pyx_n_s_quadTree); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 191, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_9);
           __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-          __pyx_t_12 = __Pyx_PyObject_GetItem(__pyx_v_normalTokens, __pyx_v_j); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 189, __pyx_L1_error)
+          __pyx_t_12 = __Pyx_PyObject_GetItem(__pyx_v_normalTokens, __pyx_v_j); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 191, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_12);
-          __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_12, __pyx_n_s_place); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 189, __pyx_L1_error)
+          __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_12, __pyx_n_s_place); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 191, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_10);
           __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-          __pyx_t_12 = __Pyx_GetModuleGlobalName(__pyx_n_s_STAY_AWAY); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 189, __pyx_L1_error)
+          __pyx_t_12 = __Pyx_GetModuleGlobalName(__pyx_n_s_STAY_AWAY); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 191, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_12);
           __pyx_t_15 = NULL;
           __pyx_t_14 = 0;
@@ -3618,7 +3852,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
           #if CYTHON_FAST_PYCALL
           if (PyFunction_Check(__pyx_t_3)) {
             PyObject *__pyx_temp[6] = {__pyx_t_15, __pyx_t_7, __pyx_t_9, __pyx_v_place1, __pyx_t_10, __pyx_t_12};
-            __pyx_t_6 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_14, 5+__pyx_t_14); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 189, __pyx_L1_error)
+            __pyx_t_6 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_14, 5+__pyx_t_14); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 191, __pyx_L1_error)
             __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
             __Pyx_GOTREF(__pyx_t_6);
             __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
@@ -3630,7 +3864,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
           #if CYTHON_FAST_PYCCALL
           if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
             PyObject *__pyx_temp[6] = {__pyx_t_15, __pyx_t_7, __pyx_t_9, __pyx_v_place1, __pyx_t_10, __pyx_t_12};
-            __pyx_t_6 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_14, 5+__pyx_t_14); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 189, __pyx_L1_error)
+            __pyx_t_6 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_14, 5+__pyx_t_14); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 191, __pyx_L1_error)
             __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
             __Pyx_GOTREF(__pyx_t_6);
             __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
@@ -3640,7 +3874,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
           } else
           #endif
           {
-            __pyx_t_16 = PyTuple_New(5+__pyx_t_14); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 189, __pyx_L1_error)
+            __pyx_t_16 = PyTuple_New(5+__pyx_t_14); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 191, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_16);
             if (__pyx_t_15) {
               __Pyx_GIVEREF(__pyx_t_15); PyTuple_SET_ITEM(__pyx_t_16, 0, __pyx_t_15); __pyx_t_15 = NULL;
@@ -3660,7 +3894,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
             __pyx_t_9 = 0;
             __pyx_t_10 = 0;
             __pyx_t_12 = 0;
-            __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_16, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 189, __pyx_L1_error)
+            __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_16, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 191, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_6);
             __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
           }
@@ -3668,7 +3902,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
           __Pyx_DECREF_SET(__pyx_v_collision, __pyx_t_6);
           __pyx_t_6 = 0;
 
-          /* "wordle.pyx":188
+          /* "wordle.pyx":190
  *             if last_hit_index < i:
  *                 j = last_hit_index
  *                 if normalTokens[j].place != None:             # <<<<<<<<<<<<<<
@@ -3677,7 +3911,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  */
         }
 
-        /* "wordle.pyx":186
+        /* "wordle.pyx":188
  *             collision = False
  * 
  *             if last_hit_index < i:             # <<<<<<<<<<<<<<
@@ -3686,34 +3920,34 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  */
       }
 
-      /* "wordle.pyx":191
+      /* "wordle.pyx":193
  *                     collision = BBox.collisionTest( token.quadTree, normalTokens[j].quadTree, place1, normalTokens[j].place, STAY_AWAY)
  * 
  *             if collision == False:             # <<<<<<<<<<<<<<
  *                 # NO collision with the cached index
  *                 for j in range( i ): # check for collisions with the rest of the tokens
  */
-      __pyx_t_6 = PyObject_RichCompare(__pyx_v_collision, Py_False, Py_EQ); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 191, __pyx_L1_error)
-      __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 191, __pyx_L1_error)
+      __pyx_t_6 = PyObject_RichCompare(__pyx_v_collision, Py_False, Py_EQ); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 193, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 193, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       if (__pyx_t_8) {
 
-        /* "wordle.pyx":193
+        /* "wordle.pyx":195
  *             if collision == False:
  *                 # NO collision with the cached index
  *                 for j in range( i ): # check for collisions with the rest of the tokens             # <<<<<<<<<<<<<<
  *                     if ((j != last_hit_index) and (normalTokens[j].place != None)):
  *                         if BBox.collisionTest(token.quadTree, normalTokens[j].quadTree, place1, normalTokens[j].place, STAY_AWAY) == True:
  */
-        __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_builtin_range, __pyx_v_i); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 193, __pyx_L1_error)
+        __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_builtin_range, __pyx_v_i); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 195, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
         if (likely(PyList_CheckExact(__pyx_t_6)) || PyTuple_CheckExact(__pyx_t_6)) {
           __pyx_t_3 = __pyx_t_6; __Pyx_INCREF(__pyx_t_3); __pyx_t_17 = 0;
           __pyx_t_18 = NULL;
         } else {
-          __pyx_t_17 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 193, __pyx_L1_error)
+          __pyx_t_17 = -1; __pyx_t_3 = PyObject_GetIter(__pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 195, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_3);
-          __pyx_t_18 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 193, __pyx_L1_error)
+          __pyx_t_18 = Py_TYPE(__pyx_t_3)->tp_iternext; if (unlikely(!__pyx_t_18)) __PYX_ERR(0, 195, __pyx_L1_error)
         }
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
         for (;;) {
@@ -3721,17 +3955,17 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
             if (likely(PyList_CheckExact(__pyx_t_3))) {
               if (__pyx_t_17 >= PyList_GET_SIZE(__pyx_t_3)) break;
               #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-              __pyx_t_6 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_17); __Pyx_INCREF(__pyx_t_6); __pyx_t_17++; if (unlikely(0 < 0)) __PYX_ERR(0, 193, __pyx_L1_error)
+              __pyx_t_6 = PyList_GET_ITEM(__pyx_t_3, __pyx_t_17); __Pyx_INCREF(__pyx_t_6); __pyx_t_17++; if (unlikely(0 < 0)) __PYX_ERR(0, 195, __pyx_L1_error)
               #else
-              __pyx_t_6 = PySequence_ITEM(__pyx_t_3, __pyx_t_17); __pyx_t_17++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 193, __pyx_L1_error)
+              __pyx_t_6 = PySequence_ITEM(__pyx_t_3, __pyx_t_17); __pyx_t_17++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 195, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_6);
               #endif
             } else {
               if (__pyx_t_17 >= PyTuple_GET_SIZE(__pyx_t_3)) break;
               #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-              __pyx_t_6 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_17); __Pyx_INCREF(__pyx_t_6); __pyx_t_17++; if (unlikely(0 < 0)) __PYX_ERR(0, 193, __pyx_L1_error)
+              __pyx_t_6 = PyTuple_GET_ITEM(__pyx_t_3, __pyx_t_17); __Pyx_INCREF(__pyx_t_6); __pyx_t_17++; if (unlikely(0 < 0)) __PYX_ERR(0, 195, __pyx_L1_error)
               #else
-              __pyx_t_6 = PySequence_ITEM(__pyx_t_3, __pyx_t_17); __pyx_t_17++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 193, __pyx_L1_error)
+              __pyx_t_6 = PySequence_ITEM(__pyx_t_3, __pyx_t_17); __pyx_t_17++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 195, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_6);
               #endif
             }
@@ -3741,7 +3975,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
               PyObject* exc_type = PyErr_Occurred();
               if (exc_type) {
                 if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-                else __PYX_ERR(0, 193, __pyx_L1_error)
+                else __PYX_ERR(0, 195, __pyx_L1_error)
               }
               break;
             }
@@ -3750,62 +3984,62 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
           __Pyx_XDECREF_SET(__pyx_v_j, __pyx_t_6);
           __pyx_t_6 = 0;
 
-          /* "wordle.pyx":194
+          /* "wordle.pyx":196
  *                 # NO collision with the cached index
  *                 for j in range( i ): # check for collisions with the rest of the tokens
  *                     if ((j != last_hit_index) and (normalTokens[j].place != None)):             # <<<<<<<<<<<<<<
  *                         if BBox.collisionTest(token.quadTree, normalTokens[j].quadTree, place1, normalTokens[j].place, STAY_AWAY) == True:
  *                             collision = True
  */
-          __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_last_hit_index); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 194, __pyx_L1_error)
+          __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_last_hit_index); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 196, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_6);
-          __pyx_t_16 = PyObject_RichCompare(__pyx_v_j, __pyx_t_6, Py_NE); __Pyx_XGOTREF(__pyx_t_16); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 194, __pyx_L1_error)
+          __pyx_t_16 = PyObject_RichCompare(__pyx_v_j, __pyx_t_6, Py_NE); __Pyx_XGOTREF(__pyx_t_16); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 196, __pyx_L1_error)
           __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-          __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_16); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 194, __pyx_L1_error)
+          __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_16); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 196, __pyx_L1_error)
           __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
           if (__pyx_t_13) {
           } else {
             __pyx_t_8 = __pyx_t_13;
             goto __pyx_L31_bool_binop_done;
           }
-          __pyx_t_16 = __Pyx_PyObject_GetItem(__pyx_v_normalTokens, __pyx_v_j); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 194, __pyx_L1_error)
+          __pyx_t_16 = __Pyx_PyObject_GetItem(__pyx_v_normalTokens, __pyx_v_j); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 196, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_16);
-          __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_n_s_place); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 194, __pyx_L1_error)
+          __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_16, __pyx_n_s_place); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 196, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_6);
           __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-          __pyx_t_16 = PyObject_RichCompare(__pyx_t_6, Py_None, Py_NE); __Pyx_XGOTREF(__pyx_t_16); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 194, __pyx_L1_error)
+          __pyx_t_16 = PyObject_RichCompare(__pyx_t_6, Py_None, Py_NE); __Pyx_XGOTREF(__pyx_t_16); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 196, __pyx_L1_error)
           __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-          __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_16); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 194, __pyx_L1_error)
+          __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_16); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 196, __pyx_L1_error)
           __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
           __pyx_t_8 = __pyx_t_13;
           __pyx_L31_bool_binop_done:;
           if (__pyx_t_8) {
 
-            /* "wordle.pyx":195
+            /* "wordle.pyx":197
  *                 for j in range( i ): # check for collisions with the rest of the tokens
  *                     if ((j != last_hit_index) and (normalTokens[j].place != None)):
  *                         if BBox.collisionTest(token.quadTree, normalTokens[j].quadTree, place1, normalTokens[j].place, STAY_AWAY) == True:             # <<<<<<<<<<<<<<
  *                             collision = True
  *                             last_hit_index = j
  */
-            __pyx_t_6 = __Pyx_GetModuleGlobalName(__pyx_n_s_BBox); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 195, __pyx_L1_error)
+            __pyx_t_6 = __Pyx_GetModuleGlobalName(__pyx_n_s_BBox); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 197, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_6);
-            __pyx_t_12 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_collisionTest); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 195, __pyx_L1_error)
+            __pyx_t_12 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_collisionTest); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 197, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_12);
             __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-            __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_token, __pyx_n_s_quadTree); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 195, __pyx_L1_error)
+            __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_token, __pyx_n_s_quadTree); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 197, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_6);
-            __pyx_t_10 = __Pyx_PyObject_GetItem(__pyx_v_normalTokens, __pyx_v_j); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 195, __pyx_L1_error)
+            __pyx_t_10 = __Pyx_PyObject_GetItem(__pyx_v_normalTokens, __pyx_v_j); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 197, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_10);
-            __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_quadTree); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 195, __pyx_L1_error)
+            __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_quadTree); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 197, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_9);
             __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-            __pyx_t_10 = __Pyx_PyObject_GetItem(__pyx_v_normalTokens, __pyx_v_j); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 195, __pyx_L1_error)
+            __pyx_t_10 = __Pyx_PyObject_GetItem(__pyx_v_normalTokens, __pyx_v_j); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 197, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_10);
-            __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_place); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 195, __pyx_L1_error)
+            __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_place); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 197, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_7);
             __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-            __pyx_t_10 = __Pyx_GetModuleGlobalName(__pyx_n_s_STAY_AWAY); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 195, __pyx_L1_error)
+            __pyx_t_10 = __Pyx_GetModuleGlobalName(__pyx_n_s_STAY_AWAY); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 197, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_10);
             __pyx_t_15 = NULL;
             __pyx_t_14 = 0;
@@ -3822,7 +4056,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
             #if CYTHON_FAST_PYCALL
             if (PyFunction_Check(__pyx_t_12)) {
               PyObject *__pyx_temp[6] = {__pyx_t_15, __pyx_t_6, __pyx_t_9, __pyx_v_place1, __pyx_t_7, __pyx_t_10};
-              __pyx_t_16 = __Pyx_PyFunction_FastCall(__pyx_t_12, __pyx_temp+1-__pyx_t_14, 5+__pyx_t_14); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 195, __pyx_L1_error)
+              __pyx_t_16 = __Pyx_PyFunction_FastCall(__pyx_t_12, __pyx_temp+1-__pyx_t_14, 5+__pyx_t_14); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 197, __pyx_L1_error)
               __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
               __Pyx_GOTREF(__pyx_t_16);
               __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
@@ -3834,7 +4068,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
             #if CYTHON_FAST_PYCCALL
             if (__Pyx_PyFastCFunction_Check(__pyx_t_12)) {
               PyObject *__pyx_temp[6] = {__pyx_t_15, __pyx_t_6, __pyx_t_9, __pyx_v_place1, __pyx_t_7, __pyx_t_10};
-              __pyx_t_16 = __Pyx_PyCFunction_FastCall(__pyx_t_12, __pyx_temp+1-__pyx_t_14, 5+__pyx_t_14); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 195, __pyx_L1_error)
+              __pyx_t_16 = __Pyx_PyCFunction_FastCall(__pyx_t_12, __pyx_temp+1-__pyx_t_14, 5+__pyx_t_14); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 197, __pyx_L1_error)
               __Pyx_XDECREF(__pyx_t_15); __pyx_t_15 = 0;
               __Pyx_GOTREF(__pyx_t_16);
               __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
@@ -3844,7 +4078,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
             } else
             #endif
             {
-              __pyx_t_19 = PyTuple_New(5+__pyx_t_14); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 195, __pyx_L1_error)
+              __pyx_t_19 = PyTuple_New(5+__pyx_t_14); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 197, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_19);
               if (__pyx_t_15) {
                 __Pyx_GIVEREF(__pyx_t_15); PyTuple_SET_ITEM(__pyx_t_19, 0, __pyx_t_15); __pyx_t_15 = NULL;
@@ -3864,18 +4098,18 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
               __pyx_t_9 = 0;
               __pyx_t_7 = 0;
               __pyx_t_10 = 0;
-              __pyx_t_16 = __Pyx_PyObject_Call(__pyx_t_12, __pyx_t_19, NULL); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 195, __pyx_L1_error)
+              __pyx_t_16 = __Pyx_PyObject_Call(__pyx_t_12, __pyx_t_19, NULL); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 197, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_16);
               __Pyx_DECREF(__pyx_t_19); __pyx_t_19 = 0;
             }
             __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-            __pyx_t_12 = PyObject_RichCompare(__pyx_t_16, Py_True, Py_EQ); __Pyx_XGOTREF(__pyx_t_12); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 195, __pyx_L1_error)
+            __pyx_t_12 = PyObject_RichCompare(__pyx_t_16, Py_True, Py_EQ); __Pyx_XGOTREF(__pyx_t_12); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 197, __pyx_L1_error)
             __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-            __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_12); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 195, __pyx_L1_error)
+            __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_12); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 197, __pyx_L1_error)
             __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
             if (__pyx_t_8) {
 
-              /* "wordle.pyx":196
+              /* "wordle.pyx":198
  *                     if ((j != last_hit_index) and (normalTokens[j].place != None)):
  *                         if BBox.collisionTest(token.quadTree, normalTokens[j].quadTree, place1, normalTokens[j].place, STAY_AWAY) == True:
  *                             collision = True             # <<<<<<<<<<<<<<
@@ -3885,17 +4119,17 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
               __Pyx_INCREF(Py_True);
               __Pyx_DECREF_SET(__pyx_v_collision, Py_True);
 
-              /* "wordle.pyx":197
+              /* "wordle.pyx":199
  *                         if BBox.collisionTest(token.quadTree, normalTokens[j].quadTree, place1, normalTokens[j].place, STAY_AWAY) == True:
  *                             collision = True
  *                             last_hit_index = j             # <<<<<<<<<<<<<<
  * 
  *                             break # no need to check with the rest of the tokens, try a new position now
  */
-              __pyx_t_14 = __Pyx_PyInt_As_int(__pyx_v_j); if (unlikely((__pyx_t_14 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 197, __pyx_L1_error)
+              __pyx_t_14 = __Pyx_PyInt_As_int(__pyx_v_j); if (unlikely((__pyx_t_14 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 199, __pyx_L1_error)
               __pyx_v_last_hit_index = __pyx_t_14;
 
-              /* "wordle.pyx":199
+              /* "wordle.pyx":201
  *                             last_hit_index = j
  * 
  *                             break # no need to check with the rest of the tokens, try a new position now             # <<<<<<<<<<<<<<
@@ -3904,7 +4138,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  */
               goto __pyx_L29_break;
 
-              /* "wordle.pyx":195
+              /* "wordle.pyx":197
  *                 for j in range( i ): # check for collisions with the rest of the tokens
  *                     if ((j != last_hit_index) and (normalTokens[j].place != None)):
  *                         if BBox.collisionTest(token.quadTree, normalTokens[j].quadTree, place1, normalTokens[j].place, STAY_AWAY) == True:             # <<<<<<<<<<<<<<
@@ -3913,7 +4147,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  */
             }
 
-            /* "wordle.pyx":194
+            /* "wordle.pyx":196
  *                 # NO collision with the cached index
  *                 for j in range( i ): # check for collisions with the rest of the tokens
  *                     if ((j != last_hit_index) and (normalTokens[j].place != None)):             # <<<<<<<<<<<<<<
@@ -3922,7 +4156,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  */
           }
 
-          /* "wordle.pyx":193
+          /* "wordle.pyx":195
  *             if collision == False:
  *                 # NO collision with the cached index
  *                 for j in range( i ): # check for collisions with the rest of the tokens             # <<<<<<<<<<<<<<
@@ -3933,7 +4167,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
         __pyx_L29_break:;
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-        /* "wordle.pyx":191
+        /* "wordle.pyx":193
  *                     collision = BBox.collisionTest( token.quadTree, normalTokens[j].quadTree, place1, normalTokens[j].place, STAY_AWAY)
  * 
  *             if collision == False:             # <<<<<<<<<<<<<<
@@ -3942,39 +4176,39 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  */
       }
 
-      /* "wordle.pyx":201
+      /* "wordle.pyx":203
  *                             break # no need to check with the rest of the tokens, try a new position now
  * 
  *             if collision == False:             # <<<<<<<<<<<<<<
  *                 if BBox.insideCanvas( token.quadTree , place1[0], place1[1], c_W, c_H ) == True:
  *                     # at this point we have found a place inside the canvas where the current token has NO collision
  */
-      __pyx_t_3 = PyObject_RichCompare(__pyx_v_collision, Py_False, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 201, __pyx_L1_error)
-      __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 201, __pyx_L1_error)
+      __pyx_t_3 = PyObject_RichCompare(__pyx_v_collision, Py_False, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 203, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 203, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       if (__pyx_t_8) {
 
-        /* "wordle.pyx":202
+        /* "wordle.pyx":204
  * 
  *             if collision == False:
  *                 if BBox.insideCanvas( token.quadTree , place1[0], place1[1], c_W, c_H ) == True:             # <<<<<<<<<<<<<<
  *                     # at this point we have found a place inside the canvas where the current token has NO collision
  *                     # with the already placed tokens; The search has been completed.
  */
-        __pyx_t_12 = __Pyx_GetModuleGlobalName(__pyx_n_s_BBox); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 202, __pyx_L1_error)
+        __pyx_t_12 = __Pyx_GetModuleGlobalName(__pyx_n_s_BBox); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 204, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_12);
-        __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_t_12, __pyx_n_s_insideCanvas); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 202, __pyx_L1_error)
+        __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_t_12, __pyx_n_s_insideCanvas); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 204, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_16);
         __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-        __pyx_t_12 = __Pyx_PyObject_GetAttrStr(__pyx_v_token, __pyx_n_s_quadTree); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 202, __pyx_L1_error)
+        __pyx_t_12 = __Pyx_PyObject_GetAttrStr(__pyx_v_token, __pyx_n_s_quadTree); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 204, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_12);
-        __pyx_t_19 = __Pyx_GetItemInt(__pyx_v_place1, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 202, __pyx_L1_error)
+        __pyx_t_19 = __Pyx_GetItemInt(__pyx_v_place1, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_19)) __PYX_ERR(0, 204, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_19);
-        __pyx_t_10 = __Pyx_GetItemInt(__pyx_v_place1, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 202, __pyx_L1_error)
+        __pyx_t_10 = __Pyx_GetItemInt(__pyx_v_place1, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 204, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_10);
-        __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_c_W); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 202, __pyx_L1_error)
+        __pyx_t_7 = __Pyx_PyInt_From_int(__pyx_v_c_W); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 204, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_7);
-        __pyx_t_9 = __Pyx_PyInt_From_int(__pyx_v_c_H); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 202, __pyx_L1_error)
+        __pyx_t_9 = __Pyx_PyInt_From_int(__pyx_v_c_H); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 204, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_9);
         __pyx_t_6 = NULL;
         __pyx_t_14 = 0;
@@ -3991,7 +4225,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_16)) {
           PyObject *__pyx_temp[6] = {__pyx_t_6, __pyx_t_12, __pyx_t_19, __pyx_t_10, __pyx_t_7, __pyx_t_9};
-          __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_16, __pyx_temp+1-__pyx_t_14, 5+__pyx_t_14); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 202, __pyx_L1_error)
+          __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_16, __pyx_temp+1-__pyx_t_14, 5+__pyx_t_14); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 204, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
@@ -4004,7 +4238,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_16)) {
           PyObject *__pyx_temp[6] = {__pyx_t_6, __pyx_t_12, __pyx_t_19, __pyx_t_10, __pyx_t_7, __pyx_t_9};
-          __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_16, __pyx_temp+1-__pyx_t_14, 5+__pyx_t_14); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 202, __pyx_L1_error)
+          __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_16, __pyx_temp+1-__pyx_t_14, 5+__pyx_t_14); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 204, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
@@ -4015,7 +4249,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
         } else
         #endif
         {
-          __pyx_t_15 = PyTuple_New(5+__pyx_t_14); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 202, __pyx_L1_error)
+          __pyx_t_15 = PyTuple_New(5+__pyx_t_14); if (unlikely(!__pyx_t_15)) __PYX_ERR(0, 204, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_15);
           if (__pyx_t_6) {
             __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_15, 0, __pyx_t_6); __pyx_t_6 = NULL;
@@ -4035,27 +4269,27 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
           __pyx_t_10 = 0;
           __pyx_t_7 = 0;
           __pyx_t_9 = 0;
-          __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_16, __pyx_t_15, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 202, __pyx_L1_error)
+          __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_16, __pyx_t_15, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 204, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_DECREF(__pyx_t_15); __pyx_t_15 = 0;
         }
         __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-        __pyx_t_16 = PyObject_RichCompare(__pyx_t_3, Py_True, Py_EQ); __Pyx_XGOTREF(__pyx_t_16); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 202, __pyx_L1_error)
+        __pyx_t_16 = PyObject_RichCompare(__pyx_t_3, Py_True, Py_EQ); __Pyx_XGOTREF(__pyx_t_16); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 204, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-        __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_16); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 202, __pyx_L1_error)
+        __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_16); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 204, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
         if (__pyx_t_8) {
 
-          /* "wordle.pyx":205
+          /* "wordle.pyx":207
  *                     # at this point we have found a place inside the canvas where the current token has NO collision
  *                     # with the already placed tokens; The search has been completed.
  *                     token.place = place1             # <<<<<<<<<<<<<<
  *                     break   # breaks the spiral movement
  *                 else:
  */
-          if (__Pyx_PyObject_SetAttrStr(__pyx_v_token, __pyx_n_s_place, __pyx_v_place1) < 0) __PYX_ERR(0, 205, __pyx_L1_error)
+          if (__Pyx_PyObject_SetAttrStr(__pyx_v_token, __pyx_n_s_place, __pyx_v_place1) < 0) __PYX_ERR(0, 207, __pyx_L1_error)
 
-          /* "wordle.pyx":206
+          /* "wordle.pyx":208
  *                     # with the already placed tokens; The search has been completed.
  *                     token.place = place1
  *                     break   # breaks the spiral movement             # <<<<<<<<<<<<<<
@@ -4064,7 +4298,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  */
           goto __pyx_L16_break;
 
-          /* "wordle.pyx":202
+          /* "wordle.pyx":204
  * 
  *             if collision == False:
  *                 if BBox.insideCanvas( token.quadTree , place1[0], place1[1], c_W, c_H ) == True:             # <<<<<<<<<<<<<<
@@ -4073,7 +4307,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  */
         }
 
-        /* "wordle.pyx":208
+        /* "wordle.pyx":210
  *                     break   # breaks the spiral movement
  *                 else:
  *                     if token.place == None:             # <<<<<<<<<<<<<<
@@ -4081,24 +4315,24 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
  *                         # store it in any case to ensure that the token will be placed
  */
         /*else*/ {
-          __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_v_token, __pyx_n_s_place); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 208, __pyx_L1_error)
+          __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_v_token, __pyx_n_s_place); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 210, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_16);
-          __pyx_t_3 = PyObject_RichCompare(__pyx_t_16, Py_None, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 208, __pyx_L1_error)
+          __pyx_t_3 = PyObject_RichCompare(__pyx_t_16, Py_None, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 210, __pyx_L1_error)
           __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-          __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 208, __pyx_L1_error)
+          __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 210, __pyx_L1_error)
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
           if (__pyx_t_8) {
 
-            /* "wordle.pyx":211
+            /* "wordle.pyx":213
  *                         # even though this place is outside the canvas, it is collision free and we
  *                         # store it in any case to ensure that the token will be placed
  *                         token.place = place1             # <<<<<<<<<<<<<<
  * 
  * 
  */
-            if (__Pyx_PyObject_SetAttrStr(__pyx_v_token, __pyx_n_s_place, __pyx_v_place1) < 0) __PYX_ERR(0, 211, __pyx_L1_error)
+            if (__Pyx_PyObject_SetAttrStr(__pyx_v_token, __pyx_n_s_place, __pyx_v_place1) < 0) __PYX_ERR(0, 213, __pyx_L1_error)
 
-            /* "wordle.pyx":208
+            /* "wordle.pyx":210
  *                     break   # breaks the spiral movement
  *                 else:
  *                     if token.place == None:             # <<<<<<<<<<<<<<
@@ -4108,7 +4342,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
           }
         }
 
-        /* "wordle.pyx":201
+        /* "wordle.pyx":203
  *                             break # no need to check with the rest of the tokens, try a new position now
  * 
  *             if collision == False:             # <<<<<<<<<<<<<<
@@ -4119,7 +4353,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
     }
     __pyx_L16_break:;
 
-    /* "wordle.pyx":125
+    /* "wordle.pyx":127
  * 
  * 
  *     for i, token in enumerate(normalTokens):             # <<<<<<<<<<<<<<
@@ -4130,16 +4364,16 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "wordle.pyx":216
+  /* "wordle.pyx":218
  * 
  * 
  *     T_stop = timeit.default_timer()             # <<<<<<<<<<<<<<
  * 
  *     print('')
  */
-  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_timeit); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 216, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_timeit); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 218, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_default_timer); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 216, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_default_timer); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 218, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_t_4 = NULL;
@@ -4153,61 +4387,61 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
     }
   }
   if (__pyx_t_4) {
-    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 216, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 218, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   } else {
-    __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 216, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallNoArg(__pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 218, __pyx_L1_error)
   }
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF_SET(__pyx_v_T_stop, __pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "wordle.pyx":218
+  /* "wordle.pyx":220
  *     T_stop = timeit.default_timer()
  * 
  *     print('')             # <<<<<<<<<<<<<<
  *     print('\nWords have been placed in ' + str( T_stop - T_start ) + ' seconds.\n')
  * 
  */
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__8, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 218, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__9, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 220, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "wordle.pyx":219
+  /* "wordle.pyx":221
  * 
  *     print('')
  *     print('\nWords have been placed in ' + str( T_stop - T_start ) + ' seconds.\n')             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_t_2 = PyNumber_Subtract(__pyx_v_T_stop, __pyx_v_T_start); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 219, __pyx_L1_error)
+  __pyx_t_2 = PyNumber_Subtract(__pyx_v_T_stop, __pyx_v_T_start); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 221, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 219, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyString_Type)), __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 221, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyNumber_Add(__pyx_kp_s_Words_have_been_placed_in, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 219, __pyx_L1_error)
+  __pyx_t_2 = PyNumber_Add(__pyx_kp_s_Words_have_been_placed_in, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 221, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyNumber_Add(__pyx_t_2, __pyx_kp_s_seconds_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 219, __pyx_L1_error)
+  __pyx_t_3 = PyNumber_Add(__pyx_t_2, __pyx_kp_s_seconds_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 221, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 219, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 221, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "wordle.pyx":222
+  /* "wordle.pyx":224
  * 
  * 
  *     return c_W, c_H             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_c_W); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 222, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_c_W); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 224, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_c_H); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 222, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_c_H); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 224, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 222, __pyx_L1_error)
+  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 224, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_2);
@@ -4219,7 +4453,7 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
   __pyx_t_4 = 0;
   goto __pyx_L0;
 
-  /* "wordle.pyx":81
+  /* "wordle.pyx":83
  * 
  * 
  * cpdef placeWords(normalTokens):             # <<<<<<<<<<<<<<
@@ -4260,26 +4494,26 @@ static PyObject *__pyx_f_6wordle_placeWords(PyObject *__pyx_v_normalTokens, CYTH
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_6wordle_1placeWords(PyObject *__pyx_self, PyObject *__pyx_v_normalTokens); /*proto*/
-static char __pyx_doc_6wordle_placeWords[] = "\n      gets a list of tokens and their frequencies\n      executes the placing strategy and\n      returns canvas size, locations of upper-left corner of words and words' sizes\n    ";
-static PyObject *__pyx_pw_6wordle_1placeWords(PyObject *__pyx_self, PyObject *__pyx_v_normalTokens) {
+static PyObject *__pyx_pw_6wordle_3placeWords(PyObject *__pyx_self, PyObject *__pyx_v_normalTokens); /*proto*/
+static char __pyx_doc_6wordle_2placeWords[] = "\n      gets a list of tokens and their frequencies\n      executes the placing strategy and\n      returns canvas size, locations of upper-left corner of words and words' sizes\n    ";
+static PyObject *__pyx_pw_6wordle_3placeWords(PyObject *__pyx_self, PyObject *__pyx_v_normalTokens) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("placeWords (wrapper)", 0);
-  __pyx_r = __pyx_pf_6wordle_placeWords(__pyx_self, ((PyObject *)__pyx_v_normalTokens));
+  __pyx_r = __pyx_pf_6wordle_2placeWords(__pyx_self, ((PyObject *)__pyx_v_normalTokens));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_6wordle_placeWords(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_normalTokens) {
+static PyObject *__pyx_pf_6wordle_2placeWords(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_normalTokens) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("placeWords", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_f_6wordle_placeWords(__pyx_v_normalTokens, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 81, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_6wordle_placeWords(__pyx_v_normalTokens, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 83, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -4297,7 +4531,8 @@ static PyObject *__pyx_pf_6wordle_placeWords(CYTHON_UNUSED PyObject *__pyx_self,
 }
 
 static PyMethodDef __pyx_methods[] = {
-  {"placeWords", (PyCFunction)__pyx_pw_6wordle_1placeWords, METH_O, __pyx_doc_6wordle_placeWords},
+  {"drawWord", (PyCFunction)__pyx_pw_6wordle_1drawWord, METH_VARARGS|METH_KEYWORDS, __pyx_doc_6wordle_drawWord},
+  {"placeWords", (PyCFunction)__pyx_pw_6wordle_3placeWords, METH_O, __pyx_doc_6wordle_2placeWords},
   {0, 0, 0, 0}
 };
 
@@ -4355,9 +4590,9 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_Tree, __pyx_k_Tree, sizeof(__pyx_k_Tree), 0, 0, 1, 1},
   {&__pyx_n_s_Trees, __pyx_k_Trees, sizeof(__pyx_k_Trees), 0, 0, 1, 1},
   {&__pyx_kp_s_Words_have_been_placed_in, __pyx_k_Words_have_been_placed_in, sizeof(__pyx_k_Words_have_been_placed_in), 0, 0, 1, 0},
-  {&__pyx_kp_s__2, __pyx_k__2, sizeof(__pyx_k__2), 0, 0, 1, 0},
-  {&__pyx_kp_s__5, __pyx_k__5, sizeof(__pyx_k__5), 0, 0, 1, 0},
-  {&__pyx_kp_s__7, __pyx_k__7, sizeof(__pyx_k__7), 0, 0, 1, 0},
+  {&__pyx_kp_s__3, __pyx_k__3, sizeof(__pyx_k__3), 0, 0, 1, 0},
+  {&__pyx_kp_s__6, __pyx_k__6, sizeof(__pyx_k__6), 0, 0, 1, 0},
+  {&__pyx_kp_s__8, __pyx_k__8, sizeof(__pyx_k__8), 0, 0, 1, 0},
   {&__pyx_kp_s_arial_ttf, __pyx_k_arial_ttf, sizeof(__pyx_k_arial_ttf), 0, 0, 1, 0},
   {&__pyx_n_s_cline_in_traceback, __pyx_k_cline_in_traceback, sizeof(__pyx_k_cline_in_traceback), 0, 0, 1, 1},
   {&__pyx_n_s_collisionTest, __pyx_k_collisionTest, sizeof(__pyx_k_collisionTest), 0, 0, 1, 1},
@@ -4370,6 +4605,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_s_encapsulates_the_main_informati, __pyx_k_encapsulates_the_main_informati, sizeof(__pyx_k_encapsulates_the_main_informati), 0, 0, 1, 0},
   {&__pyx_n_s_end, __pyx_k_end, sizeof(__pyx_k_end), 0, 0, 1, 1},
   {&__pyx_n_s_enumerate, __pyx_k_enumerate, sizeof(__pyx_k_enumerate), 0, 0, 1, 1},
+  {&__pyx_n_s_expand, __pyx_k_expand, sizeof(__pyx_k_expand), 0, 0, 1, 1},
+  {&__pyx_n_s_fill, __pyx_k_fill, sizeof(__pyx_k_fill), 0, 0, 1, 1},
   {&__pyx_n_s_flush, __pyx_k_flush, sizeof(__pyx_k_flush), 0, 0, 1, 1},
   {&__pyx_n_s_font, __pyx_k_font, sizeof(__pyx_k_font), 0, 0, 1, 1},
   {&__pyx_n_s_fontSize, __pyx_k_fontSize, sizeof(__pyx_k_fontSize), 0, 0, 1, 1},
@@ -4395,6 +4632,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_randint, __pyx_k_randint, sizeof(__pyx_k_randint), 0, 0, 1, 1},
   {&__pyx_n_s_random, __pyx_k_random, sizeof(__pyx_k_random), 0, 0, 1, 1},
   {&__pyx_n_s_range, __pyx_k_range, sizeof(__pyx_k_range), 0, 0, 1, 1},
+  {&__pyx_n_s_rotate, __pyx_k_rotate, sizeof(__pyx_k_rotate), 0, 0, 1, 1},
   {&__pyx_kp_s_seconds, __pyx_k_seconds, sizeof(__pyx_k_seconds), 0, 0, 1, 0},
   {&__pyx_kp_s_seconds_2, __pyx_k_seconds_2, sizeof(__pyx_k_seconds_2), 0, 0, 1, 0},
   {&__pyx_n_s_self, __pyx_k_self, sizeof(__pyx_k_self), 0, 0, 1, 1},
@@ -4406,8 +4644,10 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
   {&__pyx_n_s_text, __pyx_k_text, sizeof(__pyx_k_text), 0, 0, 1, 1},
   {&__pyx_n_s_timeit, __pyx_k_timeit, sizeof(__pyx_k_timeit), 0, 0, 1, 1},
+  {&__pyx_n_s_token, __pyx_k_token, sizeof(__pyx_k_token), 0, 0, 1, 1},
   {&__pyx_n_s_truetype, __pyx_k_truetype, sizeof(__pyx_k_truetype), 0, 0, 1, 1},
   {&__pyx_n_s_u, __pyx_k_u, sizeof(__pyx_k_u), 0, 0, 1, 1},
+  {&__pyx_n_s_useColor, __pyx_k_useColor, sizeof(__pyx_k_useColor), 0, 0, 1, 1},
   {&__pyx_n_s_v, __pyx_k_v, sizeof(__pyx_k_v), 0, 0, 1, 1},
   {&__pyx_n_s_word, __pyx_k_word, sizeof(__pyx_k_word), 0, 0, 1, 1},
   {&__pyx_n_s_wordle, __pyx_k_wordle, sizeof(__pyx_k_wordle), 0, 0, 1, 1},
@@ -4415,9 +4655,9 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(0, 71, __pyx_L1_error)
-  __pyx_builtin_print = __Pyx_GetBuiltinName(__pyx_n_s_print); if (!__pyx_builtin_print) __PYX_ERR(0, 90, __pyx_L1_error)
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 122, __pyx_L1_error)
+  __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(0, 73, __pyx_L1_error)
+  __pyx_builtin_print = __Pyx_GetBuiltinName(__pyx_n_s_print); if (!__pyx_builtin_print) __PYX_ERR(0, 92, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 124, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -4427,60 +4667,71 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "wordle.pyx":57
- *     im = Image.new('RGBA', (w,h), color = None)
+  /* "wordle.pyx":58
  *     draw = ImageDraw.Draw(im)
- *     draw.text((0, 0), token.word, font = font)             # <<<<<<<<<<<<<<
- * 
- *     # TODO the rotation is not being used currently
+ *     if useColor == False:
+ *         draw.text((0, 0), token.word, font = font)             # <<<<<<<<<<<<<<
+ *     else:
+ *         draw.text((0, 0), token.word, font = font, fill = token.color)
  */
-  __pyx_tuple_ = PyTuple_Pack(2, __pyx_int_0, __pyx_int_0); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 57, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(2, __pyx_int_0, __pyx_int_0); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 58, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
 
-  /* "wordle.pyx":114
+  /* "wordle.pyx":60
+ *         draw.text((0, 0), token.word, font = font)
+ *     else:
+ *         draw.text((0, 0), token.word, font = font, fill = token.color)             # <<<<<<<<<<<<<<
+ * 
+ *     if token.drawAngle != 0:
+ */
+  __pyx_tuple__2 = PyTuple_Pack(2, __pyx_int_0, __pyx_int_0); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(0, 60, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__2);
+  __Pyx_GIVEREF(__pyx_tuple__2);
+
+  /* "wordle.pyx":116
  *     cdef int last_hit_index = 0 # we cache the index of last hit
  * 
  *     print('(ii) Now trying to place the words.\n')             # <<<<<<<<<<<<<<
  *     sys.stdout.flush()
  * 
  */
-  __pyx_tuple__3 = PyTuple_Pack(1, __pyx_kp_s_ii_Now_trying_to_place_the_word); if (unlikely(!__pyx_tuple__3)) __PYX_ERR(0, 114, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__3);
-  __Pyx_GIVEREF(__pyx_tuple__3);
+  __pyx_tuple__4 = PyTuple_Pack(1, __pyx_kp_s_ii_Now_trying_to_place_the_word); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 116, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__4);
+  __Pyx_GIVEREF(__pyx_tuple__4);
 
-  /* "wordle.pyx":122
+  /* "wordle.pyx":124
  * 
  * 
  *     ups_and_downs = [ random.randint(0,20)%2  for i in range( len(normalTokens) )]             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_tuple__4 = PyTuple_Pack(2, __pyx_int_0, __pyx_int_20); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 122, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__4);
-  __Pyx_GIVEREF(__pyx_tuple__4);
+  __pyx_tuple__5 = PyTuple_Pack(2, __pyx_int_0, __pyx_int_20); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(0, 124, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__5);
+  __Pyx_GIVEREF(__pyx_tuple__5);
 
-  /* "wordle.pyx":151
+  /* "wordle.pyx":153
  *         else:
  *             A = SP.Rectangular()
  *             A.start(2)             # <<<<<<<<<<<<<<
  * 
  *         dx0, dy0 = 0, 0
  */
-  __pyx_tuple__6 = PyTuple_Pack(1, __pyx_int_2); if (unlikely(!__pyx_tuple__6)) __PYX_ERR(0, 151, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__6);
-  __Pyx_GIVEREF(__pyx_tuple__6);
+  __pyx_tuple__7 = PyTuple_Pack(1, __pyx_int_2); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(0, 153, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__7);
+  __Pyx_GIVEREF(__pyx_tuple__7);
 
-  /* "wordle.pyx":218
+  /* "wordle.pyx":220
  *     T_stop = timeit.default_timer()
  * 
  *     print('')             # <<<<<<<<<<<<<<
  *     print('\nWords have been placed in ' + str( T_stop - T_start ) + ' seconds.\n')
  * 
  */
-  __pyx_tuple__8 = PyTuple_Pack(1, __pyx_kp_s__7); if (unlikely(!__pyx_tuple__8)) __PYX_ERR(0, 218, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__8);
-  __Pyx_GIVEREF(__pyx_tuple__8);
+  __pyx_tuple__9 = PyTuple_Pack(1, __pyx_kp_s__8); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(0, 220, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__9);
+  __Pyx_GIVEREF(__pyx_tuple__9);
 
   /* "wordle.pyx":33
  *     """
@@ -4489,13 +4740,13 @@ static int __Pyx_InitCachedConstants(void) {
  *         self.word = word
  *         self.fontSize = fontSize      # an integer
  */
-  __pyx_tuple__9 = PyTuple_Pack(4, __pyx_n_s_self, __pyx_n_s_word, __pyx_n_s_fontSize, __pyx_n_s_drawAngle); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(0, 33, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__9);
-  __Pyx_GIVEREF(__pyx_tuple__9);
-  __pyx_codeobj__10 = (PyObject*)__Pyx_PyCode_New(4, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__9, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_wordle_pyx, __pyx_n_s_init, 33, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__10)) __PYX_ERR(0, 33, __pyx_L1_error)
-  __pyx_tuple__11 = PyTuple_Pack(2, ((PyObject *)__pyx_int_10), ((PyObject *)__pyx_int_0)); if (unlikely(!__pyx_tuple__11)) __PYX_ERR(0, 33, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__11);
-  __Pyx_GIVEREF(__pyx_tuple__11);
+  __pyx_tuple__10 = PyTuple_Pack(4, __pyx_n_s_self, __pyx_n_s_word, __pyx_n_s_fontSize, __pyx_n_s_drawAngle); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__10);
+  __Pyx_GIVEREF(__pyx_tuple__10);
+  __pyx_codeobj__11 = (PyObject*)__Pyx_PyCode_New(4, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__10, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_wordle_pyx, __pyx_n_s_init, 33, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__11)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __pyx_tuple__12 = PyTuple_Pack(2, ((PyObject *)__pyx_int_10), ((PyObject *)__pyx_int_0)); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__12);
+  __Pyx_GIVEREF(__pyx_tuple__12);
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -4940,9 +5191,9 @@ if (!__Pyx_RefNanny) {
  *         self.word = word
  *         self.fontSize = fontSize      # an integer
  */
-  __pyx_t_2 = __Pyx_CyFunction_NewEx(&__pyx_mdef_6wordle_5Token_1__init__, 0, __pyx_n_s_Token___init, NULL, __pyx_n_s_wordle, __pyx_d, ((PyObject *)__pyx_codeobj__10)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CyFunction_NewEx(&__pyx_mdef_6wordle_5Token_1__init__, 0, __pyx_n_s_Token___init, NULL, __pyx_n_s_wordle, __pyx_d, ((PyObject *)__pyx_codeobj__11)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 33, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_2, __pyx_tuple__11);
+  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_2, __pyx_tuple__12);
   if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_init, __pyx_t_2) < 0) __PYX_ERR(0, 33, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 

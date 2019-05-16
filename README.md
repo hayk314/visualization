@@ -17,9 +17,9 @@ created with the code from the [wordle](https://github.com/hayk314/visualization
 
 The input to the current version of the program is a text file. Download or clone this repository, install the missing python packages (see below) if any, then from a terminal window navigate to the [wordle](https://github.com/hayk314/visualization/tree/master/wordle) folder and call
 
-`python wordle.py fileName.txt interactiveFlag`
+`python wordle.py fileName.txt interactiveFlag verticalProbability`
 
-where `fileName.txt` is the name of the text file you want to create the wordle from, and `interactiveFlag` is a boolean value, `0,1` which allows the user to repaint the final configuration of words as many times as they wish. If `interactiveFlag == 0` or it is skipped altogether, the program will create a single wordle image (word cloud) and will stop afterwards. Otherwise, if `interactiveFlag == 1` the program will ask the user if they want to apply other color schemes on the already created configuration. The prompting will continue until the user instructs the program to stop. In this way, if the configuration appears nice but not the coloring then there is still a chance to change the color scheme in a relatively cheap way.
+where `fileName.txt` is the name of the text file you want to create the wordle from, and `interactiveFlag` is a boolean value, `0,1` which allows the user to repaint the final configuration of words as many times as they wish. If `interactiveFlag == 0` or it is skipped altogether, the program will create a single wordle image (word cloud) and will stop afterwards. Otherwise, if `interactiveFlag == 1` the program will ask the user if they want to apply other color schemes on the already created configuration. The prompting will continue until the user instructs the program to stop. In this way, if the configuration appears nice but not the coloring then there is still a chance to change the color scheme in a relatively cheap way. Finally, `verticalProbability` is a number from `[0,1]` which shows the probability of a word being placed vertically. Skipping this parameter is equivalent to setting it as 0, i.e. all words will be placed *horizontally*.
 
 ### Fonts
 
@@ -141,7 +141,9 @@ Spirals are used for exploring the canvas. Namely, assume a word is placed at a 
 While in its current form this wordle program does its job, there are some obvious directions one should try to improve it. The following list is not exhaustive.
 
 - allow for non-horizontal placement of words
+    - *UPDATE*: currently allowing vertical placements of words, the probability of tokens being placed vertically is part of the user input
 - try moving some performance critical code into `C++` (or perhaps `cython` ?)
+    - *UPDATE*: part of the code, most notably the placing strategy and part of collision checking now have `cython` equivalents. The gain in performance is substantial. See [cython version](https://github.com/hayk314/visualization/tree/master/wordle/cython_wordle) for more details.
 - add a possibility of putting wordle into a predefined shape (a mask)
 - allow for better font-scaling techniques
 - propose a canvas size based on the tokens' sizes

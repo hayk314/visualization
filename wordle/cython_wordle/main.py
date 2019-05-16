@@ -72,10 +72,11 @@ def randomFlips(n, p):
 
 
 
-def normalizeWordSize(tokens, freq, N_of_tokens_to_use):
+def normalizeWordSize(tokens, freq, N_of_tokens_to_use, horizontalProbability = 1.0):
     """
      (linearly) scale the font sizes of tokens to a new range depending on the ratio of the current min-max
      and take maximum @N_of_tokens_to_use of these tokens
+     allow some words to have vertical orientation defined by @horizontalProbability
     """
 
     words = tokens[:N_of_tokens_to_use]
@@ -106,11 +107,12 @@ def normalizeWordSize(tokens, freq, N_of_tokens_to_use):
 
     print( 'after scaling of fonts min = {}, max = {} '.format( min(sizes), max(sizes) ), '\n'  )
 
-    # TODO vertical placement NOT in use currently
-    flips = randomFlips(len( words ), 0.8)  # allow 20% of rotation
 
+    # allow some vertical placement; the probability is defined by the user
+    flips = randomFlips(len( words ), horizontalProbability )
     for i in range(len(sizes)):
         normalTokens.append( Token( words[i], sizes[i], 0 if flips[i] == 0 else 90 ) )
+
 
     return normalTokens
 
@@ -178,9 +180,18 @@ def drawOnCanvas(normalTokens, canvas_size):
         font1 = ImageFont.truetype(FONT_NAME, token.fontSize)
         c = token.color
 
-        dd.text( token.place, token.word, fill = c,  font = font1 )
-        if background == 0:
-            dd_white.text( token.place, token.word, fill = c,  font = font1 )
+        if token.drawAngle != 0:
+            # place vertically, since PIL does support drawing text in vertical orientation,
+            # we first draw the token in a temporary image, the @im, then past that at the location of
+            # the token on the canvas; this might introduce some rasterization for smaller fonts
+            im = wordle.drawWord(token, useColor = True)
+            im_canvas.paste(im,  token.place, im )
+            if background == 0:
+                im_canvas_white.paste(im,  token.place, im )
+        else:
+            dd.text( token.place, token.word, fill = c,  font = font1 )
+            if background == 0:
+                dd_white.text( token.place, token.word, fill = c,  font = font1 )
 
 
     margin_size = 10 # the border margin size
@@ -197,7 +208,7 @@ def drawOnCanvas(normalTokens, canvas_size):
 
 
 
-def createWordle_fromFile( fName, interActive = False ):
+def createWordle_fromFile( fName, interActive = False, horizontalProbability = 1.0 ):
     # the master function, creates the wordle from a given text file
 
     tokens = FR.tokenize_file_IntoWords(fName)
@@ -210,7 +221,7 @@ def createWordle_fromFile( fName, interActive = False ):
         print( str(s) +  (7 - len(str(s)))*' ' + ':  ' + tokens[i]  )
 
 
-    normalTokens =  normalizeWordSize(tokens, freq, TOKENS_TO_USE)
+    normalTokens =  normalizeWordSize(tokens, freq, TOKENS_TO_USE, horizontalProbability)
     canvas_W, canvas_H = wordle.placeWords(normalTokens)
 
     wordle_img = drawOnCanvas(normalTokens, (canvas_W, canvas_H ) )
@@ -220,13 +231,13 @@ def createWordle_fromFile( fName, interActive = False ):
     if interActive == True:
         # we allow the user to repaint the existing tokens with other color schemes as many times as they wish
         print('\n=========== You may repaint the existing wordle with other color schemes =========== \n')
-        print('To stop, please type the text inside the quotes: "done"')
-        print('To try a new scheme type any char\n')
+        print('To stop, please type the text inside the quotes: "q" folowed by Enter')
+        print('To try a new scheme type any other char\n')
 
         version = 1
         while True:
             userInput = input(str(version) + '.   waiting for new user input ... ')
-            if userInput == 'done':
+            if userInput == 'q':
                 print('exiting...')
                 break
             wordle_img = drawOnCanvas(normalTokens, (canvas_W, canvas_H))
@@ -240,8 +251,18 @@ def createWordle_fromFile( fName, interActive = False ):
 if __name__ == "__main__":
     # waits for .txt fileName and interactive flag {0, 1} for processing
 
-    interActive = False
+    interActive = False        # if True, keep repainting the wordle on user's demand
+    verticalProbability = 0    # the probability of placing some words vertically
+
     if len(sys.argv) > 2 and sys.argv[2] == '1':
         interActive = True
+    if len(sys.argv) > 3:
+        try:
+            verticalProbability = float(sys.argv[3])
+            if verticalProbability > 1: verticalProbability = 1.0
+            if verticalProbability < 0: verticalProbability = 0.0
+        except:
+            verticalProbability = 0.0
 
-    createWordle_fromFile( sys.argv[1], interActive )
+
+    createWordle_fromFile( sys.argv[1], interActive, 1 - verticalProbability )

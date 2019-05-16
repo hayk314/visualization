@@ -42,7 +42,7 @@ class Token:
 
 
 
-cdef drawWord(token):
+cpdef drawWord(token, useColor = False):
     """
       gets an instance of Token class and draws the word it represents
       returns an image of the given word in the given font size
@@ -54,11 +54,13 @@ cdef drawWord(token):
 
     im = Image.new('RGBA', (w,h), color = None)
     draw = ImageDraw.Draw(im)
-    draw.text((0, 0), token.word, font = font)
+    if useColor == False:
+        draw.text((0, 0), token.word, font = font)
+    else:
+        draw.text((0, 0), token.word, font = font, fill = token.color)
 
-    # TODO the rotation is not being used currently
-    # if token.drawAngle != 0:
-    #    im = im.rotate( token.drawAngle,  expand = 1)
+    if token.drawAngle != 0:
+        im = im.rotate( token.drawAngle,  expand = 1)
 
     return im
 

@@ -77,7 +77,6 @@ def randomFlips(n, p):
      Return an array of length n of random bits {0, 1} where Probability(0) = p and Probability(1) = 1 - p
      this is used for randomly selecting some of the tokens for vertical placement.
     """
-
     ans = n*[0]
     for i in range(n):
         x = random.random()
@@ -87,11 +86,11 @@ def randomFlips(n, p):
     return ans
 
 
-
-def normalizeWordSize(tokens, freq, N_of_tokens_to_use):
+def normalizeWordSize(tokens, freq, N_of_tokens_to_use, horizontalProbability = 1.0):
     """
      (linearly) scale the font sizes of tokens to a new range depending on the ratio of the current min-max
      and take maximum @N_of_tokens_to_use of these tokens
+     allow some words to have vertical orientation defined by @horizontalProbability
     """
 
     words = tokens[:N_of_tokens_to_use]
@@ -122,9 +121,8 @@ def normalizeWordSize(tokens, freq, N_of_tokens_to_use):
 
     print( 'after scaling of fonts min = {}, max = {} '.format( min(sizes), max(sizes) ), '\n'  )
 
-    # TODO vertical placement NOT in use currently
-    flips = randomFlips(len( words ), 0.8)  # allow 20% of rotation
-
+    # allow some vertical placement; the probability is defined by the user
+    flips = randomFlips(len( words ), horizontalProbability )
     for i in range(len(sizes)):
         normalTokens.append( Token( words[i], sizes[i], 0 if flips[i] == 0 else 90 ) )
 
@@ -132,7 +130,7 @@ def normalizeWordSize(tokens, freq, N_of_tokens_to_use):
 
 
 
-def drawWord(token):
+def drawWord(token, useColor = False):
     """
       gets an instance of Token class and draws the word it represents
       returns an image of the given word in the given font size
@@ -144,11 +142,13 @@ def drawWord(token):
 
     im = Image.new('RGBA', (w,h), color = None)
     draw = ImageDraw.Draw(im)
-    draw.text((0, 0), token.word, font = font)
+    if useColor == False:
+        draw.text((0, 0), token.word, font = font)
+    else:
+        draw.text((0, 0), token.word, font = font, fill = token.color)
 
-    # TODO the rotation is not being used currently
-    # if token.drawAngle != 0:
-    #    im = im.rotate( token.drawAngle,  expand = 1)
+    if token.drawAngle != 0:
+        im = im.rotate( token.drawAngle,  expand = 1)
 
     return im
 
@@ -216,18 +216,29 @@ def drawOnCanvas(normalTokens, canvas_size):
         font1 = ImageFont.truetype(FONT_NAME, token.fontSize)
         c = token.color
 
-        dd.text( token.place, token.word, fill = c,  font = font1 )
-        if background == 0:
-            dd_white.text( token.place, token.word, fill = c,  font = font1 )
+        if token.drawAngle != 0:
+            # place vertically, since PIL does support drawing text in vertical orientation,
+            # we first draw the token in a temporary image, the @im, then past that at the location of
+            # the token on the canvas; this might introduce some rasterization for smaller fonts
+            im = drawWord(token, useColor = True)
+            im_canvas.paste(im,  token.place, im )
+            if background == 0:
+                im_canvas_white.paste(im,  token.place, im )
+        else:
+            dd.text( token.place, token.word, fill = c,  font = font1 )
+            if background == 0:
+                dd_white.text( token.place, token.word, fill = c,  font = font1 )
 
 
     margin_size = 10 # the border margin size
     box = im_canvas.getbbox()
 
     if background == 0:
+        # white background
         im_canvas_1 = Image.new('RGBA', ( box[2] - box[0] + 2*margin_size, box[3] - box[1] + 2*margin_size ), color = (100,100,100,100)  )
         im_canvas_1.paste( im_canvas_white.crop(box), ( margin_size, margin_size, margin_size + box[2] - box[0], margin_size + box[3] - box[1] ) )
     else:
+        # black background
         im_canvas_1 = Image.new('RGB', ( box[2] - box[0] + 2*margin_size, box[3] - box[1] + 2*margin_size ), color = (0,0,0)  )
         im_canvas_1.paste( im_canvas.crop(box), ( margin_size, margin_size, margin_size + box[2] - box[0], margin_size + box[3] - box[1] ) )
 
@@ -283,9 +294,7 @@ def placeWords(normalTokens):
 
     #3a. we start with the 1st word
 
-
     ups_and_downs = [ random.randint(0,20)%2  for i in range( len(normalTokens) )]
-    #ups_and_downs = [ random.randint(0,51)%3  for i in range( len(normalTokens) )]
 
     for i, token in enumerate(normalTokens):
         print( token.word , end = ' ' )
@@ -296,7 +305,6 @@ def placeWords(normalTokens):
         if ups_and_downs[i] == 1:
             # add some randomness to the placing strategy
             a = -a
-
 
         # determine a starting position on the canvas of this token, near half of the width of canvas
         w, h =   random.randint( int(0.3*c_W), int(0.7*c_W) ) ,  (c_H >> 1) - (token.imgSize[1] >> 1)
@@ -372,7 +380,6 @@ def placeWords(normalTokens):
 
 
 
-
     T_stop = timeit.default_timer()
 
     print('\n Words have been placed in ' + str( T_stop - T_start ) + ' seconds.\n')
@@ -380,7 +387,7 @@ def placeWords(normalTokens):
 
     return c_W, c_H
 
-def createWordle_fromFile( fName, interActive = False ):
+def createWordle_fromFile( fName, interActive = False, horizontalProbability = 1.0 ):
     # the master function, creates the wordle from a given text file
 
     tokens = FR.tokenize_file_IntoWords(fName)
@@ -393,7 +400,7 @@ def createWordle_fromFile( fName, interActive = False ):
         print( str(s) +  (7 - len(str(s)))*' ' + ':  ' + tokens[i]  )
 
 
-    normalTokens =  normalizeWordSize(tokens, freq, TOKENS_TO_USE)
+    normalTokens =  normalizeWordSize(tokens, freq, TOKENS_TO_USE, horizontalProbability)
     canvas_W, canvas_H = placeWords(normalTokens)
 
     wordle = drawOnCanvas(normalTokens, (canvas_W, canvas_H ) )
@@ -403,16 +410,16 @@ def createWordle_fromFile( fName, interActive = False ):
     if interActive == True:
         # we allow the user to repaint the existing tokens with other color schemes as many times as they wish
         print('\n=========== You may repaint the existing wordle with other color schemes =========== \n')
-        print('To stop, please type the text inside the quotes: "done"')
-        print('To try a new scheme type any char\n')
+        print('To stop, please type the text inside the quotes: "q" folowed by Enter')
+        print('To try a new scheme type any other char\n')
 
         version = 1
         while True:
             userInput = input(str(version) + '.   waiting for new user input ... ')
-            if userInput == 'done':
+            if userInput == 'q':
                 print('exiting...')
                 break
-            wordle = drawOnCanvas(normalTokens, (canvas_W, canvas_H))
+            wordle = drawOnCanvas(normalTokens, (canvas_W, canvas_H) )
             newFileName = fName[0:-4] + '_wordle_v' + str(version) + '.png'
             wordle.save( newFileName)
             print( '=== saved on the disc as <', newFileName, '>\n')
@@ -423,8 +430,18 @@ def createWordle_fromFile( fName, interActive = False ):
 if __name__ == "__main__":
     # waits for .txt fileName and interactive flag {0, 1} for processing
 
-    interActive = False
+    interActive = False        # if True, keep repainting the wordle on user's demand
+    verticalProbability = 0    # the probability of placing some words vertically
+
     if len(sys.argv) > 2 and sys.argv[2] == '1':
         interActive = True
+    if len(sys.argv) > 3:
+        try:
+            verticalProbability = float(sys.argv[3])
+            if verticalProbability > 1: verticalProbability = 1.0
+            if verticalProbability < 0: verticalProbability = 0.0
+        except:
+            verticalProbability = 0.0
 
-    createWordle_fromFile( sys.argv[1], interActive )
+
+    createWordle_fromFile( sys.argv[1], interActive, 1 - verticalProbability )
