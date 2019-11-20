@@ -119,13 +119,14 @@ The Trees described above are modelled, from an OOP perspective, in `Trees.py` a
 Spirals are used for exploring the canvas. Namely, assume a word is placed at a certain coordinate `(x,y)` initially, but it intersects some of the already placed tokens. When trying new positions on the canvas for the word, we move it along some curve and for each point on the curve check if the place is valid, i.e. is collision-free. Ideally we would like this curves to be computationally cheap and have space-filling property, i.e. the trajectory of the curve should cover a significant portion of the canvas (if not the entire canvas itself). As a model example of such curves we try *Archimedian spiral* and *Rectangular spirals*, both are implemented in `Spirals.py`.
 
 
-### Python 3 packages you need
-- **PIL**
-    - is used to draw a given word with the given font on an image
-- **numpy**
-    - is used to for drawing the spiral curves (see `spirals.py` in the repository)
-- the following packages are pretty standard and they should be preinstalled
-    -  **chardet, codecs, math, os, pathlib, random, re, sys, timeit**
+### Required packages of Python3
+
+To make sure you have the necessary packages installed, `cd` to the directory containing the `requirments.txt` file and run the following command from your terminal window
+
+    pip install -r requirments.txt
+
+This will install a few packages listed in `requirments.txt`(which you would most probably have already).
+
 
 ### Author
 
