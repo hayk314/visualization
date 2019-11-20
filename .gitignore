@@ -2,4 +2,6 @@ wordle/__pycache__/*
 wordle/cython_wordle/__pycache__/*
 wordle/cython_wordle/build/*
 wordle/cython_wordle/*.pyd
-wordle/sample_wordle.png
+wordle/cython_wordle/*.png
+wordle/*.png
+wordle/*.txt
