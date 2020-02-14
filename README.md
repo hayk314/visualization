@@ -17,15 +17,27 @@ created with the code from the [wordle](https://github.com/hayk314/visualization
 
 The input to the current version of the program is a text file. Download or clone this repository, install the missing python packages (see below) if any, then from a terminal window navigate to the [wordle](https://github.com/hayk314/visualization/tree/master/wordle) folder and call
 
-`python wordle.py fileName.txt interactiveFlag verticalProbability`
+`python wordle.py --fileName=fileName.txt`
 
-where `fileName.txt` is the name of the text file you want to create the wordle from, and `interactiveFlag` is a boolean value, `0,1` which allows the user to repaint the final configuration of words as many times as they wish. If `interactiveFlag == 0` or it is skipped altogether, the program will create a single wordle image (word cloud) and will stop afterwards. Otherwise, if `interactiveFlag == 1` the program will ask the user if they want to apply other color schemes on the already created configuration. The prompting will continue until the user instructs the program to stop. In this way, if the configuration appears nice but not the coloring then there is still a chance to change the color scheme in a relatively cheap way. Finally, `verticalProbability` is a number from `[0,1]` which shows the probability of a word being placed vertically. Skipping this parameter is equivalent to setting it as 0, i.e. all words will be placed *horizontally*.
+where `fileName.txt` is the name of the text file you want to create the wordle from. If in need for **help** use 
 
-### Fonts
+`python wordle.py --help`
+
+to see what are paramters of the program. Currently to call the program with the full list of parameters one should use this
+
+`python wordle.py --fileName=sample.txt --verProb=0.1 --interactive=1`
+
+where `vertProb` is the probability of a word to be placed vertically (can be anything from `[0,1]` with default value equal to `0`, i.e. all words will be placed *horizontally* if this paramter is skipped) and `interactive` is a boolean flag with `0,1` values allowing the user to repaint the final configuration of words as many times as they wish. If `interactive == 0` or it is skipped altogether, the program will create a single wordle image (word cloud) and will stop afterwards. Otherwise, if `interactive == 1` the program will ask the user if they want to apply other color schemes on the already created configuration. The prompting will continue until the user instructs the program to stop. In this way, if the configuration appears nice but not the coloring then there is still a chance to change the color scheme in a relatively cheap way. 
+
+### Fonts and layout
 
 To change the font of the words use the `fonts` folder and add your desired `true type` font there. Afterwards, change the `FONT_NAME` constant accordingly  in the `wordle.py` module. Here is another sample image with a different font:
 
 ![curlyFont](https://github.com/hayk314/visualization/blob/master/wordle/examples/research.png)
+
+To get a black background with part of (or all) words placed vertically use ``--vertProb=0.1`` and ``--interactive=1`` . Here the ``0.1`` means that a probability of placing a word vertically is ``0.1``, this parameter can be anything between ``0`` - all horizontal and ``1`` - all vertical. The ``interactive`` is a boolean flag signaling the program to change layout colors at random until instructed by the user to stop. With these parameters one can get something that looks like this.
+
+![blackBackground](https://github.com/hayk314/visualization/blob/master/wordle/examples/research-1.png)
 
 ## How this works, the algorithm
 
