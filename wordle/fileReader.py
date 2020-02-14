@@ -24,9 +24,9 @@ def readFrom(fName):
     try:
         with open(fName, 'rb') as f:
             f1 = bytearray(f.read())
-            encoding_name = chardet.detect(f1)['encoding']
+            encoding_name = chardet.detect(f1[:1000])['encoding']  # it's enough to take a slice for determining the enconding
     except:
-        encoding_name = 'utf-8' #the default try
+        encoding_name = 'utf-8' # the default try
 
 
     try:
