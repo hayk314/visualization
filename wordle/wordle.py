@@ -8,7 +8,7 @@ import random
 
 import timeit   # for calculating running time (TESTING purposes only)
 import sys
-
+import os
 
 import fileReader as FR
 import spirals as SP
@@ -24,7 +24,7 @@ FONT_SIZE_MIN = 10        # the smallest font of a word
 FONT_SIZE_MAX = 300       # the largest font of a word, might go slightly above this value
 DESIRED_HW_RATIO = 0.618  # height/widht ratio of the canvas
 QUADTREE_MINSIZE = 5      # minimal height-width of the box in quadTree partition
-FONT_NAME = "fonts/arial.ttf"   # the font (true type) used to draw the word shapes
+FONT_NAME = "fonts/DroidSansMono.ttf"   # the font (true type) used to draw the word shapes
 
 
 class Token:
@@ -284,7 +284,7 @@ def placeWords(normalTokens):
     #c_W, c_H = 4000, 4000
     #c_W, c_H = 2000, 1000
     c_W, c_H = 3000, 1500
-    #c_W, c_H = 1000, 1000
+    #c_W, c_H = 1000, 500
 
 
     print('(ii) Now trying to place the words.\n')
@@ -387,7 +387,7 @@ def placeWords(normalTokens):
 
     return c_W, c_H
 
-def createWordle_fromFile( fName, interActive = False, horizontalProbability = 1.0 ):
+def createWordle_fromFile(fName, interActive = False, horizontalProbability=1.0):
     # the master function, creates the wordle from a given text file
 
     tokens = FR.tokenize_file_IntoWords(fName)
@@ -426,22 +426,64 @@ def createWordle_fromFile( fName, interActive = False, horizontalProbability = 1
             version += 1
 
 
+def paramHelper():
+    """prints the parameters necessary for the routine to operate"""
+
+    print('the following are all parameters of this module.\n')
+
+    strMessage = """The text file on which the word-cloud will be generated.
+If the file is in the same path as the wordle.py then only file name will suffice, otherwise the full path of the txt file is necessary.\n"""
+    print('--fileName= ', strMessage)
+
+    strMessage = """The probability of words to be placed vertically. To force all horizontal placement choose 1.0 or leave this parameter.\n"""
+    print('--vertProb=', strMessage)
+
+    strMessage = """The interactive flag, if 1 then the program keeps changing the color scheme until not instructed by the user to exit. The parameter can be skipped, in which case the default value of 0 will be used.\n"""
+    print('--interactive=', strMessage)
+
+
 
 if __name__ == "__main__":
     # waits for .txt fileName and interactive flag {0, 1} for processing
 
-    interActive = False        # if True, keep repainting the wordle on user's demand
-    verticalProbability = 0    # the probability of placing some words vertically
+    argv = sys.argv
+    if '--help' in argv:
+        paramHelper()
+        sys.exit(0)
 
-    if len(sys.argv) > 2 and sys.argv[2] == '1':
-        interActive = True
-    if len(sys.argv) > 3:
+    interactive = False   # if True, keep repainting the wordle on user's demand
+    vertProb = 0          # the probability of placing some words vertically
+    fName = ""            # the .txt file on which the wordle will be build
+
+    params = dict()
+    for s in argv[1:]:
+        s = s.split('=')
+        if len(s) != 2 or len(s[0]) <= 2 or s[0][:2] != '--':
+            print('paramter {} is in incorrect format, terminating.'.format(s))
+            sys.exit(0)
+        params[ s[0][2:] ] = s[1] # drop the -- (double hyphen from the beginning of the key)
+
+    print("The paramters are\n", params)
+
+    if not 'fileName' in params:
+        print('--fileName parameter is missing, terminating.')
+        sys.exit(0)
+
+    fName = params['fileName']
+    if os.path.isfile(fName) == False:
+        print('the file', fName, 'does not exist, terminating.')
+        sys.exit(0)
+
+    if 'interactive' in params:
+        if params['interactive'] == '1':
+            interactive = True
+    if 'vertProb' in params:
         try:
-            verticalProbability = float(sys.argv[3])
-            if verticalProbability > 1: verticalProbability = 1.0
-            if verticalProbability < 0: verticalProbability = 0.0
+            vertProb = float(params['vertProb'])
+            if vertProb > 1: vertProb = 1.0
+            if vertProb < 0: vertProb = 0.0
         except:
-            verticalProbability = 0.0
+            vertProb = 0.0
 
 
-    createWordle_fromFile( sys.argv[1], interActive, 1 - verticalProbability )
+    createWordle_fromFile( fName, interactive, 1 - vertProb )
