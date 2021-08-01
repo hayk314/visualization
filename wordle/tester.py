@@ -12,7 +12,7 @@ import numpy as np
 import sys
 
 import spirals as SP
-import BBox
+import bbox
 
 
 def colorBBoxesBorders(im, T, shift = (0, 0) ):
@@ -26,7 +26,7 @@ def colorBBoxesBorders(im, T, shift = (0, 0) ):
     im_1 = im.copy()
     (W, H) = im_1.size
 
-    Boxes = T.getValues()
+    Boxes = T.get_node_value_list()
 
     for i in range( len(Boxes) ):
         z = Boxes[i]
@@ -100,7 +100,7 @@ def testQuadTrees(testWord = "test", fontSize = 200):
 
     T_start = timeit.default_timer()
 
-    T = BBox.getQuadTree( im , 7, 7 )
+    T = bbox.construct_quadtree(im, 7, 7)
 
     T_stop = timeit.default_timer()
     print('2. Quad tree ready in ', T_stop - T_start, 'seconds.')

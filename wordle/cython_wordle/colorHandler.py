@@ -142,16 +142,16 @@ def chooseFromFixedSchemes(normalTokens):
 
     # chose the color scheme randomly
     word_colors = color_schemes[ random.randint(0, len(color_schemes) - 1) ]
-    max_size = max( [ token.fontSize for token in normalTokens ] )
+    max_size = max([token.font_size for token in normalTokens])
 
     for token in normalTokens:
-        if token.fontSize >= 0.7*max_size:
+        if token.font_size >= 0.7*max_size:
             c = word_colors[-1]
-        elif ((token.fontSize >= 0.5*max_size)and(token.fontSize < 0.7*max_size) ):
+        elif ((token.font_size >= 0.5 * max_size) and (token.font_size < 0.7 * max_size)):
             c = word_colors[-2]
-        elif ((token.fontSize >= 0.35*max_size)and(token.fontSize < 0.5*max_size) ):
+        elif ((token.font_size >= 0.35 * max_size) and (token.font_size < 0.5 * max_size)):
             c = word_colors[-3]
-        elif ((token.fontSize >= 0.15*max_size)and(token.fontSize < 0.35*max_size) ):
+        elif ((token.font_size >= 0.15 * max_size) and (token.font_size < 0.35 * max_size)):
             c = word_colors[-4]
         else:
             c = word_colors[-5]

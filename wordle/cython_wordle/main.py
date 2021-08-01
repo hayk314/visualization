@@ -12,7 +12,7 @@ import sys
 
 import fileReader as FR
 import spirals as SP
-import BBox
+import bbox
 import Trees
 from Trees import Node, Tree
 import colorHandler as CH
@@ -44,8 +44,8 @@ def proposeCanvasSize(normalTokens):
     boxArea = []     # the areas covered by the bounding box of the tokens
 
     for token in normalTokens:
-        area += token.quadTree.areaCovered()
-        boxArea.append( Trees.rectArea(token.quadTree.root.value) )
+        area += token.quadtree.area_covered()
+        boxArea.append(Trees.rectArea(token.quadtree.root.value))
 
     ensure_space = 5    # force the sum of the total area to cover at least the first @ensure_space tokens
 
@@ -150,10 +150,10 @@ def drawOnCanvas(normalTokens, canvas_size):
             continue
 
         token.place = ( token.place[0] + x_shift, token.place[1] + y_shift )
-        if X_max < token.place[0] + token.imgSize[0]:
-            X_max = token.place[0] + token.imgSize[0]
-        if Y_max < token.place[1] + token.imgSize[1]:
-            Y_max = token.place[1] + token.imgSize[1]
+        if X_max < token.place[0] + token.img_size[0]:
+            X_max = token.place[0] + token.img_size[0]
+        if Y_max < token.place[1] + token.img_size[1]:
+            Y_max = token.place[1] + token.img_size[1]
 
     c_W = max(c_W, X_max)
     c_H = max(c_H, Y_max)
@@ -177,14 +177,14 @@ def drawOnCanvas(normalTokens, canvas_size):
             print('the word <' + token.word + '> was skipped' )
             continue
 
-        font1 = ImageFont.truetype(FONT_NAME, token.fontSize)
+        font1 = ImageFont.truetype(FONT_NAME, token.font_size)
         c = token.color
 
-        if token.drawAngle != 0:
+        if token.draw_at_angle != 0:
             # place vertically, since PIL does support drawing text in vertical orientation,
             # we first draw the token in a temporary image, the @im, then past that at the location of
             # the token on the canvas; this might introduce some rasterization for smaller fonts
-            im = wordle.drawWord(token, useColor = True)
+            im = wordle.draw_word(token, useColor = True)
             im_canvas.paste(im,  token.place, im )
             if background == 0:
                 im_canvas_white.paste(im,  token.place, im )
@@ -222,7 +222,7 @@ def createWordle_fromFile( fName, interActive = False, horizontalProbability = 1
 
 
     normalTokens =  normalizeWordSize(tokens, freq, TOKENS_TO_USE, horizontalProbability)
-    canvas_W, canvas_H = wordle.placeWords(normalTokens)
+    canvas_W, canvas_H = wordle.place_words(normalTokens)
 
     wordle_img = drawOnCanvas(normalTokens, (canvas_W, canvas_H ) )
     wordle_img.save( fName[0:-4] + '_wordle.png')

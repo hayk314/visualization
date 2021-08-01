@@ -50,19 +50,19 @@ class Node:
     def hasLeaf_ChildrenOnly(self):
         # True, if the all children of this node (if any) are leaves
         if (self.child1 is not None):
-            if self.child1.isLeaf() == False:
+            if self.child1.is_leaf() == False:
                 return False
 
         if (self.child2 is not None):
-            if self.child2.isLeaf() == False:
+            if self.child2.is_leaf() == False:
                 return False
 
         if (self.child3 is not None):
-            if self.child3.isLeaf() == False:
+            if self.child3.is_leaf() == False:
                 return False
 
         if (self.child4 is not None):
-            if self.child4.isLeaf() == False:
+            if self.child4.is_leaf() == False:
                 return False
 
         return True
@@ -85,14 +85,14 @@ class Tree:
 
         res = []
 
-        c = self.root.Children()
+        c = self.root.get_children_list()
         while c:
             c1 = []
             for x in c:
-                if x.isLeaf():
+                if x.is_leaf():
                     res.append(x)
                 else:
-                    for u in x.Children():
+                    for u in x.get_children_list():
                         c1.append(u)
 
             c = c1
@@ -106,7 +106,7 @@ class Tree:
             return 0
 
         res = 1
-        c = self.root.Children()
+        c = self.root.get_children_list()
 
         while c:
             c1 = []
@@ -114,8 +114,8 @@ class Tree:
 
             for x in c:
                 #print(' '*i + 'Level ' + str(i) + ' : ' + str(x.value) )
-                if x.isLeaf() == False:
-                    for u in x.Children():
+                if x.is_leaf() == False:
+                    for u in x.get_children_list():
                         c1.append(u)
 
             c = c1
@@ -136,7 +136,7 @@ class Tree:
 
         res = [ self.root.value ]
 
-        c = self.root.Children()
+        c = self.root.get_children_list()
         i = 0
 
         while c:
@@ -147,8 +147,8 @@ class Tree:
                     print(' '*i + 'Level ' + str(i) + ' : ' + str(x.value) )
 
                 res.append(x.value)
-                if not x.isLeaf():
-                    for u in x.Children():
+                if not x.is_leaf():
+                    for u in x.get_children_list():
                         c1.append(u)
 
             c = c1
@@ -196,9 +196,9 @@ class Tree:
 
                 if n != None:
                     p = n.parent
-                    if p.isFull:
+                    if p.node_is_full:
                         # p has all 4 or all 2 children
-                        if p.hasLeaf_ChildrenOnly():
+                        if p.all_children_are_leafs():
                             # compression means that we destroy all children of a node
                             # with only leaf children and where all child nodes are occupied
                             p.child1 = None
