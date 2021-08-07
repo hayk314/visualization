@@ -2,22 +2,17 @@
 # testing wordle related utils
 # anything in this module is for illustration/test purposes only
 
-from PIL import Image, ImageColor, ImageFont, ImageDraw
+import inspect
+from PIL import Image, ImageFont, ImageDraw
+from termcolor import colored
+import timeit
 
-import random   # used for random placement of the initial position of a word
-
-import timeit   # for calculating running time (TESTING purposes only)
-
-import numpy as np
-import sys
-
-import spirals as SP
 import bbox
 
 
-def colorBBoxesBorders(im, T, shift = (0, 0) ):
+def color_bbox_borders(im, quadtree, shift=(0, 0)):
     """
-        takes an image @im and a Tree @T corresponding to the bounding box hierarchy (quad-tree partition)
+        takes an image @im and a Tree @quadtree corresponding to the bounding box hierarchy (quad-tree partition)
         colors only the borders of bounding rectangles
     """
 
@@ -26,239 +21,225 @@ def colorBBoxesBorders(im, T, shift = (0, 0) ):
     im_1 = im.copy()
     (W, H) = im_1.size
 
-    Boxes = T.get_node_value_list()
+    boxes = quadtree.get_node_value_list()
 
-    for i in range( len(Boxes) ):
-        z = Boxes[i]
+    for z in boxes:
 
-        for u in range(z[0] + shift[0] , z[2] + shift[0] ):
-            for v in range( z[1] + shift[1] - w, z[1] + shift[1] + w + 1 ):
-                if ( (v >= 0 ) and (v < H) ):
-                    im_1.putpixel( (u, v), (255, 0, 0, 0) )
+        for u in range(z[0] + shift[0], z[2] + shift[0]):
+            for v in range(z[1] + shift[1] - w, z[1] + shift[1] + w + 1):
+                if (v >= 0) and (v < H):
+                    im_1.putpixel((u, v), (255, 0, 0, 0))
 
-            for v in range( z[3] + shift[1] - w, z[3] + shift[1] + w + 1 ):
-                if ( (v >= 0) and ( v < H ) ):
-                    im_1.putpixel( (u, v), (255, 0, 0, 0) )
+            for v in range(z[3] + shift[1] - w, z[3] + shift[1] + w + 1):
+                if (v >= 0) and (v < H):
+                    im_1.putpixel((u, v), (255, 0, 0, 0))
 
+        for u in range(z[1] + shift[1], z[3] + shift[1]):
+            for v in range(z[0] + shift[0] - w, z[0] + shift[0] + w + 1):
+                if (v >= 0) and (v < W):
+                    im_1.putpixel((v, u), (255, 0, 0, 0))
 
-        for u in range( z[1] + shift[1], z[3] + shift[1] ):
-            for v in range( z[0] + shift[0] - w, z[0] + shift[0] + w + 1 ):
-                if ( ( v >= 0 ) and ( v < W ) ):
-                    im_1.putpixel( (v, u), (255, 0, 0, 0) )
-
-            for v in range( z[2] + shift[0] - w, z[2] + shift[0] + w + 1 ):
-                if ( ( v >= 0 ) and ( v < W ) ):
-                    im_1.putpixel( (v, u), (255, 0, 0, 0) )
-
+            for v in range(z[2] + shift[0] - w, z[2] + shift[0] + w + 1):
+                if (v >= 0) and (v < W):
+                    im_1.putpixel((v, u), (255, 0, 0, 0))
 
     return im_1
 
 
-def colorBoxes( im, Boxes, shift = (0,0) ):
+def color_boxes(im, boxes, shift=(0, 0)):
     """
        gets an image @im and a list of rectangles (in upper-left - bottom-right coordinates) @Boxes
-       @shift parameter can be used to shift the rectanlges in the coordinate system.
+       @shift parameter can be used to shift the rectangles in the coordinate system.
 
        This function colors bounding boxes @Boxes of the image @im in red and returns this colored image
     """
     im_1 = im.copy()
 
-    for i in range( len(Boxes) ):
-        z = Boxes[i].value
-        for u in range(z[0] + shift[0] , z[2] + shift[0] ):
-            for v in range(z[1] + shift[1] , z[3] + shift[1] ):
-                im_1.putpixel( (u, v), (255, 0, 0, 0) )
+    for i in range(len(boxes)):
+        z = boxes[i].value
+        for u in range(z[0] + shift[0], z[2] + shift[0]):
+            for v in range(z[1] + shift[1], z[3] + shift[1]):
+                im_1.putpixel((u, v), (255, 0, 0, 0))
 
     return im_1
 
 
-def drawWord(word, fsize):
-    # returns the cropped image of the @word with Font.size = @fsize
+def draw_word(test_word, font_size):
+    """ returns the cropped image of the @word with Font.size = @font_size """
 
-    font = ImageFont.truetype("fonts/arial.ttf", fsize)
-    w, h = font.getsize( word )
+    font = ImageFont.truetype("fonts/arial.ttf", font_size)
+    w, h = font.getsize(test_word)
 
-    im = Image.new('RGBA', (w,h), color = None)
-    draw = ImageDraw.Draw(im)
-    draw.text( (0, 0), word, font = font )
+    img = Image.new('RGBA', (w, h), color=None)
+    draw = ImageDraw.Draw(img)
+    draw.text((0, 0), test_word, font=font)
 
-    box_0 = im.getbbox() # the initial bounding box
-    im = im.crop(box_0)
+    box_0 = img.getbbox()  # the initial bounding box
+    img = img.crop(box_0)
 
-    return im
-
-
-def testQuadTrees(testWord = "test", fontSize = 200):
-    # create quadtree of the given test-word  with a given font size, and apply tree compression (pruning)
-    # save the images of colored bounding boxes
-
-    T_start = timeit.default_timer()
-
-    im = drawWord(testWord, fontSize)
-    T_stop = timeit.default_timer()
-    print('\n1. Word image ready in ', T_stop - T_start, 'seconds.')
-
-    T_start = timeit.default_timer()
-
-    T = bbox.construct_quadtree(im, 7, 7)
-
-    T_stop = timeit.default_timer()
-    print('2. Quad tree ready in ', T_stop - T_start, 'seconds.')
-
-    T_start = timeit.default_timer()
-
-    im_colored_boxes = colorBBoxesBorders(im, T)
-
-    T_stop = timeit.default_timer()
-    print('3. Coloring of the uncompressed tree took ', T_stop - T_start, 'seconds.')
+    return img
 
 
-    T_start = timeit.default_timer()
-    T.compress()
-    T_stop = timeit.default_timer()
-    print('4. Tree compression ready in ', T_stop - T_start, 'seconds.')
+def test_quadtrees(test_word="test", font_size=200):
+    """ create quadtree of the given test-word  with a given font size, and apply tree compression (pruning)
+       save the images of colored bounding boxes
+    """
 
-    T_start = timeit.default_timer()
+    t_start = timeit.default_timer()
 
-    im_color_boxes_pruned = colorBBoxesBorders(im, T)
+    im = draw_word(test_word, font_size)
+    t_stop = timeit.default_timer()
+    print('1. Image of word [{}] build in {} seconds'.format(test_word, t_stop - t_start), flush=True)
 
-    T_stop = timeit.default_timer()
-    print('5. Coloring of the compressed tree took ', T_stop - T_start, 'seconds.','\n')
+    t_start = timeit.default_timer()
+
+    quadtree_of_word = bbox.construct_quadtree(im, 7, 7)
+
+    t_stop = timeit.default_timer()
+    print('2. Quad tree constructed in {} seconds'.format(t_stop - t_start), flush=True)
+
+    t_start = timeit.default_timer()
+
+    im_colored_boxes = color_bbox_borders(im, quadtree_of_word)
+
+    t_stop = timeit.default_timer()
+    print('3. Coloring of the uncompressed tree took {} seconds'.format(t_stop - t_start), flush=True)
+
+    t_start = timeit.default_timer()
+    quadtree_of_word.compress()
+    t_stop = timeit.default_timer()
+    print('4. Tree compression done in {} seconds'.format(t_stop - t_start), flush=True)
+
+    t_start = timeit.default_timer()
+
+    im_color_boxes_pruned = color_bbox_borders(im, quadtree_of_word)
+
+    t_stop = timeit.default_timer()
+    print('5. Coloring of the compressed tree took {} seconds'.format(t_stop - t_start), flush=True)
 
     # convert RGBA to RGB allowing the files to be saved as png
-    im_colored_boxes_back = Image.new('RGB', im_colored_boxes.size, (0,0,0))
-    im_colored_boxes_back.paste( im_colored_boxes)
+    im_colored_boxes_back = Image.new('RGB', im_colored_boxes.size, (0, 0, 0))
+    im_colored_boxes_back.paste(im_colored_boxes)
 
-    im_color_boxes_pruned_back = Image.new('RGB', im_color_boxes_pruned.size, (0,0,0))
-    im_color_boxes_pruned_back.paste( im_color_boxes_pruned )
+    im_color_boxes_pruned_back = Image.new('RGB', im_color_boxes_pruned.size, (0, 0, 0))
+    im_color_boxes_pruned_back.paste(im_color_boxes_pruned)
 
-    im_colored_boxes_back.save(testWord + '_BBox.png')
-    im_color_boxes_pruned_back.save(testWord + '_pruned_BBox.png')
+    bbox_img_file_name = test_word + '_BBox.png'
+    bbox_pruned_img_file_name = test_word + '_pruned_BBox.png'
 
-    print('The output saved on ', testWord + '_BBox.png', ' and ', testWord + '_pruned_BBox.png', '\n')
+    im_colored_boxes_back.save(bbox_img_file_name)
+    im_color_boxes_pruned_back.save(bbox_pruned_img_file_name)
+
+    print('The outputs were saved on [{}] and [{}]'.format(bbox_img_file_name, bbox_pruned_img_file_name), flush=True)
 
 
+def try_to_get_spiral_class_by_alias(alias):
+    """ try to get the spiral class by its alias """
 
-def testSpirals(**spiralArgs):
-    # testing the spirals
+    spiral_module = __import__("spirals")
+    spiral_cls = None
 
-    if not 'type' in spiralArgs:
-        print('the spiral type is not specified, terminating.')
+    for name, obj in inspect.getmembers(spiral_module):
+        if inspect.isclass(obj):
+            if hasattr(obj, "get_alias") and obj.get_alias() == alias:
+                spiral_cls = obj
+                break
+
+    return spiral_cls
+
+
+def get_spiral_aliases():
+    spiral_module = __import__("spirals")
+
+    spiral_aliases = []
+
+    for name, obj in inspect.getmembers(spiral_module):
+        if inspect.isclass(obj):
+            if hasattr(obj, "get_alias"):
+                if obj.get_alias() != "":
+                    spiral_aliases.append(obj.get_alias())
+
+    return spiral_aliases
+
+
+def test_spirals(spiral_alias, param, n_of_iter=1000, snapshot_freq=200):
+
+    spiral_cls = try_to_get_spiral_class_by_alias(spiral_alias)
+    if spiral_cls is None:
+        print("the spiral alias [{}] was not recognized.".format(spiral_alias), flush=True)
         return
 
-    t = spiralArgs['type']
-    if t == 1:
-        if not 'param' in spiralArgs:
-            a =  0.2
-        else:
-            a = spiralArgs['param']
-        A = SP.Archimedian(a)
-    elif t == 2:
-        if not 'param' in spiralArgs:
-            a = 2
-        else:
-            a = spiralArgs['param']
-        A = SP.Rectangular(a)
-    elif t == 3:
-        if not 'param' in spiralArgs:
-            a = 2
-        else:
-            a = spiralArgs['param']
-        A = SP.RandomWalk(a)
-    else:
-        print('unknown spiral type, terminating')
-        return
+    spiral_cls_inst = spiral_cls(param)
 
-    if 'iter' in spiralArgs:
-        iterN = spiralArgs['iter']
-    else:
-        iterN = 1000
-    if 'dump' in spiralArgs:
-        dump = spiralArgs['dump']
-        if 'dumpFreq' in spiralArgs:
-            dumpFreq = spiralArgs['dumpFreq']
-        else:
-            dumpFreq = 0
-    else:
-        dump, dumpFreq = False, 0
-
-    im = A.draw(1000, 1000, iterN, dump, dumpFreq)
-    fName = A.name + '_iter=' + str(iterN) + '.png'
-    im.save(fName)
-    print('\nThe spiral image saved on ', fName)
+    img = spiral_cls_inst.draw(1000, 1000, n_of_iter, snapshot_freq=snapshot_freq)
+    file_name = spiral_cls_inst.name + '_iter=' + str(n_of_iter) + '.png'
+    img.save(file_name)
+    print('The spiral image saved on ', file_name, flush=True)
 
 
-def testingDirective():
-    # start a process of testing, promping the user until they wish to terminate
+def testing_directive():
+    """ start a process of testing, prompting the user until they wish to terminate """
 
-    print('\nStarting testing process of QuadTrees and Sprials.')
-    print('To stop please type the text inside the quotes: "STOP"\n')
+    print('\nStarting testing process of QuadTrees and Spirals.')
+
+    avail_spiral_alias_set = get_spiral_aliases()
+    avail_spiral_aliases = ", ".join(list(avail_spiral_alias_set))
 
     while True:
-
-        userInput = input("For QuadTrees type 1, for Spirals type 2, anything else will terminate the process.\n")
-        if userInput  != '1' and userInput != '2':
+        msg = "\nType 1 - for {}, 2 - for {}: anything else will terminate\n".format(
+            colored("QuadTrees", "blue", attrs=["bold"]), colored("Spirals", "blue", attrs=["bold"]))
+        ans = input(msg)
+        if ans != '1' and ans != '2':
             print('exiting...')
             return
 
-        if userInput == '1':
-            inputStr = input('please type the word to build the Quad Tree on\n')
-            if len(inputStr) == 0:
+        if ans == '1':
+            test_word = input('please type the word to build the QuadTree on\n')
+            if len(test_word) == 0:
                 print('empty string, nothing to do\n')
                 continue
-            elif len(inputStr) > 100:
+            elif len(test_word) > 100:
                 print('please restrict the input to maximum 100 characters\n')
                 continue
 
-            inputFontSize = input('please type the font size, an integer between 1 and 1000\n')
-            if not inputFontSize.isdigit():
+            font_size = input('please type the font size, an integer between 1 and 1000\n')
+            if not font_size.isdigit():
                 print('the input is not an integer, nothing to do')
                 continue
 
-            inputFontSize = int(inputFontSize)
-            if not 0 < inputFontSize <= 1000:
+            font_size = int(font_size)
+            if not 0 < font_size <= 1000:
                 print('please keep the font size between 1 and 1000')
                 continue
 
-            print('\n')
-            testQuadTrees(testWord = inputStr , fontSize = inputFontSize)
-            print('\n')
+            test_quadtrees(test_word=test_word, font_size=font_size)
 
-        if userInput == '2':
-            inputType = input('please type the 1 for Archimedian spiral, 2 for Rectangular spiral, 3 for Random Walks\n')
-
-            if not inputType in {'1', '2', '3'}:
-                print('invalid type, nothing to do\n')
+        if ans == '2':
+            spiral_alias = input('type any of these [{}] spiral aliases\n'.format(avail_spiral_aliases))
+            if spiral_alias not in avail_spiral_alias_set:
+                print("the alias is not recognized", flush=True)
                 continue
 
-            inputType = int(inputType)
-
-            inputParam = input('please type the parameter of the spiral\n')
+            param = input('please type the parameter of the spiral\n')
             try:
-                inputParam = float(inputParam)
+                param = float(param)
             except:
                 print('the parameter must be numeric')
                 continue
 
-            if inputParam <= 0:
+            if param <= 0:
                 print('the parameter must be positive\n')
                 continue
-            if inputType != 1:
-                inputParam = int(inputParam)
-                if inputParam == 0:
-                    inputParam = 1
 
-            inputIterN = input('please type the iteration count, a positive integer\n')
-            if not inputIterN.isdigit() or int(inputIterN) <= 0:
-                print('the iteration count must be positive\n')
+            n_of_iter = input('please type the number of iterations\n')
+            if not n_of_iter.isdigit() or int(n_of_iter) <= 0:
+                print('the iteration number must be positive\n')
                 continue
+            n_of_iter = int(n_of_iter)
 
-            print('\n')
-            testSpirals(type = inputType, param = inputParam, iter = inputIterN  )
-            print('\n')
-
+            test_spirals(spiral_alias, param, n_of_iter=n_of_iter)
 
 
 if __name__ == "__main__":
     # simply follow the prompt of the program
-    testingDirective()
+    testing_directive()

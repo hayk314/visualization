@@ -31,7 +31,7 @@ class Token:
     def __init__(self, word, font_size=10, draw_at_angle=0):
         self.word = word
         self.font_size = font_size  # an integer
-        self.draw_at_angle = draw_at_angle  # an integer representing the rotation angle of the image; 0 - for NO rotation
+        self.draw_at_angle = draw_at_angle  # integer representing the rotation angle of the image; 0 - for NO rotation
         self.img_size = None  # integers (width, height) size of the image of this word with the given fontSize
         self.quadtree = None  # the quadTree of the image of this word with the above characteristics
         self.place = None  # tuple, the coordinate of the upper-left corner of the token on the final canvas

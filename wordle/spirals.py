@@ -3,6 +3,7 @@
 
 import math
 import numpy as np
+import os
 from PIL import Image
 
 
@@ -19,12 +20,16 @@ class SpiralBase:
     def name(self):
         return type(self).__name__
 
-    def draw(self, width, height, n_of_iter, dump_snapshots=False, snapshot_freq=10):
+    @staticmethod
+    def get_alias():
+        return ""
+
+    def draw(self, width, height, n_of_iter, snapshot_freq=-1):
         """
          draw the spiral based on the generator @gen on a 2d canvas of the given @width and @height
          use next @N_of_iter items of the generator
 
-         if @dumpSnapshots == True, then we save the result of iteration each @snapshotFreq itervals
+         if @snapshot_freq > 0 then we save the result of iteration each @snapshot_freq intervals
 
          NOTE!! <draw> method will alter the state of the generator, this is only for testing purposes
         """
@@ -33,6 +38,11 @@ class SpiralBase:
         im_canvas = np.zeros((width, height), dtype='uint8')
 
         n, t = 0, 0  # counting iterations
+
+        if snapshot_freq > 0:
+            output_folder = os.path.join("tmp", self.name)
+            if not os.path.exists(output_folder):
+                os.makedirs(output_folder)
 
         for dx, dy in self.generator:
             u, v = c_x + dx, c_y + dy
@@ -49,10 +59,10 @@ class SpiralBase:
             if n == n_of_iter:
                 break
 
-            if dump_snapshots and n % snapshot_freq == 0:
+            if snapshot_freq > 0 and n % snapshot_freq == 0:
                 t += 1
                 im_1 = Image.fromarray(im_canvas)
-                im_1.save("test_" + str(t) + ".png")
+                im_1.save(os.path.join(output_folder, "test_" + str(t) + ".png"))
 
         return Image.fromarray(im_canvas)
 
@@ -77,6 +87,10 @@ class Archimedian(SpiralBase):
 
     def __init__(self, param):
         super().__init__(self.spiral(param))
+
+    @staticmethod
+    def get_alias():
+        return "arch"
 
     def spiral(self, a):
         """
@@ -106,7 +120,12 @@ class Rectangular(SpiralBase):
     """ Models a Rectangular spiral  with the given parameters """
 
     def __init__(self, param, reverse=1):
+        param = int(param)
         super().__init__(self.spiral(param, reverse))
+
+    @staticmethod
+    def get_alias():
+        return "rect"
 
     def spiral(self, a, reverse):
         """
@@ -173,6 +192,7 @@ class RandomWalk(SpiralBase):
     """
 
     def __init__(self, param):
+        param = int(param)
         super().__init__(self.spiral(param))
 
         self.random_directions = np.random
@@ -182,6 +202,10 @@ class RandomWalk(SpiralBase):
         self._pointer = 0
 
         self.update_random_direction_buffer()
+
+    @staticmethod
+    def get_alias():
+        return "randomwalk"
 
     def update_random_direction_buffer(self):
         self._directions = np.random.randint(0, 4, self._buffer_size)
