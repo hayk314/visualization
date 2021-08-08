@@ -3,5 +3,7 @@ wordle/cython_wordle/__pycache__/*
 wordle/cython_wordle/build/*
 wordle/cython_wordle/*.pyd
 wordle/cython_wordle/*.png
+wordle/cython_wordle/*.c
 wordle/*.png
 wordle/*.txt
+*.so

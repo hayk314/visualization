@@ -25,7 +25,7 @@ cdef class Archimedian:
         self.r = 0.0
 
 
-    def getNext(self):
+    def get_next(self):
         """
          generator for the Archimedian spiral r = a*\phi (in polar coordinates)
          generated coordinates are in (x,y) plane
@@ -37,7 +37,7 @@ cdef class Archimedian:
 
         if (( int(self.x - self.u) == 0 ) and ( int(self.y - self.v) == 0 ) ):
                 # forcing a move
-                self.getNext()
+                self.get_next()
         else:
             self.u = int(self.x)
             self.v = int(self.y)
@@ -63,7 +63,7 @@ cdef class Rectangular:
         self.m = param
 
 
-    def getNext(self):
+    def get_next(self):
         """
            generator for rectangular spiral
            directions = [ (0,-1), (1,0), (0, 1), (-1, 0) ]
@@ -80,7 +80,7 @@ cdef class Rectangular:
             else:
                 self.step = 0
                 self.phase = 1
-                self.getNext()
+                self.get_next()
 
         elif self.phase == 1:
             if self.step < self.m:
@@ -92,7 +92,7 @@ cdef class Rectangular:
                 self.phase = 2
                 self.m += self.param
 
-                self.getNext()
+                self.get_next()
 
         elif self.phase == 2:
             if self.step < self.m:
@@ -101,7 +101,7 @@ cdef class Rectangular:
             else:
                 self.step = 0
                 self.phase = 3
-                self.getNext()
+                self.get_next()
 
         elif self.phase == 3:
             if self.step < self.m:
@@ -112,4 +112,4 @@ cdef class Rectangular:
                 self.phase = 0
                 self.m += self.param
 
-                self.getNext()
+                self.get_next()
