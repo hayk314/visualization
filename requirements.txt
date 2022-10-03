@@ -1,0 +1,5 @@
+chardet>=3.0.4
+Cython>=0.28.5
+numpy>=1.16.2
+Pillow>=5.2.0
+termcolor>=1.0.0
